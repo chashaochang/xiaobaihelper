@@ -1,4 +1,7 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
@@ -24,11 +27,11 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'androidx.appcompat:appcompat:1.1.0-alpha02'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha3'
+    implementation 'androidx.appcompat:appcompat:1.1.0-alpha04'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.0-alpha4'
     testImplementation 'junit:junit:4.13-beta-2'
-    androidTestImplementation 'androidx.test:runner:1.1.2-alpha01'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.2-alpha01'
+    androidTestImplementation 'androidx.test:runner:1.2.0-alpha03'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0-alpha03'
 
     //依赖注入
     implementation "com.google.dagger:dagger:2.21"
@@ -37,7 +40,7 @@ dependencies {
     annotationProcessor "com.google.dagger:dagger-android-processor:2.21"
 
     //判断网络错误类型
-    implementation 'com.amitshekhar.android:rx2-android-networking:1.0.1'
+    // implementation 'com.amitshekhar.android:rx2-android-networking:1.0.1'
 
     //网络相关
     implementation 'com.squareup.okhttp3:okhttp:3.13.1'
@@ -48,16 +51,22 @@ dependencies {
     //RxAndroid
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
     implementation 'io.reactivex.rxjava2:rxjava:2.2.2'
-    implementation 'com.jakewharton.rxbinding2:rxbinding:2.2.0'
-    implementation 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
-    implementation 'com.squareup.retrofit2:adapter-rxjava:2.5.0'
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.3.0'
+    //implementation 'com.jakewharton.rxbinding2:rxbinding:2.2.0'
+    //implementation 'com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0'
+    //implementation 'com.squareup.retrofit2:adapter-rxjava:2.5.0'
 
     //自动处理Rx内存泄漏
-    implementation 'com.uber.autodispose:autodispose:1.1.0'
-    implementation 'com.uber.autodispose:autodispose-android:1.1.0'
-    implementation 'com.uber.autodispose:autodispose-android-archcomponents:1.1.0'
+    //implementation 'com.uber.autodispose:autodispose:1.1.0'
+    //implementation 'com.uber.autodispose:autodispose-android:1.1.0'
+    //implementation 'com.uber.autodispose:autodispose-android-archcomponents:1.1.0'
 
     //butterknife 视图绑定
     implementation 'com.jakewharton:butterknife:10.1.0'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:10.1.0'
+    kapt 'com.jakewharton:butterknife-compiler:10.1.0'
+    //kotlin
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }
