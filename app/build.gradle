@@ -23,6 +23,9 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -34,10 +37,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0-alpha03'
 
     //依赖注入
-    implementation "com.google.dagger:dagger:2.21"
-    implementation "com.google.dagger:dagger-android-support:2.21"
-    annotationProcessor "com.google.dagger:dagger-compiler:2.21"
-    annotationProcessor "com.google.dagger:dagger-android-processor:2.21"
+    implementation "org.koin:koin-android:1.0.1"
+    implementation 'org.koin:koin-androidx-viewmodel:1.0.1'
 
     //判断网络错误类型
     // implementation 'com.amitshekhar.android:rx2-android-networking:1.0.1'
@@ -57,15 +58,24 @@ dependencies {
     //implementation 'com.squareup.retrofit2:adapter-rxjava:2.5.0'
 
     //自动处理Rx内存泄漏
-    //implementation 'com.uber.autodispose:autodispose:1.1.0'
-    //implementation 'com.uber.autodispose:autodispose-android:1.1.0'
-    //implementation 'com.uber.autodispose:autodispose-android-archcomponents:1.1.0'
+    implementation 'com.uber.autodispose:autodispose:1.1.0'
+    implementation 'com.uber.autodispose:autodispose-android:1.1.0'
+    implementation 'com.uber.autodispose:autodispose-android-archcomponents:1.1.0'
 
     //butterknife 视图绑定
     implementation 'com.jakewharton:butterknife:10.1.0'
     kapt 'com.jakewharton:butterknife-compiler:10.1.0'
+
     //kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+
+    //viewmodle
+    api "android.arch.lifecycle:extensions:1.1.1"
+    implementation "android.arch.lifecycle:viewmodel:1.1.1"
+    kapt "android.arch.lifecycle:compiler:1.1.1"
+
+    //image
+    implementation 'com.github.bumptech.glide:glide:3.7.0'
 }
 repositories {
     mavenCentral()

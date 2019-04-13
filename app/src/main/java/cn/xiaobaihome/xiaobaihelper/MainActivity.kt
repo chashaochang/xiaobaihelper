@@ -1,13 +1,18 @@
 package cn.xiaobaihome.xiaobaihelper
 
-import androidx.appcompat.app.AppCompatActivity
-
 import android.os.Bundle
+import cn.xiaobaihome.xiaobaihelper.base.BaseActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
+
+
+
+    override fun bindLayout(): Int {
+        return R.layout.activity_main
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
     }
 }
