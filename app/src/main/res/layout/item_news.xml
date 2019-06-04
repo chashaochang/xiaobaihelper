@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="item"
+            type="cn.xiaobaihome.xiaobaihelper.mvvm.view.fragment.home.viewmodel.NewItemViewModel" />
+
+        <variable
+            name="presenter"
+            type="cn.xiaobaihome.xiaobaihelper.helper.adapter.recyclerview.ItemClickPresenter" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingStart="15dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingEnd="15dp"
+        android:onClick="@{(v)->presenter.onItemClick(v,item)}">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="@{item.title}"
+            android:textColor="@color/black"
+            android:textSize="18sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:url="@{item.thumbnail_pic_s}"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:visibility="@{item.thumbnail_pic_s02.length()>0?View.VISIBLE:View.GONE}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                app:url="@{item.thumbnail_pic_s02}"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:visibility="@{item.thumbnail_pic_s03.length()>0?View.VISIBLE:View.GONE}"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_weight="1"
+                app:url="@{item.thumbnail_pic_s03}"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{item.category + @string/space + item.author_name + @string/space + item.date}"
+            android:textColor="@color/gray_99"
+            android:textSize="12sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray_f1" />
+    </LinearLayout>
+</layout>

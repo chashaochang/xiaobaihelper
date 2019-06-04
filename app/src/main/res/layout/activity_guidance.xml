@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="presenter"
+            type="cn.xiaobaihome.xiaobaihelper.base.Presenter" />
+    </data>
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/guidance_activity_FrameLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/guidance_activity_BottomNavigationView"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="?android:attr/windowBackground"
+            android:elevation="1dp"
+            app:itemBackground="@null"
+            app:itemIconTint="@drawable/bottom_navigation_selector"
+            app:itemTextColor="@drawable/bottom_navigation_selector"
+            app:menu="@menu/navigation" />
+
+    </LinearLayout
+        >
+</layout>

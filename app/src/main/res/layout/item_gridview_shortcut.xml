@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="cn.xiaobaihome.xiaobaihelper.entity.Shortcut" />
+
+        <import type="android.view.View.OnClickListener" />
+
+        <variable
+            name="shortcut"
+            type="cn.xiaobaihome.xiaobaihelper.entity.Shortcut" />
+
+        <variable
+            name="onclick"
+            type="OnClickListener" />
+    </data>
+
+    <LinearLayout
+        android:id="@+id/shortcut_item_gridview_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="@{onclick}"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/shortcut_item_gridview_img"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:adjustViewBounds="true"
+            android:src="@{shortcut.imgResId}"
+            tools:ignore="ContentDescription" />
+
+        <TextView
+            android:id="@+id/shortcut_item_gridview_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:text="@{shortcut.title}"
+            android:textColor="#333333"
+            android:textSize="14sp" />
+    </LinearLayout>
+</layout>

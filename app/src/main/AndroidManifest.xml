@@ -6,19 +6,31 @@
 
     <application
         android:name=".App"
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
         <activity android:name=".MainActivity">
             <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+            </intent-filter>
+        </activity>
+        <activity android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.activity.guidance.GuidanceActivity" >
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".mvvm.view.activity.video.VideoWebViewActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"/>
+        <activity android:name=".mvvm.view.activity.play.PlayActivity"
+            android:theme="@style/Theme.AppCompat.DayNight.NoActionBar"
+            android:hardwareAccelerated="true"
+            android:configChanges="orientation|screenSize"/>
+        <activity android:name=".mvvm.view.activity.webview.WebViewActivity" />
     </application>
 
 </manifest>
