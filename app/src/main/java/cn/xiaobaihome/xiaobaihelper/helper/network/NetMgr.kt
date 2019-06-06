@@ -52,8 +52,8 @@ object NetMgr {
                 .addConverterFactory(GsonConverterFactory.create(gson))
 
         val retrofit = builder.build()
-        retrofitMap.put(baseUrl, retrofit)
-        providerMap.put(baseUrl, provider)
+        retrofitMap[baseUrl] = retrofit
+        providerMap[baseUrl] = provider
 
         return retrofit
     }
@@ -113,7 +113,7 @@ object NetMgr {
     }
 
     private fun empty(interceptors: Array<Interceptor>?): Boolean {
-        return interceptors == null || interceptors.size == 0
+        return interceptors == null || interceptors.isEmpty()
     }
 
     private fun checkProvider(provider: NetProvider?) {

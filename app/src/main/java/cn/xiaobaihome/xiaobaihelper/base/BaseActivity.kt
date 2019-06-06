@@ -17,10 +17,10 @@ abstract class BaseActivity<VB : ViewDataBinding> : AppCompatActivity(),Presente
         setContentView(getLayoutId())
         binding.setVariable(BR.presenter, this)
         binding.executePendingBindings()
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = this
         context = this
         initView()
-//        lifecycle.addObserver(BaseActivityLifecycle(this))
+        //lifecycle.addObserver(BaseActivityLifecycle(this))
     }
 
     abstract fun getLayoutId():Int

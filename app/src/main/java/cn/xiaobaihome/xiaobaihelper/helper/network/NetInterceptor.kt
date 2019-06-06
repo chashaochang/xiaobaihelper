@@ -27,8 +27,7 @@ class NetInterceptor(private val handler: RequestHandler?) : Interceptor {
 
 
         if (handler != null) {
-            val tmp = handler.onAfterRequest(response, chain)
-            return tmp
+            return handler.onAfterRequest(response, chain)
 
         }
         return response
