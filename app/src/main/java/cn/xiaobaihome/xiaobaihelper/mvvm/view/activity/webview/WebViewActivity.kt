@@ -49,7 +49,7 @@ class WebViewActivity : BaseActivity<ActivityWebviewBinding>(){
         }
         binding.webViewActivityWebView.webChromeClient = object : WebChromeClient() {
             override fun onReceivedTitle(view: WebView, title: String) {
-                binding.webViewActivityToolbar.title = title
+                binding.webViewActivityTitle.text = title
                 super.onReceivedTitle(view, title)
             }
         }

@@ -20,7 +20,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:url="@{item.thumbnail_pic_s}"
-            tools:ignore="ContentDescription" />
+            tools:ignore="ContentDescription"
+            android:background="@drawable/bg_list_white"/>
 
         <TextView
             android:layout_width="200dp"
