@@ -118,26 +118,29 @@ class PlayActivity : BaseActivity<ActivityPlayBinding>() {
         val wvc = object : WebViewClient() {
             override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
                 Log.i("url", url)
-                if (url.indexOf("mob") > -1 || url.indexOf("c125") > -1) {
-                    return false
+                //防止跳转广告
+                if (!url.contains(this@PlayActivity.url!!.substring(this@PlayActivity.url!!.length - 10, this@PlayActivity.url!!.length))) {
+                    Log.i("return", url)
+                    return true
                 }
+                Log.i("load", url)
                 binding.playActivityWebview.loadUrl(url)
-                return true
+                return false
             }
 
-            @SuppressLint("DefaultLocale")
-            override fun shouldInterceptRequest(view: WebView?, request: WebResourceRequest?): WebResourceResponse? {
-                val reqUrl = request?.url.toString().toLowerCase()
-                return if (!reqUrl.contains(url.toString())) {
-                    if (!hasAd(context, reqUrl)) {
-                        super.shouldInterceptRequest(view, reqUrl)
-                    } else {
-                        WebResourceResponse(null, null, null)
-                    }
-                } else {
-                    super.shouldInterceptRequest(view, reqUrl)
-                }
-            }
+//            @SuppressLint("DefaultLocale")
+//            override fun shouldInterceptRequest(view: WebView?, request: WebResourceRequest?): WebResourceResponse? {
+//                val reqUrl = request?.url.toString().toLowerCase()
+//                return if (!reqUrl.contains(url.toString())) {
+//                    if (!hasAd(context, reqUrl)) {
+//                        super.shouldInterceptRequest(view, reqUrl)
+//                    } else {
+//                        WebResourceResponse(null, null, null)
+//                    }
+//                } else {
+//                    super.shouldInterceptRequest(view, reqUrl)
+//                }
+//            }
         }
         binding.playActivityWebview.webViewClient = wvc
 
