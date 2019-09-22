@@ -1,12 +1,13 @@
 package cn.xiaobaihome.xiaobaihelper.base
 
 import android.content.Context
+import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
@@ -15,7 +16,7 @@ import cn.xiaobaihome.xiaobaihelper.helper.annotation.ToastType
 import cn.xiaobaihome.xiaobaihelper.helper.extens.dispatchFailure
 import cn.xiaobaihome.xiaobaihelper.helper.extens.toast
 
-abstract class BaseFragment<VB : ViewDataBinding> : Fragment(),Presenter{
+abstract class BaseFragment<VB : ViewDataBinding> : Fragment(), Presenter {
 
     protected val binding by lazy { DataBindingUtil.inflate<VB>(layoutInflater, getLayoutId(), null, false) }
 
@@ -34,6 +35,7 @@ abstract class BaseFragment<VB : ViewDataBinding> : Fragment(),Presenter{
      */
     protected var hasLoadOnce: Boolean = false
 
+    private lateinit var alertDialog: AlertDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,6 +75,25 @@ abstract class BaseFragment<VB : ViewDataBinding> : Fragment(),Presenter{
             visible = false
             onInvisible()
         }
+    }
+
+    protected fun alert(msg: String) {
+        alertDialog = context?.let {
+            AlertDialog.Builder(it)
+                    .setTitle("提示")
+                    .setMessage(msg)
+                    .show()
+        }!!
+    }
+
+    protected fun alert(msg: String, okBtnText: String, listener: DialogInterface.OnClickListener) {
+        alertDialog = context?.let {
+            AlertDialog.Builder(it)
+                    .setTitle("提示")
+                    .setMessage(msg)
+                    .setNegativeButton(okBtnText, listener)
+                    .show()
+        }!!
     }
 
     protected fun onInvisible() {
@@ -125,5 +146,15 @@ abstract class BaseFragment<VB : ViewDataBinding> : Fragment(),Presenter{
             }
         } else default
 
+    }
+
+    fun getVersion(): Int {
+        return try {
+            val info = activity?.packageManager?.getPackageInfo(activity?.packageName.toString(), 0)
+            info!!.versionCode
+        } catch (e: Exception) {
+            e.printStackTrace()
+            0
+        }
     }
 }

@@ -18,4 +18,6 @@ class XBActionBar : Toolbar {
     private fun init(context: Context) {
 
     }
+
+
 }

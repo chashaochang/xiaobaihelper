@@ -2,4 +2,6 @@
 <resources>
     <string name="iconzuojiantou">&#xe648;</string>
     <string name="iconguanbi">&#xe649;</string>
+    <string name="iconkejian">&#xe72f;</string>
+    <string name="iconyincang">&#xe64a;</string>
 </resources>

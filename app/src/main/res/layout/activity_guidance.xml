@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <data>
-        <variable
-            name="presenter"
-            type="cn.xiaobaihome.xiaobaihelper.base.Presenter" />
-    </data>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <LinearLayout
-
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -16,20 +9,90 @@
         <FrameLayout
             android:id="@+id/guidance_activity_FrameLayout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_height="match_parent" />
 
-        <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/guidance_activity_BottomNavigationView"
+        <LinearLayout
+            android:id="@+id/guidance_activity_bottomNavBar"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="?android:attr/windowBackground"
-            android:elevation="1dp"
-            app:itemBackground="@null"
-            app:itemIconTint="@drawable/bottom_navigation_selector"
-            app:itemTextColor="@drawable/bottom_navigation_selector"
-            app:menu="@menu/navigation" />
+            android:layout_height="80dp"
+            android:layout_gravity="bottom"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_bottom_navbar"
+            android:elevation="10dp"
+            android:clickable="true"
+            android:focusable="true">
 
-    </LinearLayout
-        >
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:text="@string/home"
+                    android:gravity="center"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp"
+                    android:drawableStart="@mipmap/home_checked"
+                    android:drawablePadding="5dp"
+                    android:background="@drawable/bg_item_nav"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:gravity="center"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp"
+                    android:drawableStart="@mipmap/movie_unchecked" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
+                    android:gravity="center"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14sp"
+                    android:drawableStart="@mipmap/mine_unchecked" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+    <data>
+
+        <variable
+            name="presenter"
+            type="cn.xiaobaihome.xiaobaihelper.base.Presenter" />
+    </data>
 </layout>

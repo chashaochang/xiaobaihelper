@@ -60,20 +60,18 @@ class BaseNetProvider(private val mContext: Context) : NetProvider {
         @Throws(IOException::class)
         override fun onAfterRequest(response: Response, chain: Interceptor.Chain): Response {
             var e: ApiException? = null
-            if (401 == response.code()) {
-                throw ApiException("登录已过期,请重新登录!")
-            } else if (403 == response.code()) {
-                e = ApiException("禁止访问!")
-            } else if (404 == response.code()) {
-                e = ApiException("链接错误")
-            } else if (503 == response.code()) {
-                e = ApiException("服务器升级中!")
-            } else if (response.code() > 300) {
-                val message = response.body()!!.string()
-                e = if (Utils.check(message)) {
-                    ApiException("服务器内部错误!")
-                } else {
-                    ApiException(message)
+            when {
+                401 == response.code -> throw ApiException("登录已过期,请重新登录!")
+                403 == response.code -> e = ApiException("禁止访问!")
+                404 == response.code -> e = ApiException("链接错误")
+                503 == response.code -> e = ApiException("服务器升级中!")
+                response.code > 300 -> {
+                    val message = response.body!!.string()
+                    e = if (Utils.check(message)) {
+                        ApiException("服务器内部错误!")
+                    } else {
+                        ApiException(message)
+                    }
                 }
             }
             if (!Utils.check(e)) {

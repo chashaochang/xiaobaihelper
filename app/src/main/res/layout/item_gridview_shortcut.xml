@@ -37,10 +37,9 @@
             android:id="@+id/shortcut_item_gridview_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:gravity="center"
             android:text="@{shortcut.title}"
             android:textColor="#333333"
-            android:textSize="14sp" />
+            android:textSize="12sp" />
     </LinearLayout>
 </layout>

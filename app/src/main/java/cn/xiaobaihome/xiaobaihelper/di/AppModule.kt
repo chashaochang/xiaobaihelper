@@ -2,8 +2,11 @@ package cn.xiaobaihome.xiaobaihelper.di
 
 import cn.xiaobaihome.xiaobaihelper.helper.Constant
 import cn.xiaobaihome.xiaobaihelper.helper.network.NetMgr
+import cn.xiaobaihome.xiaobaihelper.mvvm.model.remote.api.ApiService
 import cn.xiaobaihome.xiaobaihelper.mvvm.model.remote.api.JuHeService
+import cn.xiaobaihome.xiaobaihelper.mvvm.model.repository.ApiRepository
 import cn.xiaobaihome.xiaobaihelper.mvvm.model.repository.JuHeRepository
+import cn.xiaobaihome.xiaobaihelper.mvvm.view.activity.login.viewmodel.LoginViewModel
 import cn.xiaobaihome.xiaobaihelper.mvvm.view.fragment.home.viewmodel.HomeViewModel
 import org.koin.androidx.viewmodel.ext.koin.viewModel
 import org.koin.dsl.module.module
@@ -15,12 +18,12 @@ val viewModelModule = module {
 //    viewModel { (article: Article, nameDate: String) -> CodeDetailViewModel(article, nameDate, get(), get()) }
 //    viewModel { MainViewModel(get()) }
 //    viewModel { RecentViewModel(get()) }
-    viewModel { HomeViewModel(get()) }
+    viewModel { HomeViewModel(get(),get()) }
+    viewModel { LoginViewModel() }
 //    viewModel { (category: Int?, keyWord: String?) -> CodeListViewModel(category, keyWord, get()) }
 //    viewModel { RecentSearchViewModel(get()) }
 //    viewModel { MyArticleViewModel(get()) }
 //    viewModel { (type: Int) -> MyCollectViewModel(type, get()) }
-//    viewModel { LoginViewModel(get()) }
 
 }
 
@@ -28,7 +31,7 @@ val remoteModule = module {
 
     single { NetMgr.getRetrofit(Constant.HOST_API_JUHE) }
     single<JuHeService> { get<Retrofit>().create(JuHeService::class.java) }
-//    single<UserService> { get<Retrofit>().create(UserService::class.java) }
+    single<ApiService> { get<Retrofit>().create(ApiService::class.java) }
 
 }
 
@@ -43,7 +46,7 @@ val localModule = module {
 val repoModule = module {
 
     single { JuHeRepository(get()) }
-//    single { UserRepository(get(), get()) }
+    single { ApiRepository(get()) }
 
 }
 

@@ -2,26 +2,28 @@ package cn.xiaobaihome.xiaobaihelper.mvvm.view.activity.video
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.util.Log
 import android.view.View
-import android.webkit.*
 import androidx.core.content.ContextCompat
 import cn.xiaobaihome.xiaobaihelper.R
 import cn.xiaobaihome.xiaobaihelper.base.BaseActivity
 import cn.xiaobaihome.xiaobaihelper.databinding.ActivityVideoWebviewBinding
 import cn.xiaobaihome.xiaobaihelper.mvvm.view.activity.play.PlayActivity
+import com.tencent.smtt.export.external.interfaces.WebResourceRequest
+import com.tencent.smtt.sdk.WebChromeClient
+import com.tencent.smtt.sdk.WebView
+import com.tencent.smtt.sdk.WebViewClient
 
 class VideoWebViewActivity : BaseActivity<ActivityVideoWebviewBinding>() {
 
     private var url: String? = null
     private var playUrl: String? = null
+    private var title: String? = null
 
     override fun getLayoutId(): Int {
         return R.layout.activity_video_webview
     }
 
     override fun initView() {
-        window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimaryDark)
         url = intent.getStringExtra("url")
         initWebView()
         loadUrl()
@@ -30,7 +32,7 @@ class VideoWebViewActivity : BaseActivity<ActivityVideoWebviewBinding>() {
                 goToPlay()
             }
         }
-        binding.videoWebviewActivityBackBtn.setOnClickListener {
+        binding.videoWebviewActivityToolbar.setNavigationOnClickListener {
             goBack()
         }
         binding.videoWebviewActivityCloseBtn.setOnClickListener {
@@ -47,7 +49,7 @@ class VideoWebViewActivity : BaseActivity<ActivityVideoWebviewBinding>() {
         settings.builtInZoomControls = true
         settings.displayZoomControls = true
         settings.supportZoom()
-        settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+        //settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
         settings.domStorageEnabled = true//开启DOM
         settings.defaultTextEncodingName = "utf-8"
         binding.videoWebviewActivityWebview.webViewClient = object : WebViewClient() {
@@ -65,6 +67,8 @@ class VideoWebViewActivity : BaseActivity<ActivityVideoWebviewBinding>() {
         binding.videoWebviewActivityWebview.webChromeClient = object : WebChromeClient() {
             override fun onReceivedTitle(view: WebView, title: String) {
                 binding.videoWebviewActivityTessss.text = view.url
+                binding.videoWebviewActivityTitle.text = title
+                this@VideoWebViewActivity.title = title
                 if (binding.videoWebviewActivityWebview.canGoBack()) {
                     binding.videoWebviewActivityCloseBtn.visibility = View.VISIBLE
                 } else {
@@ -87,13 +91,13 @@ class VideoWebViewActivity : BaseActivity<ActivityVideoWebviewBinding>() {
                 binding.videoWebviewActivityPlayBtn.visibility = View.VISIBLE
                 val txdata2 = url.split("\\?".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                 var cid = getValueByName(url, "cid")
-                if (cid.length <= 0) {
+                if (cid.isEmpty()) {
                     cid = txdata2[0].substring(txdata2[0].length - 20, txdata2[0].length - 5)
                 }
-                if (vid.length == 11) {
-                    playUrl = "https://v.qq.com/x/cover/$cid/$vid.html"
+                playUrl = if (vid.length == 11) {
+                    "https://v.qq.com/x/cover/$cid/$vid.html"
                 } else {
-                    playUrl = "https://v.qq.com/x/cover/$cid.html"
+                    "https://v.qq.com/x/cover/$cid.html"
                 }
             }
             if (txurl.contains("//m.iqiyi.com") && feurl.substring(0, 16) == "//m.iqiyi.com/v_") {
@@ -101,10 +105,15 @@ class VideoWebViewActivity : BaseActivity<ActivityVideoWebviewBinding>() {
                 val ykdata = feurl.substring(13)
                 playUrl = "https://www.iqiyi.com$ykdata"
             }
-            if (txurl.contains("//m.bilibili.com") && feurl.length > 30 && feurl.substring(0, 30).contains("m.bilibili.com/video")) {
+            if ((txurl.contains("//m.bilibili.com") && feurl.length > 30 && feurl.substring(0, 30).contains("m.bilibili.com/video")) ||
+                    feurl.contains("//m.bilibili.com") && feurl.contains("/play/")) {
                 binding.videoWebviewActivityPlayBtn.visibility = View.VISIBLE
                 playUrl = url
                 //goToPlay()
+            }
+            if (txurl.contains("//m.youku.com") && feurl.substring(0, 23) == "//m.youku.com/video/id_") {
+                binding.videoWebviewActivityPlayBtn.visibility = View.VISIBLE
+                playUrl = url
             }
             if (feurl.substring(0, 16) == "//m.iqiyi.com/v_"
                     || feurl.substring(0, 19) == "//v.qq.com/x/cover/"
@@ -142,6 +151,7 @@ class VideoWebViewActivity : BaseActivity<ActivityVideoWebviewBinding>() {
     private fun goToPlay() {
         val intent = Intent(this, PlayActivity::class.java)
         intent.putExtra("url", playUrl)
+        intent.putExtra("title", title)
         startActivity(intent)
     }
 

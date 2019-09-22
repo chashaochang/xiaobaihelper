@@ -2,6 +2,7 @@ package cn.xiaobaihome.xiaobaihelper.helper.extens
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Resources
 import androidx.databinding.Observable
 import androidx.databinding.ObservableBoolean
 import androidx.databinding.ObservableField
@@ -89,7 +90,7 @@ fun Activity.dispatchFailure(error: Throwable?) {
 fun <T : Any> FragmentActivity.argument(key: String) =
         lazy {
             @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "UNCHECKED_CAST")
-            intent.extras[key] as? T ?: error("Intent Argument $key is missing")
+            intent.extras?.get(key) as? T ?: error("Intent Argument $key is missing")
         }
 
 fun AppCompatActivity.switchFragment(current: Fragment?, targetFg: Fragment, tag: String? = null) {
@@ -102,7 +103,9 @@ fun AppCompatActivity.switchFragment(current: Fragment?, targetFg: Fragment, tag
     ft.commitAllowingStateLoss();
 }
 
-fun Activity.dpToPx(@DimenRes resID: Int): Int = this.resources.getDimensionPixelOffset(resID)
+fun dpToPx(dpValue: Int): Int {
+    return (0.5f + dpValue * Resources.getSystem().displayMetrics.density).toInt()
+}
 
 fun Activity.navigateToActivity(c: Class<*>, serializable: Serializable? = null) {
     val intent = Intent()

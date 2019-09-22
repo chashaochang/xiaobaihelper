@@ -8,7 +8,19 @@
     <string name="play">播放</string>
     <string name="change_jx">更换线路</string>
     <string name="hot">HOT</string>
-    <string name="vip_area">VIP视频观看专区</string>
+    <string name="vip_area">免费全网影视VIP视频免广告看电影！</string>
 
-    <string name="space">&#x0020;</string>
+    <string name="space" formatted="false"> </string>
+    <string name="login_tip">登录后可查看\"我的\"页面</string>
+    <string name="login_welcome">欢迎登录小白助手</string>
+    <string name="hint_username">请输入账号</string>
+    <string name="hint_pwd">请输入密码</string>
+    <string name="login">登录</string>
+    <string name="diandiandian">…</string>
+    <string name="news">热点资讯</string>
+    <string name="more">更多</string>
+    <string name="nearby_foods">周边美食</string>
+    <string name="choose_helper">帮你选</string>
+    <string name="listen_to_the_god">听天由命</string>
+
 </resources>

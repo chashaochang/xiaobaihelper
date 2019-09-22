@@ -2,10 +2,13 @@ package cn.xiaobaihome.xiaobaihelper.mvvm.view.activity.webview
 
 import android.annotation.SuppressLint
 import android.view.View
-import android.webkit.*
 import cn.xiaobaihome.xiaobaihelper.R
 import cn.xiaobaihome.xiaobaihelper.base.BaseActivity
 import cn.xiaobaihome.xiaobaihelper.databinding.ActivityWebviewBinding
+import com.tencent.smtt.export.external.interfaces.WebResourceRequest
+import com.tencent.smtt.sdk.WebChromeClient
+import com.tencent.smtt.sdk.WebView
+import com.tencent.smtt.sdk.WebViewClient
 
 class WebViewActivity : BaseActivity<ActivityWebviewBinding>(){
 
@@ -19,31 +22,34 @@ class WebViewActivity : BaseActivity<ActivityWebviewBinding>(){
         url = intent.getStringExtra("url")
         initWebView()
         loadUrl()
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        binding.webViewActivityToolbar.setNavigationOnClickListener {
+            finish()
+        }
     }
 
     @SuppressLint("SetJavaScriptEnabled")
     private fun initWebView() {
-        val settings = binding.webviewActivityWebview.settings
+        val settings = binding.webViewActivityWebView.settings
         settings.loadWithOverviewMode = true
         settings.javaScriptEnabled = true
         settings.useWideViewPort = true
         settings.builtInZoomControls = true
         settings.displayZoomControls = true
         settings.supportZoom()
-        settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+        //settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
         settings.domStorageEnabled = true//开启DOM
         settings.defaultTextEncodingName = "utf-8"
-        binding.webviewActivityWebview.webViewClient = object : WebViewClient() {
+        binding.webViewActivityWebView.webViewClient = object : WebViewClient() {
 
             override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
                 return true
             }
 
         }
-        binding.webviewActivityWebview.webChromeClient = object : WebChromeClient() {
+        binding.webViewActivityWebView.webChromeClient = object : WebChromeClient() {
             override fun onReceivedTitle(view: WebView, title: String) {
-                supportActionBar?.title = title
+                binding.webViewActivityToolbar.title = title
                 super.onReceivedTitle(view, title)
             }
         }
@@ -52,7 +58,7 @@ class WebViewActivity : BaseActivity<ActivityWebviewBinding>(){
     private fun loadUrl() {
         // 加载Web地址
         if (url?.isNotEmpty()!!) {
-            binding.webviewActivityWebview.loadUrl(url)
+            binding.webViewActivityWebView.loadUrl(url)
         }
     }
 

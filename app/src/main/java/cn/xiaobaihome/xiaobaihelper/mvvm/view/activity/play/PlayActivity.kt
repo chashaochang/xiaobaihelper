@@ -3,10 +3,9 @@ package cn.xiaobaihome.xiaobaihelper.mvvm.view.activity.play
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.ActivityInfo
-import android.text.TextUtils
+import android.graphics.PixelFormat
 import android.util.Log
 import android.view.*
-import android.webkit.*
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import cn.xiaobaihome.xiaobaihelper.R
@@ -14,9 +13,13 @@ import cn.xiaobaihome.xiaobaihelper.base.BaseActivity
 import cn.xiaobaihome.xiaobaihelper.databinding.ActivityPlayBinding
 import cn.xiaobaihome.xiaobaihelper.helper.Constant
 import com.baoyz.actionsheet.ActionSheet
-import android.webkit.WebResourceResponse
-
-
+import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient
+import com.tencent.smtt.export.external.interfaces.WebResourceRequest
+import com.tencent.smtt.export.external.interfaces.WebResourceResponse
+import com.tencent.smtt.sdk.WebChromeClient
+import com.tencent.smtt.sdk.WebSettings
+import com.tencent.smtt.sdk.WebView
+import com.tencent.smtt.sdk.WebViewClient
 
 class PlayActivity : BaseActivity<ActivityPlayBinding>() {
 
@@ -26,17 +29,21 @@ class PlayActivity : BaseActivity<ActivityPlayBinding>() {
     private val COVER_SCREEN_PARAMS = FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
     private var customView: View? = null
     private var fullscreenContainer: FrameLayout? = null
-    private var customViewCallback: WebChromeClient.CustomViewCallback? = null
+    private var customViewCallback: IX5WebChromeClient.CustomViewCallback? = null
 
     private var url: String? = null
+    private var title: String? = null
     internal var jxUrl = Constant.JXURL1
     override fun getLayoutId(): Int {
         return R.layout.activity_play
     }
 
     override fun initView() {
-        window.statusBarColor = ContextCompat.getColor(this, R.color.colorPrimaryDark)
+        //视频为了避免闪屏和透明问题
+        window.setFormat(PixelFormat.TRANSLUCENT)
         url = intent.getStringExtra("url")
+        title = intent.getStringExtra("title")
+        binding.playActivityTitle.text = title
         initWebView()
         binding.playActivityChangeLineBtn.setOnClickListener {
             ActionSheet.createBuilder(this, supportFragmentManager)
@@ -46,11 +53,8 @@ class PlayActivity : BaseActivity<ActivityPlayBinding>() {
                     .setListener(actionSheetListener)
                     .show()
         }
-        binding.playActivityBackBtn.setOnClickListener {
+        binding.playActivityToolbar.setNavigationOnClickListener {
             finish()
-        }
-        binding.playActivityFullscreen.setOnClickListener {
-            //            showCustomView(binding.playActivityWebview,callback ={})
         }
     }
 
@@ -101,7 +105,7 @@ class PlayActivity : BaseActivity<ActivityPlayBinding>() {
         webSettings.builtInZoomControls = true
         webSettings.displayZoomControls = true
         webSettings.supportZoom()
-        webSettings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+        //webSettings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
         webSettings.domStorageEnabled = true//开启DOM
         webSettings.defaultTextEncodingName = "utf-8"
         webSettings.mediaPlaybackRequiresUserGesture = false
@@ -147,8 +151,8 @@ class PlayActivity : BaseActivity<ActivityPlayBinding>() {
                 return frameLayout
             }
 
-            override fun onShowCustomView(view: View, callback: CustomViewCallback) {
-                Log.i("fangfa","已经进入了。。。。。。。。")
+            override fun onShowCustomView(view: View, callback: IX5WebChromeClient.CustomViewCallback) {
+                Log.i("fangfa", "已经进入了。。。。。。。。")
                 requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
                 showCustomView(view, callback)
             }
@@ -172,7 +176,7 @@ class PlayActivity : BaseActivity<ActivityPlayBinding>() {
     /**
      * 视频播放全屏
      */
-    private fun showCustomView(view: View, callback: WebChromeClient.CustomViewCallback) {
+    private fun showCustomView(view: View, callback: IX5WebChromeClient.CustomViewCallback) {
         // if a view already exists then immediately terminate the new one
         if (customView != null) {
             callback.onCustomViewHidden()
@@ -252,7 +256,7 @@ class PlayActivity : BaseActivity<ActivityPlayBinding>() {
 
     fun hasAd(context: Context, url: String): Boolean {
         val res = context.resources
-        val adUrls = res.getStringArray(cn.xiaobaihome.xiaobaihelper.R.array.adBlockUrl)
+        val adUrls = res.getStringArray(R.array.adBlockUrl)
         for (adUrl in adUrls) {
             if (url.contains(adUrl)) {
                 return true

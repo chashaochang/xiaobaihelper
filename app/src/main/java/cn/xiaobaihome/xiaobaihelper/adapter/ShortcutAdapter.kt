@@ -34,7 +34,6 @@ internal class ShortcutAdapter internal constructor(private var data: List<Short
             val intent = Intent(context, VideoWebViewActivity::class.java)
             intent.putExtra("url", data[position].url)
             context?.startActivity(intent)
-            Log.i("ShortcutAdapter","url:"+data[position].url)
         })
         return binding.root
     }

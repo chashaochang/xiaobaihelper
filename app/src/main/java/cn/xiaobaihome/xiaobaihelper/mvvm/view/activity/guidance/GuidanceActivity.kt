@@ -1,18 +1,25 @@
 package cn.xiaobaihome.xiaobaihelper.mvvm.view.activity.guidance
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.util.SparseArray
-import android.view.MenuItem
 import android.view.View
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import cn.xiaobaihome.xiaobaihelper.R
 import cn.xiaobaihome.xiaobaihelper.base.BaseActivity
 import cn.xiaobaihome.xiaobaihelper.databinding.ActivityGuidanceBinding
+import cn.xiaobaihome.xiaobaihelper.helper.extens.dpToPx
 import cn.xiaobaihome.xiaobaihelper.mvvm.view.fragment.home.HomeFragment
 import cn.xiaobaihome.xiaobaihelper.mvvm.view.fragment.mine.MineFragment
 import cn.xiaobaihome.xiaobaihelper.mvvm.view.fragment.video.VideoFragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.tbruyelle.rxpermissions2.RxPermissions
+
 
 class GuidanceActivity : BaseActivity<ActivityGuidanceBinding>() {
+
+    var rxPermissions: RxPermissions? = null
 
     override fun onClick(v: View?) {
 
@@ -27,10 +34,29 @@ class GuidanceActivity : BaseActivity<ActivityGuidanceBinding>() {
     private var mineFragment: MineFragment? = null
     private var currentFragment: Fragment? = null
     private val fragments = SparseArray<Fragment>()
+    private val navTexts = listOf("首页","影视","我的")
+    private val navIconsChecked = listOf(R.mipmap.home_checked,R.mipmap.movie_checked,R.mipmap.mine_checked)
+    private val navIconsUnChecked = listOf(R.mipmap.home_unchecked,R.mipmap.movie_unchecked,R.mipmap.mine_unchecked)
 
+    @SuppressLint("AutoDispose", "CheckResult")
     override fun initView() {
+
+        rxPermissions = RxPermissions(this)
+        rxPermissions!!.requestEachCombined(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .subscribe {
+                    // will emit 1 Permission object
+                    if (it.granted) {
+                        // All permissions are granted !
+                    } else if (it.shouldShowRequestPermissionRationale) {
+                        // At least one denied permission without ask never again
+                    } else {
+                        // At least one denied permission with ask never again
+                        // Need to go to the settings
+                    }
+                }
         initFragments()
         initBottomNavigationView()
+
     }
 
     private fun initFragments() {
@@ -59,24 +85,48 @@ class GuidanceActivity : BaseActivity<ActivityGuidanceBinding>() {
     }
 
     private fun initBottomNavigationView() {
-        binding.guidanceActivityBottomNavigationView.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.navigation_home -> {
-                    homeFragment?.let { toggleShowFragment(it) }
-                    return@setOnNavigationItemSelectedListener true
-                }
-                R.id.navigation_video -> {
-                    videoFragment?.let { toggleShowFragment(it) }
-                    return@setOnNavigationItemSelectedListener true
-                }
-                R.id.navigation_mine -> {
-                    mineFragment?.let { toggleShowFragment(it) }
-                    return@setOnNavigationItemSelectedListener true
-                }
+        for (index in 0 until binding.guidanceActivityBottomNavBar.childCount) {
+            binding.guidanceActivityBottomNavBar.getChildAt(index).setOnClickListener {
+                changeBottomIndex(index)
             }
-            false
         }
         homeFragment?.userVisibleHint = true
+    }
+
+
+    fun changeBottomIndex(index: Int) {
+        when (index) {
+            0 -> homeFragment?.let { toggleShowFragment(it) }
+            1 -> videoFragment?.let { toggleShowFragment(it) }
+            2 -> mineFragment?.let { toggleShowFragment(it) }
+        }
+        changeBottomItem(index)
+    }
+
+    //修改item样式
+    private fun changeBottomItem(index: Int) {
+        //
+        for (i in 0 until binding.guidanceActivityBottomNavBar.childCount) {
+            val itemLinear = binding.guidanceActivityBottomNavBar.getChildAt(i) as LinearLayout
+            val textView = itemLinear.getChildAt(0) as TextView
+            if (i == index) {//选中项
+                textView.text = navTexts[i]
+                val drawable = getDrawable(navIconsChecked[i])
+                drawable?.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
+                textView.setCompoundDrawables(drawable,null,null,null)
+                textView.compoundDrawablePadding = dpToPx(5)
+                textView.background = getDrawable(R.drawable.bg_item_nav)
+            } else {//未选中
+                textView.text = ""
+                val drawable = getDrawable(navIconsUnChecked[i])
+                drawable?.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
+                textView.setCompoundDrawables(drawable,null,null,null)
+                textView.compoundDrawablePadding = 0
+                textView.setBackgroundColor(0xffffff)
+            }
+        }
+
+
     }
 
     override fun getLayoutId(): Int {

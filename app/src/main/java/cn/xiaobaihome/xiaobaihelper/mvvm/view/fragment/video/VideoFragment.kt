@@ -10,13 +10,22 @@ import java.util.ArrayList
 class VideoFragment : BaseFragment<FragmentVideoBinding>() {
 
     override fun initView() {
+        binding.videoFragmentScrollView.setOnScrollChangeListener { _, _, _, _, p4 ->
+            if (p4 <= 100) {
+                binding.videoFragmentToolbar.text = ""
+            } else {
+                binding.videoFragmentToolbar.text = "影视"
+            }
+        }
         val list = ArrayList<Shortcut>()
         val shortcutAqy = Shortcut(R.mipmap.aiqiyi, "爱奇艺", "https://m.iqiyi.com/")
         val shortcutTx = Shortcut(R.mipmap.txsp, "腾讯视频", "https://v.qq.com")
-        val shortcutPptv = Shortcut(R.mipmap.bilibili, "哔哩哔哩", "https://m.bilibili.com")
+        val shortcutBilibili = Shortcut(R.mipmap.bilibili, "哔哩哔哩", "https://m.bilibili.com")
+        val shortcutYouKu = Shortcut(R.mipmap.youku, "优酷", "https://m.youku.com")
         list.add(shortcutAqy)
         list.add(shortcutTx)
-        list.add(shortcutPptv)
+        list.add(shortcutBilibili)
+        list.add(shortcutYouKu)
         binding.videoFragmentGridview.adapter = ShortcutAdapter(list)
     }
 
