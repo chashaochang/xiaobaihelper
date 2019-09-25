@@ -6,4 +6,11 @@
             <enum name="use_padding_top" value="1" />
         </attr>
     </declare-styleable>
+    <!--    主要字体颜色-->
+    <attr name="main_text_color" format="color" />
+    <!--    主要背景颜色-->
+    <attr name="main_bg_color" format="color" />
+    <attr name="main_gray_color" format="color" />
+    <attr name="main_nav_bg_color" format="color" />
+    <attr name="main_back_icon" format="integer" />
 </resources>

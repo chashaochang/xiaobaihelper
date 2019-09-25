@@ -6,34 +6,34 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/default_bg"
+        android:background="?attr/main_bg_color"
         android:orientation="vertical">
 
         <cn.xiaobaihome.xiaobaihelper.widget.StatusBarHeightView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/default_bg" />
+            android:background="?attr/main_bg_color" />
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/activity_random_toolbar"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="@color/default_bg"
+            android:background="?attr/main_bg_color"
             app:contentInsetStartWithNavigation="0dp"
-            app:navigationIcon="@mipmap/back"
+            app:navigationIcon="?attr/main_back_icon"
             tools:ignore="PrivateResource">
             <RelativeLayout
                 android:id="@+id/activity_food_toolbar_content"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="@color/default_bg">
+                android:background="?attr/main_bg_color">
 
                 <TextView
                     android:id="@+id/activity_food_title"
                     android:layout_width="200dp"
                     android:layout_height="match_parent"
                     android:gravity="start|center_vertical"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/main_text_color"
                     android:textStyle="bold"
                     android:text="@string/choose_helper"
                     android:singleLine="true"
@@ -54,7 +54,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:background="?attr/main_bg_color"
             android:orientation="vertical">
 
             <!--模拟中奖的指针-->

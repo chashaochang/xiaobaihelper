@@ -31,7 +31,7 @@
             android:ellipsize="end"
             android:maxLines="2"
             android:text="@{item.title}"
-            android:textColor="@color/black"
+            android:textColor="?attr/main_text_color"
             android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@+id/item_news_pic"
             app:layout_constraintTop_toTopOf="parent" />
@@ -43,7 +43,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginBottom="10dp"
             android:text="@{item.category}"
-            android:textColor="@color/gray_99"
+            android:textColor="?attr/main_gray_color"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/item_news_pic" />
@@ -55,7 +55,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginBottom="10dp"
             android:text="@{item.author_name.length()>9?item.author_name.substring(0,8)+@string/diandiandian:item.author_name}"
-            android:textColor="@color/gray_99"
+            android:textColor="?attr/main_gray_color"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/item_news_category" />
@@ -67,7 +67,7 @@
             android:layout_marginStart="10dp"
             android:layout_marginBottom="10dp"
             android:text="@{item.date}"
-            android:textColor="@color/gray_99"
+            android:textColor="?attr/main_gray_color"
             android:textSize="12sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />

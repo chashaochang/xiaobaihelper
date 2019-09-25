@@ -65,8 +65,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginStart="15dp"
                     android:background="@drawable/bg_btn_back"
-                    android:padding="12dp"
-                    android:src="@mipmap/back" />
+                    android:src="?attr/main_back_icon" />
 
                 <TextView
                     android:id="@+id/activity_food_title"
@@ -80,7 +79,7 @@
                     android:paddingEnd="15dp"
                     android:singleLine="true"
                     android:text="@string/nearby_foods"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/main_text_color"
                     android:textSize="14sp"
                     android:textStyle="bold" />
 

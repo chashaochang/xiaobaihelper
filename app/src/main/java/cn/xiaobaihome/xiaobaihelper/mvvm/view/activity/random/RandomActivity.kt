@@ -60,7 +60,7 @@ class RandomActivity : BaseActivity<ActivityRandomBinding>() {
         val count = 10
         val random = Random()
         //第一次随机产生中奖结果
-        randomBonusResult = random.nextInt(bonusBeans.size) + 1
+        randomBonusResult = random.nextInt(bonusBeans.size - 1) + 1
         //二次随机产生一个停在目标中奖区域的随机度数
         randomBonusRadio = random.nextFloat()
         var tempFloat = 0.0f

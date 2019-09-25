@@ -36,7 +36,7 @@
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:text="@{shortcut.title}"
-            android:textColor="#333333"
+            android:textColor="?attr/main_text_color"
             android:textSize="14sp" />
     </LinearLayout>
 </layout>

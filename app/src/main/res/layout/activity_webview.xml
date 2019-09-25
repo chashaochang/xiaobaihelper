@@ -15,28 +15,28 @@
         <cn.xiaobaihome.xiaobaihelper.widget.StatusBarHeightView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/default_bg" />
+            android:background="?attr/main_bg_color" />
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/webView_activity_toolbar"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="@color/default_bg"
+            android:background="?attr/main_bg_color"
             app:contentInsetStartWithNavigation="0dp"
-            app:navigationIcon="@mipmap/back"
+            app:navigationIcon="?attr/main_back_icon"
             tools:ignore="PrivateResource">
             <RelativeLayout
                 android:id="@+id/webView_activity_toolbar_content"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
-                android:background="@color/default_bg">
+                android:background="?attr/main_bg_color">
 
                 <TextView
                     android:id="@+id/webView_activity_title"
                     android:layout_width="200dp"
                     android:layout_height="match_parent"
                     android:gravity="start|center_vertical"
-                    android:textColor="@color/black"
+                    android:textColor="?attr/main_text_color"
                     android:textStyle="bold"
                     android:singleLine="true"
                     android:ellipsize="end"

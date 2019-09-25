@@ -21,6 +21,7 @@ import cn.xiaobaihome.xiaobaihelper.mvvm.view.fragment.home.viewmodel.NewItemVie
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 import androidx.recyclerview.widget.LinearLayoutManager
+import cn.xiaobaihome.xiaobaihelper.base.BaseActivity
 import cn.xiaobaihome.xiaobaihelper.mvvm.view.activity.guidance.GuidanceActivity
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), ItemClickPresenter<NewItemViewModel> {
@@ -46,7 +47,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ItemClickPresenter<New
         binding.homeFragmentScrollView.setOnScrollChangeListener { _, _, _, _, p4 ->
             if (p4 <= 100) {
                 binding.homeFragmentToolbar.text = ""
-                context?.let { ContextCompat.getColor(it, R.color.default_bg) }?.let { binding.homeFragmentToolbar.setBackgroundColor(it) }
+                val array = activity?.theme?.obtainStyledAttributes(intArrayOf(R.attr.main_bg_color))
+                val bgColor = array?.getColor(0, 0xffffff)
+                bgColor?.let { binding.homeFragmentToolbar.setBackgroundColor(it) }
             } else {
                 binding.homeFragmentToolbar.text = "小白助手"
                 binding.homeFragmentToolbar.background = context?.let { ContextCompat.getDrawable(it, R.drawable.cell_border_bottom_ed) }
@@ -63,14 +66,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ItemClickPresenter<New
         binding.homeFragmentRecyclerView.layoutManager = linearLayoutManager
 
         val list = ArrayList<Shortcut>()
-        val shortcutVideo = Shortcut(R.mipmap.video, "影视", "video")
-        val shortcutFood = Shortcut(R.mipmap.food, "美食", "food")
+        val isDark = context?.let { (activity as BaseActivity<*>).getDarkModeStatus(it) }
+        val shortcutVideo = Shortcut(if (isDark!!) R.mipmap.video_dark else R.mipmap.video, "影视", "video")
+        val shortcutFood = Shortcut(if (isDark) R.mipmap.food_dark else R.mipmap.food, "美食", "food")
         list.add(shortcutVideo)
         list.add(shortcutFood)
         binding.homeFragmentGridView.adapter = HomeGridViewAdapter(list)
         binding.homeFragmentGridView.onItemClickListener = AdapterView.OnItemClickListener { _, _, p2, _ ->
             when (p2) {
-                0->{
+                0 -> {
                     val guidanceActivity = activity as GuidanceActivity
                     guidanceActivity.changeBottomIndex(1)
                 }

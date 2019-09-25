@@ -16,13 +16,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/default_bg">
+        android:background="?attr/main_bg_color">
 
         <cn.xiaobaihome.xiaobaihelper.widget.StatusBarHeightView
             android:id="@+id/activity_login_statusBarHeightView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/default_bg"
+            android:background="?attr/main_bg_color"
             app:layout_constraintTop_toTopOf="parent"/>
 
         <TextView
@@ -32,7 +32,7 @@
             android:fontFamily="@font/iconfont"
             android:gravity="center"
             android:text="@string/iconguanbi"
-            android:textColor="@color/black"
+            android:textColor="?attr/main_text_color"
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +45,7 @@
             android:layout_marginStart="40dp"
             android:layout_marginTop="40dp"
             android:text="@string/login_welcome"
-            android:textColor="@color/black"
+            android:textColor="?attr/main_text_color"
             android:textSize="27sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/activity_login_btn_close" />
@@ -62,7 +62,7 @@
             android:hint="@string/hint_username"
             android:inputType="number"
             android:digits="1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
-            android:textColor="@color/black"
+            android:textColor="?attr/main_text_color"
             android:textSize="16sp"
             app:layout_constraintTop_toBottomOf="@+id/activity_login_welcome"
             tools:targetApi="o" />
@@ -73,7 +73,7 @@
             android:fontFamily="@font/iconfont"
             android:gravity="center"
             android:text="@string/iconguanbi"
-            android:textColor="@color/gray_99"
+            android:textColor="?attr/main_gray_color"
             android:textSize="16sp"
             android:textStyle="bold"
             android:visibility="gone"
@@ -92,7 +92,7 @@
             android:hint="@string/hint_pwd"
             android:inputType="@{vm.canSee?InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD:(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)}"
             android:maxLength="15"
-            android:textColor="@color/black"
+            android:textColor="?attr/main_text_color"
             android:textSize="16sp"
             app:layout_constraintTop_toBottomOf="@+id/activity_login_input_username"
             tools:targetApi="o" />
@@ -105,7 +105,7 @@
             android:fontFamily="@font/iconfont"
             android:gravity="center"
             android:text="@string/iconguanbi"
-            android:textColor="@color/gray_99"
+            android:textColor="?attr/main_gray_color"
             android:textSize="16sp"
             android:textStyle="bold"
             android:visibility="gone"
@@ -119,7 +119,7 @@
             android:fontFamily="@font/iconfont"
             android:gravity="center"
             android:text="@{vm.canSee?@string/iconkejian:@string/iconyincang}"
-            android:textColor="@color/gray_99"
+            android:textColor="?attr/main_gray_color"
             android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/activity_login_input_pwd"

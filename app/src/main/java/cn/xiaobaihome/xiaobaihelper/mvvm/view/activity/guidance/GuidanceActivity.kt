@@ -4,6 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.util.SparseArray
 import android.view.View
+import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -114,8 +115,9 @@ class GuidanceActivity : BaseActivity<ActivityGuidanceBinding>() {
                 val drawable = getDrawable(navIconsChecked[i])
                 drawable?.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
                 textView.setCompoundDrawables(drawable,null,null,null)
-                textView.compoundDrawablePadding = dpToPx(5)
+                textView.compoundDrawablePadding = dpToPx(10)
                 textView.background = getDrawable(R.drawable.bg_item_nav)
+                itemLinear.layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, dpToPx(40))
             } else {//未选中
                 textView.text = ""
                 val drawable = getDrawable(navIconsUnChecked[i])
@@ -123,6 +125,9 @@ class GuidanceActivity : BaseActivity<ActivityGuidanceBinding>() {
                 textView.setCompoundDrawables(drawable,null,null,null)
                 textView.compoundDrawablePadding = 0
                 textView.setBackgroundColor(0xffffff)
+                val params = LinearLayout.LayoutParams(0, dpToPx(40))
+                params.weight = 1f
+                itemLinear.layoutParams = params
             }
         }
 

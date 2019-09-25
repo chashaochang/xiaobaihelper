@@ -8,7 +8,26 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="actionSheetStyle">@style/ActionSheetStyleiOS7</item>
+        <item name="main_text_color">@color/main_text_color_light</item>
+        <item name="main_bg_color">@color/main_bg_color_light</item>
+        <item name="main_gray_color">@color/main_gray_color_light</item>
+        <item name="main_nav_bg_color">@color/main_nav_bg_color_light</item>
+        <item name="main_back_icon">@mipmap/back</item>
 <!--        <item name="android:fontFamily">@font/siyuanrouti</item>-->
+    </style>
+
+    <style name="AppThemeDark" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="actionSheetStyle">@style/ActionSheetStyleiOS7</item>
+        <item name="main_text_color">@color/main_text_color_dark</item>
+        <item name="main_bg_color">@color/main_bg_color_dark</item>
+        <item name="main_gray_color">@color/main_gray_color_dark</item>
+        <item name="main_nav_bg_color">@color/main_nav_bg_color_dark</item>
+        <item name="main_back_icon">@mipmap/back_dark</item>
     </style>
 
     <style name="ToolbarTheme">
