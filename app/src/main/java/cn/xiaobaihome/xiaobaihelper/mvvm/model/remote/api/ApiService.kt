@@ -6,6 +6,6 @@ import retrofit2.http.GET
 
 interface ApiService {
 
-    @GET("https://www.xiaobaihome.cn/version/getVersion")
+    @GET("https://www.xiaobaihome.cn/app/version/getVersion")
     fun getVersion(): Single<VersionInfo>
 }

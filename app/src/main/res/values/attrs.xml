@@ -13,4 +13,11 @@
     <attr name="main_gray_color" format="color" />
     <attr name="main_nav_bg_color" format="color" />
     <attr name="main_back_icon" format="integer" />
+    <declare-styleable name="RoundImageView">
+        <attr name="radius" format="dimension" />
+        <attr name="left_top_radius" format="dimension" />
+        <attr name="right_top_radius" format="dimension" />
+        <attr name="right_bottom_radius" format="dimension" />
+        <attr name="left_bottom_radius" format="dimension" />
+    </declare-styleable>
 </resources>

@@ -155,7 +155,6 @@ class PlayActivity : BaseActivity<ActivityPlayBinding>() {
             }
 
             override fun onShowCustomView(view: View, callback: IX5WebChromeClient.CustomViewCallback) {
-                Log.i("fangfa", "已经进入了。。。。。。。。")
                 requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
                 showCustomView(view, callback)
             }

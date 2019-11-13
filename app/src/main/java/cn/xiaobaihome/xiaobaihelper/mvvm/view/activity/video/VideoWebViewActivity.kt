@@ -3,21 +3,32 @@ package cn.xiaobaihome.xiaobaihelper.mvvm.view.activity.video
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.view.View
+import android.webkit.JavascriptInterface
 import androidx.core.content.ContextCompat
 import cn.xiaobaihome.xiaobaihelper.R
 import cn.xiaobaihome.xiaobaihelper.base.BaseActivity
 import cn.xiaobaihome.xiaobaihelper.databinding.ActivityVideoWebviewBinding
+import cn.xiaobaihome.xiaobaihelper.entity.VideoHistoryItem
+import cn.xiaobaihome.xiaobaihelper.helper.extens.toast
+import cn.xiaobaihome.xiaobaihelper.helper.getData
+import cn.xiaobaihome.xiaobaihelper.helper.saveData
 import cn.xiaobaihome.xiaobaihelper.mvvm.view.activity.play.PlayActivity
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.tencent.smtt.export.external.interfaces.WebResourceRequest
 import com.tencent.smtt.sdk.WebChromeClient
 import com.tencent.smtt.sdk.WebView
 import com.tencent.smtt.sdk.WebViewClient
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class VideoWebViewActivity : BaseActivity<ActivityVideoWebviewBinding>() {
 
     private var url: String? = null
     private var playUrl: String? = null
     private var title: String? = null
+    private var coverImg: String? = null
 
     override fun getLayoutId(): Int {
         return R.layout.activity_video_webview
@@ -52,6 +63,14 @@ class VideoWebViewActivity : BaseActivity<ActivityVideoWebviewBinding>() {
         //settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
         settings.domStorageEnabled = true//开启DOM
         settings.defaultTextEncodingName = "utf-8"
+        binding.videoWebviewActivityWebview.addJavascriptInterface(object : GetCoverImg {
+
+            @JavascriptInterface
+            override fun getCoverImg(imgUrl: String) {
+                coverImg = imgUrl
+            }
+
+        }, "xbBridge")
         binding.videoWebviewActivityWebview.webViewClient = object : WebViewClient() {
 
             override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
@@ -61,6 +80,19 @@ class VideoWebViewActivity : BaseActivity<ActivityVideoWebviewBinding>() {
                     return false
                 }
                 return true
+            }
+
+            override fun onPageFinished(p0: WebView?, p1: String?) {
+                super.onPageFinished(p0, p1)
+                if(p1.toString().contains("m.iqiyi.com/v_")){//爱奇艺
+                    binding.videoWebviewActivityWebview.loadUrl("javascript:window.xbBridge.getCoverImg(document.getElementById(\"player-posterimg\").src)")
+                }else if(p1.toString().contains("//m.v.qq.com")){
+                    binding.videoWebviewActivityWebview.loadUrl("javascript:window.xbBridge.getCoverImg(document.getElementsByClassName(\"poster_pic\")[0].src)")
+                }else if(p1.toString().contains("//m.youku.com")){
+                    binding.videoWebviewActivityWebview.loadUrl("javascript:window.xbBridge.getCoverImg(document.getElementsByClassName(\"x-video-poster\")[0].firstChild.src)")
+                }else if(p1.toString().contains("//m.bilibili.com")){
+                    binding.videoWebviewActivityWebview.loadUrl("javascript:window.xbBridge.getCoverImg(document.getElementsByClassName(\"player-mask relative\")[0].firstChild.src)")
+                }
             }
 
         }
@@ -153,6 +185,32 @@ class VideoWebViewActivity : BaseActivity<ActivityVideoWebviewBinding>() {
         intent.putExtra("url", playUrl)
         intent.putExtra("title", title)
         startActivity(intent)
+
+        if (coverImg != null) {
+            addHistory(title.toString(), playUrl.toString(), coverImg.toString())
+        } else {
+            toast("没找到封面图")
+        }
+    }
+
+    private fun addHistory(title: String, url: String, coverImg: String) {
+        val historyListStr = getData(this, "video_history")
+        val historyList: MutableList<VideoHistoryItem>
+        historyList = if (historyListStr.isEmpty()) {
+            ArrayList()
+        } else {
+            Gson().fromJson(historyListStr, object : TypeToken<MutableList<VideoHistoryItem>>() {}.type)
+        }
+        historyList.forEach {
+            if(it.coverImg == coverImg){
+                historyList.remove(it)
+            }
+        }
+        if (historyList.size > 19) {//已经有20个,移除第一个
+            historyList.removeAt(0)
+        }
+        historyList.add(VideoHistoryItem(title, url, coverImg, Date().time,""))
+        saveData(this, "video_history", Gson().toJson(historyList))
     }
 
     private fun getValueByName(url: String, name: String): String {
@@ -177,5 +235,9 @@ class VideoWebViewActivity : BaseActivity<ActivityVideoWebviewBinding>() {
 
     }
 
+    interface GetCoverImg {
 
+        @JavascriptInterface
+        fun getCoverImg(imgUrl: String)
+    }
 }

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+
+        <import type="cn.xiaobaihome.xiaobaihelper.entity.VideoHistoryItem" />
+
+        <import type="android.view.View.OnClickListener" />
+
+        <variable
+            name="historyItem"
+            type="cn.xiaobaihome.xiaobaihelper.entity.VideoHistoryItem" />
+
+        <variable
+            name="onclick"
+            type="OnClickListener" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/video_history_item_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="10dp"
+        android:background="?attr/main_bg_color"
+        android:onClick="@{onclick}">
+
+        <cn.xiaobaihome.xiaobaihelper.widget.RoundImageView
+            android:id="@+id/video_history_item_img"
+            android:layout_width="120dp"
+            android:layout_height="90dp"
+            android:scaleType="fitXY"
+            android:src="@{historyItem.coverImg}"
+            app:radius="10dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/video_history_item_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:text="@{historyItem.title}"
+            android:textColor="?attr/main_text_color"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent=".6"
+            app:layout_constraintStart_toEndOf="@+id/video_history_item_img"/>
+        <TextView
+            android:id="@+id/video_history_item_time"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginStart="10dp"
+            android:gravity="center"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:text="@{historyItem.timeShow}"
+            android:textColor="?attr/main_gray_color"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/video_history_item_img"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

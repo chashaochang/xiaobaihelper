@@ -132,6 +132,9 @@ class FoodActivity : BaseActivity<ActivityFoodBinding>() {
     private var poiSearchResultListener: OnGetPoiSearchResultListener = object : OnGetPoiSearchResultListener {
         override fun onGetPoiResult(poiResult: PoiResult) {
             println(poiResult.allPoi)
+            if(poiResult.allPoi == null){
+                return
+            }
             foodList.clear()
             for (poi in poiResult.allPoi) {
                 foodList.add(MapFoodListItem(poi))

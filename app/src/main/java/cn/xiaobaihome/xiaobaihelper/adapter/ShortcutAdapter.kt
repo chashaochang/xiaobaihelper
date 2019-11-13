@@ -16,7 +16,7 @@ import cn.xiaobaihome.xiaobaihelper.mvvm.view.activity.video.VideoWebViewActivit
 import androidx.databinding.BindingAdapter
 import android.widget.ImageView
 import androidx.annotation.DrawableRes
-
+import cn.xiaobaihome.xiaobaihelper.widget.RoundImageView
 
 internal class ShortcutAdapter internal constructor(private var data: List<Shortcut>) : BaseAdapter() {
 
@@ -51,9 +51,10 @@ internal class ShortcutAdapter internal constructor(private var data: List<Short
     }
 
     companion object {
+
         @BindingAdapter("android:src")
         @JvmStatic
-        fun setImageViewResource(imageView: ImageView,@DrawableRes resource: Int) {
+        fun setImageViewResource(imageView: RoundImageView,@DrawableRes resource: Int) {
             imageView.setImageResource(resource)
         }
     }

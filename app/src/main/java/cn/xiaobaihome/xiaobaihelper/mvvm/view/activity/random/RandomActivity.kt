@@ -57,7 +57,7 @@ class RandomActivity : BaseActivity<ActivityRandomBinding>() {
     //开放仿真转圈度数，要不转一下，只有一圈就尴尬了。所以想先转多少圈在显示中奖结果，自己定。
     @SuppressLint("ObjectAnimatorBinding")
     private fun initAnimation() {
-        val count = 10
+        val count = 5
         val random = Random()
         //第一次随机产生中奖结果
         randomBonusResult = random.nextInt(bonusBeans.size - 1) + 1
