@@ -12,6 +12,7 @@ import cn.xiaobaihome.xiaobaihelper.BR
 import cn.xiaobaihome.xiaobaihelper.R
 import androidx.databinding.BindingAdapter
 import cn.xiaobaihome.xiaobaihelper.entity.VideoHistoryItem
+import cn.xiaobaihome.xiaobaihelper.helper.addVideoHistory
 import cn.xiaobaihome.xiaobaihelper.mvvm.view.activity.video.VideoWebViewActivity
 import cn.xiaobaihome.xiaobaihelper.widget.GlideRoundTransform
 import cn.xiaobaihome.xiaobaihelper.widget.RoundImageView
@@ -30,12 +31,15 @@ internal class VideoHistoryAdapter internal constructor(private var data: List<V
         } else {
             DataBindingUtil.getBinding(convertView)!!
         }
-        data[position].timeShow = parseDateTime(data[position].time)
-        binding.setVariable(BR.historyItem, data[position])
+        val videoHistoryItem = data[position]
+        videoHistoryItem.timeShow = parseDateTime(videoHistoryItem.time)
+        binding.setVariable(BR.historyItem, videoHistoryItem)
         binding.setVariable(BR.onclick, View.OnClickListener {
+            videoHistoryItem.time = Date().time
+            addVideoHistory(context!!,videoHistoryItem)
             val intent = Intent(context, VideoWebViewActivity::class.java)
-            intent.putExtra("url", data[position].url)
-            context?.startActivity(intent)
+            intent.putExtra("url", videoHistoryItem.url)
+            context.startActivity(intent)
         })
         return binding.root
     }
@@ -70,18 +74,24 @@ internal class VideoHistoryAdapter internal constructor(private var data: List<V
         val dayC = diffValue / day
         val hourC = diffValue / hour
         val minC = diffValue / minute
-        if (dayC > 30) {
-            result = SimpleDateFormat("yyyy-MM-dd", Locale.CHINA).format(calendar.timeInMillis)
-        } else if (dayC > 1) {
-            result = "$dayC 天前"
-        } else if (dayC == 1L) {
-            result = "昨天"
-        } else if (hourC >= 1) {
-            result = "$hourC 小时前"
-        } else if (minC >= 5) {
-            result = "$minC 分钟前"
-        } else
-            result = "刚刚"
+        result = when {
+            dayC > 30 -> {
+                SimpleDateFormat("yyyy-MM-dd", Locale.CHINA).format(calendar.timeInMillis)
+            }
+            dayC > 1 -> {
+                "$dayC 天前"
+            }
+            dayC == 1L -> {
+                "昨天"
+            }
+            hourC >= 1 -> {
+                "$hourC 小时前"
+            }
+            minC >= 5 -> {
+                "$minC 分钟前"
+            }
+            else -> "刚刚"
+        }
         return result
 
     }

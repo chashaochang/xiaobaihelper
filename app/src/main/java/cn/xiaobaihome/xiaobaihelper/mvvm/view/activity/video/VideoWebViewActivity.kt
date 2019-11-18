@@ -9,6 +9,7 @@ import cn.xiaobaihome.xiaobaihelper.R
 import cn.xiaobaihome.xiaobaihelper.base.BaseActivity
 import cn.xiaobaihome.xiaobaihelper.databinding.ActivityVideoWebviewBinding
 import cn.xiaobaihome.xiaobaihelper.entity.VideoHistoryItem
+import cn.xiaobaihome.xiaobaihelper.helper.addVideoHistory
 import cn.xiaobaihome.xiaobaihelper.helper.extens.toast
 import cn.xiaobaihome.xiaobaihelper.helper.getData
 import cn.xiaobaihome.xiaobaihelper.helper.saveData
@@ -194,23 +195,7 @@ class VideoWebViewActivity : BaseActivity<ActivityVideoWebviewBinding>() {
     }
 
     private fun addHistory(title: String, url: String, coverImg: String) {
-        val historyListStr = getData(this, "video_history")
-        val historyList: MutableList<VideoHistoryItem>
-        historyList = if (historyListStr.isEmpty()) {
-            ArrayList()
-        } else {
-            Gson().fromJson(historyListStr, object : TypeToken<MutableList<VideoHistoryItem>>() {}.type)
-        }
-        historyList.forEach {
-            if(it.coverImg == coverImg){
-                historyList.remove(it)
-            }
-        }
-        if (historyList.size > 19) {//已经有20个,移除第一个
-            historyList.removeAt(0)
-        }
-        historyList.add(VideoHistoryItem(title, url, coverImg, Date().time,""))
-        saveData(this, "video_history", Gson().toJson(historyList))
+        addVideoHistory(this,VideoHistoryItem(title, url, coverImg, Date().time,""))
     }
 
     private fun getValueByName(url: String, name: String): String {

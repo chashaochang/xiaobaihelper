@@ -13,6 +13,8 @@ import androidx.annotation.NonNull;
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.security.MessageDigest;
 
 public class GlideRoundTransform extends BitmapTransformation {
@@ -24,10 +26,10 @@ public class GlideRoundTransform extends BitmapTransformation {
     }
 
     public GlideRoundTransform(Context context, int dp) {
-        this.radius = Resources.getSystem().getDisplayMetrics().density * dp;
+        radius = Resources.getSystem().getDisplayMetrics().density * dp;
     }
 
-    @Override protected Bitmap transform(BitmapPool pool, Bitmap toTransform, int outWidth, int outHeight) {
+    @Override protected Bitmap transform(@NotNull BitmapPool pool, @NotNull Bitmap toTransform, int outWidth, int outHeight) {
         return roundCrop(pool, toTransform);
     }
 
@@ -35,9 +37,6 @@ public class GlideRoundTransform extends BitmapTransformation {
         if (source == null) return null;
 
         Bitmap result = pool.get(source.getWidth(), source.getHeight(), Bitmap.Config.ARGB_8888);
-        if (result == null) {
-            result = Bitmap.createBitmap(source.getWidth(), source.getHeight(), Bitmap.Config.ARGB_8888);
-        }
 
         Canvas canvas = new Canvas(result);
         Paint paint = new Paint();
