@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="iconzuojiantou">&#xe648;</string>
-    <string name="iconguanbi">&#xe649;</string>
+    <string name="iconzuojiantou">&#xe72b;</string>
+    <string name="iconguanbi">&#xe72d;</string>
     <string name="iconkejian">&#xe72f;</string>
     <string name="iconyincang">&#xe64a;</string>
+    <string name="iconsaoyisao">&#xe72e;</string>
 </resources>

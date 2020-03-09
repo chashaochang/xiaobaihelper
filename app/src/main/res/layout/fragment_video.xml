@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/main_bg_color">
+        android:background="@color/main_bg_color">
 
         <ScrollView
             android:id="@+id/video_fragment_scrollView"
@@ -22,16 +22,16 @@
                 <cn.xiaobaihome.xiaobaihelper.widget.StatusBarHeightView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="?attr/main_bg_color" />
+                    android:background="@color/main_bg_color" />
 
                 <TextView
                     android:layout_width="120dp"
-                    android:layout_height="32dp"
+                    android:layout_height="50dp"
                     android:layout_marginStart="15dp"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="@dimen/actionBarHeight"
                     android:gravity="center_vertical"
                     android:text="@string/video"
-                    android:textColor="?attr/main_text_color"
+                    android:textColor="@color/main_text_color"
                     android:textSize="28sp"
                     android:textStyle="bold" />
 
@@ -39,7 +39,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginStart="15dp"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:text="@string/vip_area" />
 
@@ -47,15 +47,11 @@
                     android:id="@+id/video_fragment_gridview"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="25dp"
-                    android:layout_marginStart="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginBottom="20dp"
-                    android:elevation="10dp"
-                    android:background="@drawable/bg_list_white"
-                    android:horizontalSpacing="10dp"
                     android:numColumns="4"
-                    android:padding="15dp" />
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:verticalSpacing="10dp"
+                    tools:ignore="NestedScrolling" />
 
                 <TextView
                     android:layout_width="100dp"
@@ -63,7 +59,7 @@
                     android:layout_marginStart="15dp"
                     android:gravity="center|start"
                     android:text="@string/video_history"
-                    android:textColor="?attr/main_text_color"
+                    android:textColor="@color/main_text_color"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -71,11 +67,8 @@
                     android:id="@+id/video_fragment_history_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingStart="15dp"
-                    android:paddingEnd="15dp"
-                    android:paddingBottom="20dp"
                     android:divider="@color/transparent"
-                    android:dividerHeight="15dp"/>
+                    android:dividerHeight="0dp"/>
 
             </LinearLayout>
 
@@ -84,11 +77,11 @@
         <TextView
             android:id="@+id/video_fragment_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="?attr/main_bg_color"
+            android:layout_height="@dimen/actionBarHeight"
+            android:background="@color/main_bg_color"
             android:gravity="center"
-            android:textColor="?attr/main_text_color"
-            android:textSize="14sp"
+            android:textColor="@color/main_text_color"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintTop_toBottomOf="@+id/video_fragment_statusBarView" />
 
@@ -96,7 +89,7 @@
             android:id="@+id/video_fragment_statusBarView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/main_bg_color"
+            android:background="@color/main_bg_color"
             app:layout_constraintTop_toTopOf="parent"
             app:use_type="use_padding_top" />
 

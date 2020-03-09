@@ -85,13 +85,13 @@ class VideoWebViewActivity : BaseActivity<ActivityVideoWebviewBinding>() {
 
             override fun onPageFinished(p0: WebView?, p1: String?) {
                 super.onPageFinished(p0, p1)
-                if(p1.toString().contains("m.iqiyi.com/v_")){//爱奇艺
+                if (p1.toString().contains("m.iqiyi.com/v_")) {//爱奇艺
                     binding.videoWebviewActivityWebview.loadUrl("javascript:window.xbBridge.getCoverImg(document.getElementById(\"player-posterimg\").src)")
-                }else if(p1.toString().contains("//m.v.qq.com")){
+                } else if (p1.toString().contains("//m.v.qq.com")) {
                     binding.videoWebviewActivityWebview.loadUrl("javascript:window.xbBridge.getCoverImg(document.getElementsByClassName(\"poster_pic\")[0].src)")
-                }else if(p1.toString().contains("//m.youku.com")){
+                } else if (p1.toString().contains("//m.youku.com")) {
                     binding.videoWebviewActivityWebview.loadUrl("javascript:window.xbBridge.getCoverImg(document.getElementsByClassName(\"x-video-poster\")[0].firstChild.src)")
-                }else if(p1.toString().contains("//m.bilibili.com")){
+                } else if (p1.toString().contains("//m.bilibili.com")) {
                     binding.videoWebviewActivityWebview.loadUrl("javascript:window.xbBridge.getCoverImg(document.getElementsByClassName(\"player-mask relative\")[0].firstChild.src)")
                 }
             }
@@ -121,6 +121,20 @@ class VideoWebViewActivity : BaseActivity<ActivityVideoWebviewBinding>() {
             val txurl = feurl.substring(0, 22)
             val vid = getValueByName(url, "vid")
             if (txurl.contains("//m.v.qq.com") && (txurl.contains("/cover/") || txurl.contains("play.html"))) {
+                binding.videoWebviewActivityPlayBtn.visibility = View.VISIBLE
+                val txdata2 = url.split("\\?".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                var cid = getValueByName(url, "cid")
+                if (cid.isEmpty()) {
+                    cid = txdata2[0].substring(txdata2[0].length - 20, txdata2[0].length - 5)
+                }
+                playUrl = if (vid.length == 11) {
+                    "https://v.qq.com/x/cover/$cid/$vid.html"
+                } else {
+                    "https://v.qq.com/x/cover/$cid.html"
+                }
+            }
+            //https://m.v.qq.com/x/m/play?cid=m441e3rjq9kwpsc&vid=n0033turevc&ref_pg=page_video_detail
+            if (txurl.contains("//m.v.qq.com") && (txurl.contains("/x/m/") || txurl.contains("play?"))) {
                 binding.videoWebviewActivityPlayBtn.visibility = View.VISIBLE
                 val txdata2 = url.split("\\?".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
                 var cid = getValueByName(url, "cid")
@@ -195,7 +209,7 @@ class VideoWebViewActivity : BaseActivity<ActivityVideoWebviewBinding>() {
     }
 
     private fun addHistory(title: String, url: String, coverImg: String) {
-        addVideoHistory(this,VideoHistoryItem(title, url, coverImg, Date().time,""))
+        addVideoHistory(this, VideoHistoryItem(title, url, coverImg, Date().time, ""))
     }
 
     private fun getValueByName(url: String, name: String): String {

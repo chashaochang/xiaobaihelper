@@ -9,7 +9,7 @@
     <!-- 主体背景颜色值 -->
     <item android:bottom="1dp">
         <shape>
-            <solid android:color="?attr/main_bg_color" />
+            <solid android:color="@color/main_bg_color" />
         </shape>
     </item>
 </layer-list>

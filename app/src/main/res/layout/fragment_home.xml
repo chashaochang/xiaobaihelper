@@ -6,7 +6,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="?attr/main_bg_color">
+        android:background="@color/main_bg_color">
 
         <ScrollView
             android:id="@+id/home_fragment_scrollView"
@@ -22,16 +22,16 @@
                 <cn.xiaobaihome.xiaobaihelper.widget.StatusBarHeightView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="?attr/main_bg_color" />
+                    android:background="@color/main_bg_color" />
 
                 <TextView
                     android:layout_width="120dp"
-                    android:layout_height="32dp"
+                    android:layout_height="50dp"
                     android:layout_marginStart="15dp"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="48dp"
                     android:gravity="center_vertical"
                     android:text="@string/app_name"
-                    android:textColor="?attr/main_text_color"
+                    android:textColor="@color/main_text_color"
                     android:textSize="28sp"
                     android:textStyle="bold" />
 
@@ -39,46 +39,54 @@
                     android:id="@+id/home_fragment_gridView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:numColumns="5"
-                    android:padding="10dp"
-                    android:verticalSpacing="10dp" />
+                    android:numColumns="4"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="15dp"
+                    android:verticalSpacing="5dp"
+                    tools:ignore="NestedScrolling" />
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp">
-
-                    <TextView
-                        android:layout_width="100dp"
-                        android:layout_height="50dp"
-                        android:layout_marginStart="15dp"
-                        android:gravity="center|start"
-                        android:text="@string/news"
-                        android:textColor="?attr/main_text_color"
-                        android:textSize="20sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="40dp"
-                        android:layout_height="50dp"
-                        android:layout_alignParentEnd="true"
-                        android:layout_marginEnd="15dp"
-                        android:gravity="center|end"
-                        android:text="@string/more"
-                        android:textColor="?attr/main_gray_color"
-                        android:textSize="14sp"
-                        android:visibility="gone"/>
-                </RelativeLayout>
-
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/home_fragment_recyclerView"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:scrollbarStyle="outsideOverlay"
-                    android:scrollbars="vertical"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                    tools:listitem="@layout/item_news" />
+                    android:orientation="vertical">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp">
+
+                        <TextView
+                            android:layout_width="100dp"
+                            android:layout_height="50dp"
+                            android:layout_marginStart="15dp"
+                            android:gravity="center|start"
+                            android:text="@string/news"
+                            android:textColor="@color/main_text_color"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="40dp"
+                            android:layout_height="50dp"
+                            android:layout_alignParentEnd="true"
+                            android:layout_marginEnd="15dp"
+                            android:gravity="center|end"
+                            android:text="@string/more"
+                            android:textColor="@color/main_gray_color"
+                            android:textSize="14sp"
+                            android:visibility="gone" />
+                    </RelativeLayout>
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/home_fragment_recyclerView"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:scrollbarStyle="outsideOverlay"
+                        android:scrollbars="vertical"
+                        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                        tools:listitem="@layout/item_news" />
+
+                </LinearLayout>
 
             </LinearLayout>
         </ScrollView>
@@ -87,20 +95,44 @@
             android:id="@+id/home_fragment_statusBarView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/main_bg_color"
-            app:use_type="use_padding_top"
-            app:layout_constraintTop_toTopOf="parent"/>
+            android:background="@color/main_bg_color"
+            app:layout_constraintTop_toTopOf="parent"
+            app:use_type="use_padding_top" />
 
-        <TextView
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/home_fragment_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:background="?attr/main_bg_color"
-            android:gravity="center"
-            android:textColor="?attr/main_text_color"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/home_fragment_statusBarView"/>
+            android:layout_height="@dimen/actionBarHeight"
+            android:background="@color/main_bg_color"
+            app:layout_constraintTop_toBottomOf="@+id/home_fragment_statusBarView">
+
+            <TextView
+                android:id="@+id/home_fragment_toolbar_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@color/main_bg_color"
+                android:gravity="center"
+                android:textColor="@color/main_text_color"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/home_fragment_toolbar_scan"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="15dp"
+                android:background="@color/main_bg_color"
+                android:gravity="center"
+                android:textColor="@color/main_text_color"
+                android:fontFamily="@font/iconfont"
+                android:text="@string/iconsaoyisao"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

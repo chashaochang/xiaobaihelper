@@ -176,7 +176,7 @@ fun Fragment.navigateToWebPage(@NonNull url: String?) {
                 .setToolbarColor(ContextCompat.getColor(it, R.color.colorPrimary))
                 .build()
 
-        intent.launchUrl(activity, Uri.parse(url))
+        activity?.let { it1 -> intent.launchUrl(it1, Uri.parse(url)) }
     }
 }
 

@@ -16,22 +16,22 @@
         <cn.xiaobaihome.xiaobaihelper.widget.StatusBarHeightView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/main_bg_color" />
+            android:background="@color/main_bg_color" />
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/play_activity_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="@dimen/actionBarHeight"
             app:titleTextColor="@color/black"
-            android:background="?attr/main_bg_color"
-            app:navigationIcon="?attr/main_back_icon"
+            android:background="@color/main_bg_color"
+            app:navigationIcon="@mipmap/back"
             app:contentInsetStartWithNavigation="0dp"
             tools:ignore="PrivateResource">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="?attr/main_bg_color">
+                android:layout_height="@dimen/actionBarHeight"
+                android:background="@color/main_bg_color">
 
                 <TextView
                     android:id="@+id/play_activity_title"
@@ -39,7 +39,7 @@
                     android:layout_height="match_parent"
                     android:gravity="start|center_vertical"
                     android:text="@string/app_name"
-                    android:textColor="?attr/main_text_color"
+                    android:textColor="@color/main_text_color"
                     android:textStyle="bold"
                     android:singleLine="true"
                     android:ellipsize="end"
@@ -53,7 +53,7 @@
                     android:layout_marginEnd="15dp"
                     android:gravity="center"
                     android:text="@string/change_jx"
-                    android:textColor="?attr/main_text_color"
+                    android:textColor="@color/main_text_color"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     tools:ignore="RelativeOverlap" />

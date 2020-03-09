@@ -17,23 +17,23 @@
         <cn.xiaobaihome.xiaobaihelper.widget.StatusBarHeightView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?attr/main_bg_color" />
+            android:background="@color/main_bg_color" />
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/video_webview_activity_toolbar"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="@dimen/actionBarHeight"
             app:titleTextColor="@color/black"
-            android:background="?attr/main_bg_color"
-            app:navigationIcon="?attr/main_back_icon"
+            android:background="@color/main_bg_color"
+            app:navigationIcon="@mipmap/back"
             app:contentInsetStartWithNavigation="0dp"
             tools:ignore="PrivateResource" >
 
             <RelativeLayout
                 android:id="@+id/video_webview_activity_toolbar_content"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:background="?attr/main_bg_color">
+                android:layout_height="@dimen/actionBarHeight"
+                android:background="@color/main_bg_color">
 
                 <!--<TextView-->
                     <!--android:id="@+id/video_webview_activity_backBtn"-->
@@ -56,7 +56,7 @@
                     android:fontFamily="@font/iconfont"
                     android:gravity="center"
                     android:text="@string/iconguanbi"
-                    android:textColor="?attr/main_text_color"
+                    android:textColor="@color/main_text_color"
                     android:textSize="16sp"
                     android:textStyle="bold"
                     android:visibility="gone" />
@@ -67,12 +67,11 @@
                     android:layout_height="match_parent"
                     android:gravity="start|center_vertical"
                     android:layout_marginStart="40dp"
-                    android:textColor="?attr/main_text_color"
+                    android:textColor="@color/main_text_color"
                     android:textStyle="bold"
                     android:singleLine="true"
                     android:ellipsize="end"
-                    android:textSize="16sp"
-                    />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/video_webview_activity_playBtn"
@@ -82,7 +81,7 @@
                     android:layout_marginEnd="15dp"
                     android:gravity="center"
                     android:text="@string/play"
-                    android:textColor="?attr/main_text_color"
+                    android:textColor="@color/main_text_color"
                     android:textSize="14sp"
                     android:textStyle="bold"
                     android:visibility="gone" />

@@ -1,9 +1,13 @@
 package cn.xiaobaihome.xiaobaihelper.mvvm.view.fragment.home
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.content.DialogInterface
 import android.content.Intent
+import android.os.Bundle
 import android.view.View
 import android.widget.AdapterView
+import androidx.compose.Composable
 import androidx.core.content.ContextCompat
 import androidx.databinding.ObservableArrayList
 import cn.xiaobaihome.xiaobaihelper.R
@@ -21,10 +25,22 @@ import cn.xiaobaihome.xiaobaihelper.mvvm.view.fragment.home.viewmodel.NewItemVie
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 import androidx.recyclerview.widget.LinearLayoutManager
-import cn.xiaobaihome.xiaobaihelper.base.BaseActivity
 import cn.xiaobaihome.xiaobaihelper.mvvm.view.activity.guidance.GuidanceActivity
+import cn.xiaobaihome.xiaobaihelper.mvvm.view.activity.schedule.ScheduleActivity
+import com.google.zxing.client.android.CaptureActivity
+import com.tbruyelle.rxpermissions2.RxPermissions
+import io.reactivex.disposables.CompositeDisposable
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), ItemClickPresenter<NewItemViewModel> {
+
+    private var rxPermissions: RxPermissions? = null
+    var compositeDisposable: CompositeDisposable? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        rxPermissions = RxPermissions(this)
+        compositeDisposable = CompositeDisposable()
+    }
 
     override fun onItemClick(v: View?, item: NewItemViewModel) {
         val intent = Intent()
@@ -46,14 +62,17 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ItemClickPresenter<New
     override fun initView() {
         binding.homeFragmentScrollView.setOnScrollChangeListener { _, _, _, _, p4 ->
             if (p4 <= 100) {
-                binding.homeFragmentToolbar.text = ""
-                val array = activity?.theme?.obtainStyledAttributes(intArrayOf(R.attr.main_bg_color))
+                binding.homeFragmentToolbarTitle.text = ""
+                val array = activity?.theme?.obtainStyledAttributes(intArrayOf(R.color.main_bg_color))
                 val bgColor = array?.getColor(0, 0xffffff)
                 bgColor?.let { binding.homeFragmentToolbar.setBackgroundColor(it) }
             } else {
-                binding.homeFragmentToolbar.text = "小白助手"
+                binding.homeFragmentToolbarTitle.text = "小白助手"
                 binding.homeFragmentToolbar.background = context?.let { ContextCompat.getDrawable(it, R.drawable.cell_border_bottom_ed) }
             }
+        }
+        binding.homeFragmentToolbarScan.setOnClickListener {
+
         }
         lazyLoad = true
         binding.vm = homeViewModel
@@ -66,20 +85,25 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ItemClickPresenter<New
         binding.homeFragmentRecyclerView.layoutManager = linearLayoutManager
 
         val list = ArrayList<Shortcut>()
-        val isDark = context?.let { (activity as BaseActivity<*>).getDarkModeStatus(it) }
-        val shortcutVideo = Shortcut(if (isDark!!) R.mipmap.video_dark else R.mipmap.video, "影视", "video")
-        val shortcutFood = Shortcut(if (isDark) R.mipmap.food_dark else R.mipmap.food, "美食", "food")
+
+        val shortcutVideo = Shortcut(R.mipmap.video, "影视", "video")
+        val shortcutFood = Shortcut(R.mipmap.food, "美食", "food")
+        val shortcutSchedule = Shortcut(R.mipmap.schedule, "日程", "schedule")
         list.add(shortcutVideo)
         list.add(shortcutFood)
+        list.add(shortcutSchedule)
         binding.homeFragmentGridView.adapter = HomeGridViewAdapter(list)
         binding.homeFragmentGridView.onItemClickListener = AdapterView.OnItemClickListener { _, _, p2, _ ->
             when (p2) {
                 0 -> {
                     val guidanceActivity = activity as GuidanceActivity
-                    guidanceActivity.changeBottomIndex(1)
+                    guidanceActivity.changeBottomIndex(2)
                 }
                 1 -> {
-                    startActivity(Intent(context, FoodActivity::class.java))
+                    requestMapPermission()
+                }
+                2 -> {
+                    startActivity(Intent(context, ScheduleActivity::class.java))
                 }
             }
         }
@@ -94,7 +118,39 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ItemClickPresenter<New
                 }, {
                     toastFailure(it)
                 })
+        binding.homeFragmentToolbarScan.setOnClickListener {
+            requestCameraPermission()
+        }
+    }
 
+    @SuppressLint("AutoDispose", "CheckResult")
+    fun requestCameraPermission() {
+        rxPermissions = activity?.let { it1 -> RxPermissions(it1) }
+        val a = rxPermissions?.request(Manifest.permission.CAMERA)
+                ?.subscribe {
+                    // will emit 1 Permission object
+                    if (it) {
+                        startActivity(Intent(context, CaptureActivity::class.java))
+                    } else {
+                        alert("扫码需要开启相机权限", "确定", DialogInterface.OnClickListener { _, _ -> requestCameraPermission() })
+                    }
+                }
+        compositeDisposable?.add(a!!)
+    }
+
+    @SuppressLint("AutoDispose", "CheckResult")
+    fun requestMapPermission() {
+        rxPermissions = activity?.let { it1 -> RxPermissions(it1) }
+        val a = rxPermissions?.request(Manifest.permission.ACCESS_COARSE_LOCATION)
+                ?.subscribe {
+                    // will emit 1 Permission object
+                    if (it) {
+                        startActivity(Intent(context, FoodActivity::class.java))
+                    } else {
+                        alert("需要开启位置权限", "确定", DialogInterface.OnClickListener { _, _ -> requestMapPermission() })
+                    }
+                }
+        compositeDisposable?.add(a!!)
     }
 
     override fun getLayoutId(): Int = R.layout.fragment_home
@@ -124,6 +180,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), ItemClickPresenter<New
         }
         hasLoadOnce = true
         loadData(true)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable?.dispose()
     }
 
 }

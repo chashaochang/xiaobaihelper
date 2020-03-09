@@ -17,56 +17,67 @@
             type="OnClickListener" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/video_history_item_container"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_card_gray_corner"
         android:onClick="@{onclick}">
 
-        <cn.xiaobaihome.xiaobaihelper.widget.RoundImageView
-            android:id="@+id/video_history_item_img"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:scaleType="centerCrop"
-            android:src="@{historyItem.coverImg}"
-            app:layout_constraintDimensionRatio="w,3:4"
-            app:layout_constraintEnd_toStartOf="@+id/video_history_item_title"
-            app:layout_constraintHorizontal_weight="2"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:radius="15dp" />
-
-        <TextView
-            android:id="@+id/video_history_item_title"
-            android:layout_width="0dp"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/video_history_item_container"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="5dp"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:text="@{historyItem.title}"
-            android:textColor="?attr/main_text_color"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_weight="3"
-            app:layout_constraintStart_toEndOf="@+id/video_history_item_img"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:background="@drawable/bg_card_gray_corner"
+            android:orientation="vertical"
+            android:elevation="1dp"
+            android:layout_marginTop="7.5dp"
+            android:layout_marginBottom="7.5dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp">
 
-        <TextView
-            android:id="@+id/video_history_item_time"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginBottom="5dp"
-            android:ellipsize="end"
-            android:gravity="center"
-            android:singleLine="true"
-            android:text="@{historyItem.timeShow}"
-            android:textColor="?attr/main_gray_color"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/video_history_item_img" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <cn.xiaobaihome.xiaobaihelper.widget.RoundImageView
+                android:id="@+id/video_history_item_img"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
+                android:src="@{historyItem.coverImg}"
+                app:layout_constraintDimensionRatio="w,3:4"
+                app:layout_constraintEnd_toStartOf="@+id/video_history_item_title"
+                app:layout_constraintHorizontal_weight="2"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:radius="10dp" />
+
+            <TextView
+                android:id="@+id/video_history_item_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="5dp"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:text="@{historyItem.title}"
+                android:textColor="@color/main_text_color"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_weight="3"
+                app:layout_constraintStart_toEndOf="@+id/video_history_item_img"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/video_history_item_time"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="5dp"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="@{historyItem.timeShow}"
+                android:textColor="@color/main_gray_color"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/video_history_item_img" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </FrameLayout>
 </layout>

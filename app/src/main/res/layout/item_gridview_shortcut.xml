@@ -17,23 +17,32 @@
             type="OnClickListener" />
     </data>
 
-    <LinearLayout
-        android:id="@+id/shortcut_item_gridview_container"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="@{onclick}"
-        android:gravity="center"
-        android:orientation="vertical">
+        android:layout_height="wrap_content">
 
-        <cn.xiaobaihome.xiaobaihelper.widget.RoundImageView
-            android:id="@+id/shortcut_item_gridview_img"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:adjustViewBounds="true"
-            android:src="@{shortcut.imgResId}"
-            android:elevation="5dp"
-            android:background="@color/transparent"
-            app:radius="10dp" />
+        <LinearLayout
+            android:id="@+id/shortcut_item_gridview_container"
+            android:onClick="@{onclick}"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/bg_card_gray_corner"
+            android:gravity="center"
+            android:elevation="3dp"
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <cn.xiaobaihome.xiaobaihelper.widget.RoundImageView
+                android:id="@+id/shortcut_item_gridview_img"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:adjustViewBounds="true"
+                android:background="@color/transparent"
+                android:elevation="5dp"
+                android:src="@{shortcut.imgResId}"
+                app:radius="10dp" />
+
+        </LinearLayout>
+
+    </FrameLayout>
 </layout>

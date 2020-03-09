@@ -5,7 +5,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:background="?attr/main_bg_color">
+        android:background="@color/main_bg_color">
 
         <FrameLayout
             android:id="@+id/guidance_activity_FrameLayout"
@@ -17,24 +17,28 @@
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:layout_gravity="bottom"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
             android:gravity="center_vertical"
             android:elevation="10dp"
             android:clickable="true"
             android:focusable="true"
-            android:background="?attr/main_bg_color">
+            android:background="@color/main_bg_color"
+            android:baselineAligned="false">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="40dp"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
+                android:layout_weight="1"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:gravity="center">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:paddingStart="20dp"
-                    android:paddingEnd="20dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
                     android:text="@string/home"
                     android:gravity="center"
                     android:textColor="@color/colorPrimary"
@@ -49,19 +53,19 @@
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:gravity="center">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:paddingStart="20dp"
-                    android:paddingEnd="20dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
                     android:gravity="center"
                     android:textColor="@color/colorPrimary"
                     android:textSize="12sp"
-                    android:drawableStart="@mipmap/movie_unchecked" />
+                    android:drawableStart="@mipmap/todo_unchecked" />
 
             </LinearLayout>
 
@@ -69,19 +73,19 @@
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:layout_weight="1"
-                android:paddingStart="15dp"
-                android:paddingEnd="15dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:gravity="center">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:paddingStart="20dp"
-                    android:paddingEnd="20dp"
+                    android:paddingStart="15dp"
+                    android:paddingEnd="15dp"
                     android:gravity="center"
                     android:textColor="@color/colorPrimary"
                     android:textSize="12sp"
-                    android:drawableStart="@mipmap/mine_unchecked" />
+                    android:drawableStart="@mipmap/movie_unchecked" />
 
             </LinearLayout>
 
