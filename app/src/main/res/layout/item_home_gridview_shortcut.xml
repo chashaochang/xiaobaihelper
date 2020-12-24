@@ -1,42 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:descendantFocusability="blocksDescendants">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_home_gridview_shortcut_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:descendantFocusability="blocksDescendants"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="10dp">
 
-    <data>
+    <ImageView
+        android:id="@+id/item_home_gridview_shortcut_img"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:adjustViewBounds="true" />
 
-        <import type="cn.xiaobaihome.xiaobaihelper.entity.Shortcut" />
-
-        <import type="android.view.View.OnClickListener" />
-
-        <variable
-            name="shortcut"
-            type="cn.xiaobaihome.xiaobaihelper.entity.Shortcut" />
-    </data>
-
-    <LinearLayout
-        android:id="@+id/item_home_gridview_shortcut_container"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/item_home_gridview_shortcut_text"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="10dp"
         android:gravity="center"
-        android:orientation="vertical">
+        android:textColor="@color/main_text_color"
+        android:textSize="13sp" />
 
-        <ImageView
-            android:id="@+id/item_home_gridview_shortcut_img"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:adjustViewBounds="true"
-            android:src="@{shortcut.imgResId}"
-            tools:ignore="ContentDescription" />
-
-        <TextView
-            android:id="@+id/item_home_gridview_shortcut_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@{shortcut.title}"
-            android:textColor="@color/main_text_color"
-            android:textSize="13sp" />
-    </LinearLayout>
-</layout>
+</LinearLayout>

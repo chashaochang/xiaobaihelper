@@ -1,110 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-    <FrameLayout
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/activity_food_mapview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true" />
 
-        <com.baidu.mapapi.map.MapView
-            android:id="@+id/activity_food_mapview"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_gravity="bottom"
+        android:background="@drawable/bg_map_food_bottom"
+        android:clickable="true"
+        android:elevation="10dp"
+        android:focusable="true"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="40dp"
+            android:layout_height="5dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:background="@drawable/bg_line_pull_top"
+            android:visibility="invisible" />
+
+        <ListView
+            android:id="@+id/activity_food_listview"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clickable="true"
-            android:focusable="true" />
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/main_bg_color"
+            android:divider="@color/transparent"
+            android:dividerHeight="0dp"
+            tools:ignore="NestedWeights" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="500dp"
-            android:layout_gravity="bottom"
-            android:background="@drawable/bg_map_food_bottom"
-            android:elevation="10dp"
-            android:orientation="vertical"
-            android:clickable="true"
-            android:focusable="true">
+    </LinearLayout>
 
-            <View
-                android:layout_width="40dp"
-                android:layout_height="5dp"
-                android:layout_gravity="center"
-                android:layout_margin="10dp"
-                android:background="@drawable/bg_line_pull_top"
-                android:visibility="invisible"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-            <ListView
-                android:id="@+id/activity_food_listview"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:divider="@color/transparent"
-                android:dividerHeight="0dp"
-                android:background="@color/main_bg_color"
-                tools:ignore="NestedWeights" />
-
-        </LinearLayout>
-
-        <LinearLayout
+        <cn.xiaobaihome.xiaobaihelper.ui.widget.StatusBarHeightView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:background="@color/transparent" />
 
-            <cn.xiaobaihome.xiaobaihelper.widget.StatusBarHeightView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/transparent" />
+        <RelativeLayout
+            android:id="@+id/activity_food_toolbar_content"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/actionBarHeight"
+            android:layout_gravity="center_vertical">
 
-            <RelativeLayout
-                android:id="@+id/activity_food_toolbar_content"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/actionBarHeight"
-                android:layout_gravity="center_vertical">
+            <TextView
+                android:id="@+id/activity_food_back"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="15dp"
+                android:background="@drawable/bg_btn_back"
+                android:fontFamily="@font/iconfont"
+                android:gravity="center"
+                android:text="@string/iconzuojiantou"
+                android:textColor="@color/main_text_color"
+                android:textSize="16sp" />
 
-                <ImageView
-                    android:id="@+id/activity_food_back"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="15dp"
-                    android:background="@drawable/bg_btn_back"
-                    android:src="@mipmap/back" />
+            <TextView
+                android:id="@+id/activity_food_title"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:background="@drawable/bg_btn_back"
+                android:ellipsize="end"
+                android:gravity="start|center_vertical"
+                android:paddingStart="15dp"
+                android:paddingEnd="15dp"
+                android:singleLine="true"
+                android:text="@string/nearby_foods"
+                android:textColor="@color/main_text_color"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/activity_food_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:layout_centerInParent="true"
-                    android:background="@drawable/bg_btn_back"
-                    android:ellipsize="end"
-                    android:gravity="start|center_vertical"
-                    android:paddingStart="15dp"
-                    android:paddingEnd="15dp"
-                    android:singleLine="true"
-                    android:text="@string/nearby_foods"
-                    android:textColor="@color/main_text_color"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+        </RelativeLayout>
 
-            </RelativeLayout>
+    </LinearLayout>
 
-        </LinearLayout>
+    <Button
+        android:id="@+id/activity_food_help_btn"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_gravity="bottom|center"
+        android:layout_margin="15dp"
+        android:background="@drawable/bg_btn_login"
+        android:elevation="11dp"
+        android:stateListAnimator="@null"
+        android:text="@string/choose_helper"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
 
-        <Button
-            android:id="@+id/activity_food_help_btn"
-            android:layout_width="200dp"
-            android:layout_height="40dp"
-            android:layout_gravity="bottom|center"
-            android:layout_margin="15dp"
-            android:background="@drawable/bg_btn_login"
-            android:elevation="11dp"
-            android:text="@string/choose_helper"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:stateListAnimator="@null"/>
-
-    </FrameLayout>
-
-    <data>
-
-
-    </data>
-</layout>
+</FrameLayout>

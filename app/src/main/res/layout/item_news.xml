@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+<!--<layout >-->
 
     <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="@{(v)->presenter.onItemClick(v,item)}">
@@ -19,7 +20,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginEnd="15dp">
 
-            <cn.xiaobaihome.xiaobaihelper.widget.RoundImageView
+            <cn.xiaobaihome.xiaobaihelper.ui.widget.RoundImageView
                 android:id="@+id/item_news_pic"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -29,9 +30,9 @@
                 app:layout_constraintHorizontal_weight="2"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:radius="10dp"
-                app:url="@{item.thumbnail_pic_s}"
-                tools:ignore="ContentDescription" />
+                app:radius="10dp"/>
+<!--                app:url="@{item.thumbnail_pic_s}"-->
+<!--                tools:ignore="ContentDescription" -->
 
             <TextView
                 android:id="@+id/item_news_title"
@@ -42,14 +43,14 @@
                 android:layout_marginEnd="10dp"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:text="@{item.title}"
                 android:textColor="@color/main_text_color"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_weight="3"
                 app:layout_constraintStart_toEndOf="@+id/item_news_pic"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"/>
+<!--                android:text="@{item.title}"-->
 
             <TextView
                 android:id="@+id/item_news_category"
@@ -57,11 +58,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginBottom="5dp"
-                android:text="@{item.category}"
                 android:textColor="@color/main_gray_color"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/item_news_pic" />
+<!--            android:text="@{item.category}"-->
 
             <TextView
                 android:id="@+id/item_news_author_name"
@@ -70,11 +71,11 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginEnd="10dp"
-                android:text="@{item.author_name.length()>9?item.author_name.substring(0,8)+@string/diandiandian:item.author_name}"
                 android:textColor="@color/main_gray_color"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/item_news_category" />
+<!--            android:text="@{item.author_name.length()>9?item.author_name.substring(0,8)+@string/diandiandian:item.author_name}"-->
 
             <TextView
                 android:id="@+id/item_news_date"
@@ -83,26 +84,26 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginEnd="10dp"
-                android:text="@{item.date}"
                 android:textColor="@color/main_gray_color"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
+<!--            android:text="@{item.date}"-->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </FrameLayout>
 
-    <data>
+<!--    <data>-->
 
-        <import type="android.view.View" />
+<!--        <import type="android.view.View" />-->
 
-        <variable
-            name="item"
-            type="cn.xiaobaihome.xiaobaihelper.mvvm.view.fragment.home.viewmodel.NewItemViewModel" />
+<!--        <variable-->
+<!--            name="item"-->
+<!--            type="cn.xiaobaihome.xiaobaihelper.mvvm.view.fragment.home.viewmodel.NewItemViewModel" />-->
 
-        <variable
-            name="presenter"
-            type="cn.xiaobaihome.xiaobaihelper.helper.adapter.recyclerview.ItemClickPresenter" />
+<!--        <variable-->
+<!--            name="presenter"-->
+<!--            type="cn.xiaobaihome.xiaobaihelper.helper.adapter.recyclerview.ItemClickPresenter" />-->
 
-    </data>
-</layout>
+<!--    </data>-->
+<!--</layout>-->

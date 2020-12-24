@@ -1,13 +1,14 @@
 package cn.xiaobaihome.xiaobaihelper.mvvm.view.activity.food
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.Bundle
+import android.os.PersistableBundle
 import cn.xiaobaihome.xiaobaihelper.R
-import cn.xiaobaihome.xiaobaihelper.adapter.FoodListAdapter
-import cn.xiaobaihome.xiaobaihelper.base.BaseActivity
+import cn.xiaobaihome.xiaobaihelper.ui.adapter.FoodListAdapter
 import cn.xiaobaihome.xiaobaihelper.databinding.ActivityFoodBinding
 import cn.xiaobaihome.xiaobaihelper.entity.MapFoodListItem
+import cn.xiaobaihome.xiaobaihelper.mvvm.base.BaseActivity
 import cn.xiaobaihome.xiaobaihelper.mvvm.view.activity.random.RandomActivity
 import com.baidu.location.BDLocation
 import com.baidu.location.BDAbstractLocationListener
@@ -16,30 +17,27 @@ import com.baidu.location.LocationClient
 import com.baidu.mapapi.map.*
 import com.baidu.mapapi.model.LatLng
 import com.baidu.mapapi.search.poi.*
-import com.tbruyelle.rxpermissions2.RxPermissions
 import com.baidu.mapapi.map.MarkerOptions
 import com.baidu.mapapi.map.BitmapDescriptorFactory
 import com.baidu.mapapi.search.core.PoiInfo
 import com.google.gson.Gson
 
-class FoodActivity : BaseActivity<ActivityFoodBinding>() {
+class FoodActivity : BaseActivity() {
 
     private var mapView: MapView? = null
     private var baiduMap: BaiduMap? = null
     private var locationClient: LocationClient? = null
-    private var rxPermission: RxPermissions? = null
     private var poiSearch: PoiSearch? = null
     private var foodListAdapter: FoodListAdapter? = null
     private var foodList: MutableList<MapFoodListItem> = ArrayList()
     private var markerList: MutableList<Marker> = ArrayList()
     private var selectMarker: Int = -1
+    lateinit var binding : ActivityFoodBinding
 
-    override fun getLayoutId(): Int {
-        return R.layout.activity_food
-    }
-
-
-    override fun initView() {
+    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        super.onCreate(savedInstanceState, persistentState)
+        binding = ActivityFoodBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         checkPermission()
         initMapView()
         initListView()
@@ -76,7 +74,7 @@ class FoodActivity : BaseActivity<ActivityFoodBinding>() {
     }
 
     private fun initMapView() {
-        mapView = binding.activityFoodMapview
+//        mapView = binding.activityFoodMapview
 
         // 不显示地图缩放控件（按钮控制栏）
         mapView?.showZoomControls(false)
@@ -159,10 +157,10 @@ class FoodActivity : BaseActivity<ActivityFoodBinding>() {
 
     @SuppressLint("AutoDispose", "CheckResult")
     private fun checkPermission() {
-        rxPermission = RxPermissions(this)
-        rxPermission!!
-                .requestEach(Manifest.permission.ACCESS_FINE_LOCATION)
-                .subscribe { permission ->
+//        rxPermission = RxPermissions(this)
+//        rxPermission!!
+//                .requestEach(Manifest.permission.ACCESS_FINE_LOCATION)
+//                .subscribe { permission ->
 //                    if (permission.granted) {
 //                        // `permission.name` is granted !
 //                    } else if (permission.shouldShowRequestPermissionRationale) {
@@ -171,7 +169,7 @@ class FoodActivity : BaseActivity<ActivityFoodBinding>() {
 //                        // Denied permission with ask never again
 //                        // Need to go to the settings
 //                    }
-                }
+//                }
     }
 
     private fun addMarkers(poiInfos: MutableList<PoiInfo>) {

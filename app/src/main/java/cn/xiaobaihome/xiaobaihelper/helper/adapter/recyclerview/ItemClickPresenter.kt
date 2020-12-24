@@ -1,7 +1,6 @@
 package cn.xiaobaihome.xiaobaihelper.helper.adapter.recyclerview
 
 import android.view.View
-import androidx.databinding.ViewDataBinding
 
 
 /**
@@ -14,7 +13,7 @@ interface  ItemClickPresenter<in Any> {
 }
 
 interface ItemDecorator{
-    fun decorator(holder: BindingViewHolder<ViewDataBinding>?, position: Int, viewType: Int)
+//    fun decorator(holder: BindingViewHolder<ViewDataBinding>?, position: Int, viewType: Int)
 }
 
 interface ItemAnimator{

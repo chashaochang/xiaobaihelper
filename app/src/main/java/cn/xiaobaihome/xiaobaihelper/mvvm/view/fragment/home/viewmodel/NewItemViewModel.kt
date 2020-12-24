@@ -1,6 +1,7 @@
 package cn.xiaobaihome.xiaobaihelper.mvvm.view.fragment.home.viewmodel
 
 import cn.xiaobaihome.xiaobaihelper.mvvm.model.data.NewItem
+import java.net.URLDecoder
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -10,7 +11,7 @@ class NewItemViewModel(newItem: NewItem) {
     var date: String? = parseDateTime(newItem.date)
     var category: String? = newItem.category
     var author_name: String? = newItem.author_name
-    var url: String? = newItem.url?.replace("http","https")
+    var url: String? = URLDecoder.decode(newItem.url,"UTF-8").replace("https://v.juhe.cn/toutiao/s?id=","")
     var thumbnail_pic_s: String? = newItem.thumbnail_pic_s
 
     private fun parseDateTime(date: String?): String {

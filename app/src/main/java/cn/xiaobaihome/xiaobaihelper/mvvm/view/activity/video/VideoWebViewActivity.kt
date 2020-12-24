@@ -2,40 +2,34 @@ package cn.xiaobaihome.xiaobaihelper.mvvm.view.activity.video
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.os.Bundle
+import android.os.PersistableBundle
 import android.view.View
 import android.webkit.JavascriptInterface
-import androidx.core.content.ContextCompat
-import cn.xiaobaihome.xiaobaihelper.R
-import cn.xiaobaihome.xiaobaihelper.base.BaseActivity
 import cn.xiaobaihome.xiaobaihelper.databinding.ActivityVideoWebviewBinding
 import cn.xiaobaihome.xiaobaihelper.entity.VideoHistoryItem
 import cn.xiaobaihome.xiaobaihelper.helper.addVideoHistory
 import cn.xiaobaihome.xiaobaihelper.helper.extens.toast
-import cn.xiaobaihome.xiaobaihelper.helper.getData
-import cn.xiaobaihome.xiaobaihelper.helper.saveData
+import cn.xiaobaihome.xiaobaihelper.mvvm.base.BaseActivity
 import cn.xiaobaihome.xiaobaihelper.mvvm.view.activity.play.PlayActivity
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
 import com.tencent.smtt.export.external.interfaces.WebResourceRequest
 import com.tencent.smtt.sdk.WebChromeClient
 import com.tencent.smtt.sdk.WebView
 import com.tencent.smtt.sdk.WebViewClient
-import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
-class VideoWebViewActivity : BaseActivity<ActivityVideoWebviewBinding>() {
+class VideoWebViewActivity : BaseActivity() {
 
     private var url: String? = null
     private var playUrl: String? = null
     private var title: String? = null
     private var coverImg: String? = null
+    private lateinit var binding : ActivityVideoWebviewBinding
 
-    override fun getLayoutId(): Int {
-        return R.layout.activity_video_webview
-    }
-
-    override fun initView() {
+    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        super.onCreate(savedInstanceState, persistentState)
+        binding = ActivityVideoWebviewBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         url = intent.getStringExtra("url")
         initWebView()
         loadUrl()
@@ -44,7 +38,7 @@ class VideoWebViewActivity : BaseActivity<ActivityVideoWebviewBinding>() {
                 goToPlay()
             }
         }
-        binding.videoWebviewActivityToolbar.setNavigationOnClickListener {
+        binding.videoWebviewActivityBackBtn.setOnClickListener {
             goBack()
         }
         binding.videoWebviewActivityCloseBtn.setOnClickListener {
@@ -224,14 +218,6 @@ class VideoWebViewActivity : BaseActivity<ActivityVideoWebviewBinding>() {
             }
         }
         return result
-    }
-
-    override fun loadData(isRefresh: Boolean) {
-
-    }
-
-    override fun onClick(v: View?) {
-
     }
 
     interface GetCoverImg {

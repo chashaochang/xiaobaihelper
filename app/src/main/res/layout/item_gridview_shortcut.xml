@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<!--<layout >-->
 
-    <data>
+<!--    <data>-->
 
-        <import type="cn.xiaobaihome.xiaobaihelper.entity.Shortcut" />
+<!--        <import type="cn.xiaobaihome.xiaobaihelper.entity.Shortcut" />-->
 
-        <import type="android.view.View.OnClickListener" />
+<!--        <import type="android.view.View.OnClickListener" />-->
 
-        <variable
-            name="shortcut"
-            type="cn.xiaobaihome.xiaobaihelper.entity.Shortcut" />
+<!--        <variable-->
+<!--            name="shortcut"-->
+<!--            type="cn.xiaobaihome.xiaobaihelper.entity.Shortcut" />-->
 
-        <variable
-            name="onclick"
-            type="OnClickListener" />
-    </data>
+<!--        <variable-->
+<!--            name="onclick"-->
+<!--            type="OnClickListener" />-->
+<!--    </data>-->
 
     <FrameLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -32,17 +33,18 @@
             android:elevation="3dp"
             android:orientation="vertical">
 
-            <cn.xiaobaihome.xiaobaihelper.widget.RoundImageView
+            <cn.xiaobaihome.xiaobaihelper.ui.widget.RoundImageView
                 android:id="@+id/shortcut_item_gridview_img"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:adjustViewBounds="true"
                 android:background="@color/transparent"
                 android:elevation="5dp"
-                android:src="@{shortcut.imgResId}"
                 app:radius="10dp" />
+<!--                android:src="@{shortcut.imgResId}"-->
+
 
         </LinearLayout>
 
     </FrameLayout>
-</layout>
+<!--</layout>-->

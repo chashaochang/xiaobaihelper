@@ -21,6 +21,7 @@ import com.google.zxing.Result;
 import com.google.zxing.client.android.camera.CameraManager;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -206,8 +207,12 @@ public final class CaptureActivity extends Activity implements SurfaceHolder.Cal
 //        if (ZXingSettingManager.getInstance().isNeedShowResult()) {
 //            imageView.setImageBitmap(barcode);
 //        }
-        Toast.makeText(this, rawResult.getText(), Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, rawResult.getText(), Toast.LENGTH_SHORT).show();
         restartPreviewAfterDelay(BULK_MODE_SCAN_DELAY_MS);
+        Intent intent = new Intent();
+        intent.putExtra("result", rawResult.getText());
+        setResult(666, intent);
+        finish();
     }
 
     private void initCamera(SurfaceHolder surfaceHolder) {

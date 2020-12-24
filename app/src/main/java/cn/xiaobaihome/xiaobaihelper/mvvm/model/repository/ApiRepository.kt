@@ -2,8 +2,13 @@ package cn.xiaobaihome.xiaobaihelper.mvvm.model.repository
 
 import cn.xiaobaihome.xiaobaihelper.mvvm.model.data.VersionInfo
 import cn.xiaobaihome.xiaobaihelper.mvvm.model.remote.api.ApiService
-import io.reactivex.Single
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class ApiRepository(private val remote: ApiService) {
-    fun getVersion(): Single<VersionInfo> = remote.getVersion()
+    suspend fun getVersion(): VersionInfo {
+        return withContext(Dispatchers.IO){
+            remote.getVersion()
+        }
+    }
 }

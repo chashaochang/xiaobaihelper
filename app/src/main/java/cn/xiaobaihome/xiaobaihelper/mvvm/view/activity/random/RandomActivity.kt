@@ -5,18 +5,19 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.app.AlertDialog
-import cn.xiaobaihome.xiaobaihelper.R
-import cn.xiaobaihome.xiaobaihelper.adapter.FoodListAdapter
-import cn.xiaobaihome.xiaobaihelper.base.BaseActivity
+import android.os.Bundle
+import android.os.PersistableBundle
+import cn.xiaobaihome.xiaobaihelper.ui.adapter.FoodListAdapter
 import cn.xiaobaihome.xiaobaihelper.databinding.ActivityRandomBinding
 import cn.xiaobaihome.xiaobaihelper.entity.MapFoodListItem
-import cn.xiaobaihome.xiaobaihelper.widget.RotationPanelView
+import cn.xiaobaihome.xiaobaihelper.mvvm.base.BaseActivity
+import cn.xiaobaihome.xiaobaihelper.ui.widget.RotationPanelView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.util.*
 import kotlin.collections.ArrayList
 
-class RandomActivity : BaseActivity<ActivityRandomBinding>() {
+class RandomActivity : BaseActivity() {
 
     private var rotationPanelView: RotationPanelView? = null
     private var bonusBeans: ArrayList<Int> = ArrayList()
@@ -24,9 +25,13 @@ class RandomActivity : BaseActivity<ActivityRandomBinding>() {
     private var randomBonusRadio: Float = 0f//随机角度
     private var foodList: MutableList<MapFoodListItem>? = null
     private var foodListAdapter: FoodListAdapter? = null
+    private lateinit var binding : ActivityRandomBinding
 
-    override fun initView() {
-        binding.activityRandomToolbar.setNavigationOnClickListener {
+    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        super.onCreate(savedInstanceState, persistentState)
+        binding = ActivityRandomBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        binding.activityRandomBack.setOnClickListener {
             finish()
         }
         val listStr = intent.getStringExtra("list")
@@ -89,7 +94,4 @@ class RandomActivity : BaseActivity<ActivityRandomBinding>() {
         })
     }
 
-    override fun getLayoutId(): Int {
-        return R.layout.activity_random
-    }
 }

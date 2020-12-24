@@ -1,29 +1,34 @@
 package cn.xiaobaihome.xiaobaihelper.mvvm.view.activity.webview
 
 import android.annotation.SuppressLint
+import android.app.ActivityManager
+import android.os.Bundle
+import android.os.PersistableBundle
+import android.util.Log
 import android.view.View
-import cn.xiaobaihome.xiaobaihelper.R
-import cn.xiaobaihome.xiaobaihelper.base.BaseActivity
 import cn.xiaobaihome.xiaobaihelper.databinding.ActivityWebviewBinding
+import cn.xiaobaihome.xiaobaihelper.mvvm.base.BaseActivity
 import com.tencent.smtt.export.external.interfaces.WebResourceRequest
 import com.tencent.smtt.sdk.WebChromeClient
 import com.tencent.smtt.sdk.WebView
 import com.tencent.smtt.sdk.WebViewClient
 
-class WebViewActivity : BaseActivity<ActivityWebviewBinding>(){
+class WebViewActivity : BaseActivity(){
 
     private var url: String? = null
+    private lateinit var binding : ActivityWebviewBinding
 
-    override fun getLayoutId(): Int {
-        return R.layout.activity_webview
-    }
-
-    override fun initView() {
+    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        super.onCreate(savedInstanceState, persistentState)
+        binding = ActivityWebviewBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        //setTaskDescription(ActivityManager.TaskDescription("小程序"))
         url = intent.getStringExtra("url")
+        Log.i(TAG, "initView: url:$url")
         initWebView()
         loadUrl()
 
-        binding.webViewActivityToolbar.setNavigationOnClickListener {
+        binding.webViewActivityBack.setOnClickListener {
             finish()
         }
     }
@@ -43,6 +48,7 @@ class WebViewActivity : BaseActivity<ActivityWebviewBinding>(){
         binding.webViewActivityWebView.webViewClient = object : WebViewClient() {
 
             override fun shouldOverrideUrlLoading(view: WebView, request: WebResourceRequest): Boolean {
+                Log.i("openUrl", "shouldOverrideUrlLoading: "+request.url)
                 return true
             }
 
@@ -62,11 +68,8 @@ class WebViewActivity : BaseActivity<ActivityWebviewBinding>(){
         }
     }
 
-    override fun loadData(isRefresh: Boolean) {
-    }
-
-    override fun onClick(v: View?) {
-
+    companion object {
+        private const val TAG = "WebViewActivity"
     }
 
 }

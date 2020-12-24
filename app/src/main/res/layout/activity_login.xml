@@ -1,144 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/main_bg_color">
 
-    <data>
-
-        <import type="android.text.InputType" />
-
-        <variable
-            name="vm"
-            type="cn.xiaobaihome.xiaobaihelper.mvvm.view.activity.login.viewmodel.LoginViewModel" />
-
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <cn.xiaobaihome.xiaobaihelper.ui.widget.StatusBarHeightView
+        android:id="@+id/activity_login_statusBarHeightView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/main_bg_color">
+        android:layout_height="wrap_content"
+        android:background="@color/main_bg_color"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <cn.xiaobaihome.xiaobaihelper.widget.StatusBarHeightView
-            android:id="@+id/activity_login_statusBarHeightView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/main_bg_color"
-            app:layout_constraintTop_toTopOf="parent"/>
+    <TextView
+        android:id="@+id/activity_login_btn_close"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:fontFamily="@font/iconfont"
+        android:gravity="center"
+        android:text="@string/iconguanbi"
+        android:textColor="@color/main_text_color"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_login_statusBarHeightView" />
 
-        <TextView
-            android:id="@+id/activity_login_btn_close"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:fontFamily="@font/iconfont"
-            android:gravity="center"
-            android:text="@string/iconguanbi"
-            android:textColor="@color/main_text_color"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/activity_login_statusBarHeightView" />
+    <TextView
+        android:id="@+id/activity_login_welcome"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/login_welcome"
+        android:textColor="@color/main_text_color"
+        android:textSize="27sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/activity_login_btn_close" />
 
-        <TextView
-            android:id="@+id/activity_login_welcome"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="40dp"
-            android:text="@string/login_welcome"
-            android:textColor="@color/main_text_color"
-            android:textSize="27sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/activity_login_btn_close" />
+    <EditText
+        android:id="@+id/activity_login_input_username"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="40dp"
+        android:autofillHints="@string/hint_username"
+        android:background="@drawable/bg_divider"
+        android:digits="1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
+        android:hint="@string/hint_username"
+        android:inputType="number"
+        android:textColor="@color/main_text_color"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/activity_login_welcome"
+        tools:targetApi="o" />
 
-        <EditText
-            android:id="@+id/activity_login_input_username"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginEnd="40dp"
-            android:autofillHints="@string/hint_username"
-            android:background="@drawable/bg_divider"
-            android:hint="@string/hint_username"
-            android:inputType="number"
-            android:digits="1234567890qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
-            android:textColor="@color/main_text_color"
-            android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@+id/activity_login_welcome"
-            tools:targetApi="o" />
+    <TextView
+        android:layout_width="30dp"
+        android:layout_height="50dp"
+        android:fontFamily="@font/iconfont"
+        android:gravity="center"
+        android:text="@string/iconguanbi"
+        android:textColor="@color/main_gray_color"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/activity_login_input_username"
+        app:layout_constraintEnd_toEndOf="@+id/activity_login_input_username" />
 
-        <TextView
-            android:layout_width="30dp"
-            android:layout_height="50dp"
-            android:fontFamily="@font/iconfont"
-            android:gravity="center"
-            android:text="@string/iconguanbi"
-            android:textColor="@color/main_gray_color"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/activity_login_input_username"
-            app:layout_constraintEnd_toEndOf="@+id/activity_login_input_username" />
+    <EditText
+        android:id="@+id/activity_login_input_pwd"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="40dp"
+        android:autofillHints="@string/hint_pwd"
+        android:background="@drawable/bg_divider"
+        android:hint="@string/hint_pwd"
+        android:inputType="textPassword"
+        android:maxLength="15"
+        android:textColor="@color/main_text_color"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/activity_login_input_username"
+        tools:targetApi="o" />
 
-        <EditText
-            android:id="@+id/activity_login_input_pwd"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="40dp"
-            android:autofillHints="@string/hint_pwd"
-            android:background="@drawable/bg_divider"
-            android:hint="@string/hint_pwd"
-            android:inputType="@{vm.canSee?InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD:(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD)}"
-            android:maxLength="15"
-            android:textColor="@color/main_text_color"
-            android:textSize="16sp"
-            app:layout_constraintTop_toBottomOf="@+id/activity_login_input_username"
-            tools:targetApi="o" />
+    <TextView
+        android:id="@+id/activity_login_btn_clear_pwd"
+        android:layout_width="30dp"
+        android:layout_height="50dp"
+        android:layout_marginEnd="30dp"
+        android:fontFamily="@font/iconfont"
+        android:gravity="center"
+        android:text="@string/iconguanbi"
+        android:textColor="@color/main_gray_color"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/activity_login_input_pwd"
+        app:layout_constraintEnd_toEndOf="@+id/activity_login_input_pwd" />
 
-        <TextView
-            android:id="@+id/activity_login_btn_clear_pwd"
-            android:layout_width="30dp"
-            android:layout_height="50dp"
-            android:layout_marginEnd="30dp"
-            android:fontFamily="@font/iconfont"
-            android:gravity="center"
-            android:text="@string/iconguanbi"
-            android:textColor="@color/main_gray_color"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/activity_login_input_pwd"
-            app:layout_constraintEnd_toEndOf="@+id/activity_login_input_pwd" />
+    <TextView
+        android:id="@+id/activity_login_btn_see"
+        android:layout_width="30dp"
+        android:layout_height="50dp"
+        android:fontFamily="@font/iconfont"
+        android:gravity="center"
+        android:text="@{vm.canSee?@string/iconkejian:@string/iconyincang}"
+        android:textColor="@color/main_gray_color"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/activity_login_input_pwd"
+        app:layout_constraintEnd_toEndOf="@+id/activity_login_input_pwd" />
 
-        <TextView
-            android:id="@+id/activity_login_btn_see"
-            android:layout_width="30dp"
-            android:layout_height="50dp"
-            android:fontFamily="@font/iconfont"
-            android:gravity="center"
-            android:text="@{vm.canSee?@string/iconkejian:@string/iconyincang}"
-            android:textColor="@color/main_gray_color"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/activity_login_input_pwd"
-            app:layout_constraintEnd_toEndOf="@+id/activity_login_input_pwd" />
-
-        <Button
-            android:id="@+id/activity_login_btn_login"
-            android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginTop="50dp"
-            android:layout_marginEnd="40dp"
-            android:background="@drawable/bg_btn_login"
-            android:text="@string/login"
-            android:textSize="14sp"
-            android:textColor="@color/white"
-            android:enabled="false"
-            app:layout_constraintTop_toBottomOf="@+id/activity_login_input_pwd" />
+    <Button
+        android:id="@+id/activity_login_btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginEnd="40dp"
+        android:background="@drawable/bg_btn_login"
+        android:enabled="false"
+        android:text="@string/login"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@+id/activity_login_input_pwd" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</layout>
+</androidx.constraintlayout.widget.ConstraintLayout>

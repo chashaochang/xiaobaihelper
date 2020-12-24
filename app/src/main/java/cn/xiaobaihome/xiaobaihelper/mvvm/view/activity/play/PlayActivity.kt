@@ -4,24 +4,23 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.pm.ActivityInfo
 import android.graphics.PixelFormat
+import android.os.Bundle
+import android.os.PersistableBundle
 import android.util.Log
 import android.view.*
 import android.widget.FrameLayout
-import androidx.core.content.ContextCompat
 import cn.xiaobaihome.xiaobaihelper.R
-import cn.xiaobaihome.xiaobaihelper.base.BaseActivity
 import cn.xiaobaihome.xiaobaihelper.databinding.ActivityPlayBinding
 import cn.xiaobaihome.xiaobaihelper.helper.Constant
+import cn.xiaobaihome.xiaobaihelper.mvvm.base.BaseActivity
 import com.baoyz.actionsheet.ActionSheet
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient
-import com.tencent.smtt.export.external.interfaces.WebResourceRequest
-import com.tencent.smtt.export.external.interfaces.WebResourceResponse
 import com.tencent.smtt.sdk.WebChromeClient
 import com.tencent.smtt.sdk.WebSettings
 import com.tencent.smtt.sdk.WebView
 import com.tencent.smtt.sdk.WebViewClient
 
-class PlayActivity : BaseActivity<ActivityPlayBinding>() {
+class PlayActivity : BaseActivity() {
 
     /**
      * 视频全屏参数
@@ -34,11 +33,12 @@ class PlayActivity : BaseActivity<ActivityPlayBinding>() {
     private var url: String? = null
     private var title: String? = null
     internal var jxUrl = Constant.JXURL1
-    override fun getLayoutId(): Int {
-        return R.layout.activity_play
-    }
+    lateinit var binding : ActivityPlayBinding
 
-    override fun initView() {
+    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        super.onCreate(savedInstanceState, persistentState)
+        binding = ActivityPlayBinding.inflate(layoutInflater)
+        setContentView(binding.root)
         //视频为了避免闪屏和透明问题
         window.setFormat(PixelFormat.TRANSLUCENT)
         url = intent.getStringExtra("url")
@@ -53,7 +53,7 @@ class PlayActivity : BaseActivity<ActivityPlayBinding>() {
                     .setListener(actionSheetListener)
                     .show()
         }
-        binding.playActivityToolbar.setNavigationOnClickListener {
+        binding.playActivityBack.setOnClickListener {
             finish()
         }
     }
@@ -246,14 +246,6 @@ class PlayActivity : BaseActivity<ActivityPlayBinding>() {
             }
             else -> super.onKeyUp(keyCode, event)
         }
-    }
-
-    override fun loadData(isRefresh: Boolean) {
-
-    }
-
-    override fun onClick(v: View?) {
-
     }
 
     fun hasAd(context: Context, url: String): Boolean {
