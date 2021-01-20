@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.core.content.ContextCompat
-import androidx.recyclerview.widget.LinearLayoutManager
 import cn.xiaobaihome.xiaobaihelper.R
 import cn.xiaobaihome.xiaobaihelper.databinding.FragmentHomeBinding
 import cn.xiaobaihome.xiaobaihelper.entity.Shortcut
@@ -23,32 +22,15 @@ import cn.xiaobaihome.xiaobaihelper.mvvm.view.fragment.home.viewmodel.NewItemVie
 import com.google.zxing.client.android.CaptureActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
+import kotlin.collections.ArrayList
 
 class HomeFragment : BaseFragment() {
 
     lateinit var binding: FragmentHomeBinding
 
-//    override fun onItemClick(v: View?, item: NewItemViewModel) {
-//        val intent = Intent()
-//        intent.setClass(activity!!, WebViewActivity::class.java)
-//        intent.flags = Intent.FLAG_ACTIVITY_NEW_DOCUMENT
-////        intent.flags = Intent.FLAG_ACTIVITY_MULTIPLE_TASK
-//        intent.putExtra("url", item.url)
-//        startActivity(intent)
-//        activity?.overridePendingTransition(R.anim.slide_bottom_in, R.anim.slide_bottom_out)
-//    }
-
-    private val homeAdapter by lazy {
-        context?.let {
-//            SingleTypeAdapter<NewItemViewModel>(it, R.layout.item_news, list).apply {
-//                itemPresenter = this@HomeFragment
-//            }
-        }
-    }
-
     private val homeViewModel: HomeViewModel by viewModel()
 
-//    private val list = ObservableArrayList<NewItemViewModel>()
+    private var adapter: NewsAdapter? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentHomeBinding.inflate(inflater)
@@ -63,11 +45,8 @@ class HomeFragment : BaseFragment() {
                 binding.homeFragmentToolbar.background = context?.let { ContextCompat.getDrawable(it, R.drawable.cell_border_bottom_ed) }
             }
         }
-        binding.homeFragmentRecyclerView.apply {
-//            adapter = homeAdapter
-        }
-        val linearLayoutManager = LinearLayoutManager(context)
-        binding.homeFragmentRecyclerView.layoutManager = linearLayoutManager
+        adapter = NewsAdapter(requireContext(),ArrayList())
+        binding.lvNews.adapter = adapter
 
         val list = ArrayList<Shortcut>()
 
@@ -115,10 +94,8 @@ class HomeFragment : BaseFragment() {
         homeViewModel.loadData(object : RespResult<JuHeResp> {
             override fun onSuccess(t: JuHeResp) {
                 t.result?.data1?.map(::NewItemViewModel)?.let {
-//                    if (isRefresh) {
-//                        list.clear()
-//                    }
-//
+                    adapter?.data = it
+                    adapter?.notifyDataSetChanged()
                 }
             }
 

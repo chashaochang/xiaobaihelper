@@ -97,7 +97,7 @@ class RotationPanelView @JvmOverloads constructor(context: Context, attributeSet
             return if (abs(temp - 1.0f) < 0.01f) {
                 colorList = ArrayList()
                 //设置颜色列表，我知道的颜色不多，可以自行改成你喜欢的颜色列表
-                val myRandom = Random()
+                Random()
                 for (color in 0..bonusList.size) {
                     val ranColor = (if (color % 2 > 0) 0xff00aeef else 0xff0080be).toInt()
                     colorList.add(ranColor)

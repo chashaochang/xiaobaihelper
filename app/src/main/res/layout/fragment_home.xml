@@ -74,15 +74,16 @@
                         android:visibility="gone" />
                 </RelativeLayout>
 
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/home_fragment_recyclerView"
+                <cn.xiaobaihome.xiaobaihelper.ui.widget.AutoHeightListView
+                    android:id="@+id/lv_news"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:scrollbarStyle="outsideOverlay"
                     android:scrollbars="vertical"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                    tools:listitem="@layout/item_news" />
+                    android:divider="@null"
+                    android:dividerHeight="0dp"
+                    tools:listitem="@layout/item_news"/>
 
             </LinearLayout>
 

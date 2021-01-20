@@ -1,11 +1,8 @@
 package cn.xiaobaihome.xiaobaihelper.mvvm.view.activity.webview
 
 import android.annotation.SuppressLint
-import android.app.ActivityManager
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
-import android.view.View
 import cn.xiaobaihome.xiaobaihelper.databinding.ActivityWebviewBinding
 import cn.xiaobaihome.xiaobaihelper.mvvm.base.BaseActivity
 import com.tencent.smtt.export.external.interfaces.WebResourceRequest
@@ -18,8 +15,8 @@ class WebViewActivity : BaseActivity(){
     private var url: String? = null
     private lateinit var binding : ActivityWebviewBinding
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         binding = ActivityWebviewBinding.inflate(layoutInflater)
         setContentView(binding.root)
         //setTaskDescription(ActivityManager.TaskDescription("小程序"))

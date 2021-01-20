@@ -104,8 +104,8 @@ object NetMgr {
         }
 
         val client = builder.build()
-        clientMap.put(baseUrl, client)
-        providerMap.put(baseUrl, provider)
+        clientMap[baseUrl] = client
+        providerMap[baseUrl] = provider
 
         return client
     }
@@ -139,7 +139,7 @@ object NetMgr {
     }
 
     fun registerProvider(provider: NetProvider) {
-        NetMgr.commonProvider = provider
+        commonProvider = provider
     }
 
     fun registerProvider(baseUrl: String, provider: NetProvider) {
