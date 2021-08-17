@@ -1,14 +1,12 @@
 # xiaobaihelper
-An app with some usage functions in daily life
+想写啥就写点啥
 
-My first app to learn kotlin
 
-I'm a "ctrl engineer" 
+## 首页
+资讯，使用聚合API，免费接口
 
-The codes and architecture copyed from https://github.com/ditclear/PaoNet
+## 仿微信小程序（开发中）
 
-## Home
-Show the news,used JuHe API for free
-
-## Videos
-Play videos form Tencent,AiQiYi or Bilibili by 3rd video analysis website
+多任务模式
+根据assets里以小程序id命名的文件夹，寻找app.json配置文件
+根据配置文件的路径确定页面等，具体见微信小程序开发文档
