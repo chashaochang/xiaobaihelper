@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#00aeef</color>
+    <color name="colorPrimary">#56B6EA</color>
     <color name="colorPrimaryDark">#0080BE</color>
     <color name="colorAccent">#D81B60</color>
 
@@ -9,10 +9,10 @@
     <color name="main_text_color">#333333</color>
     <color name="main_bg_color">#f6f6f6</color>
     <color name="main_gray_color">#999999</color>
-    <color name="main_nav_bg_color">#ffffff</color>
+    <color name="main_nav_bg_color">#51C3FE</color>
 
-    <color name="tab_checked">#00aeef</color>
-    <color name="tab_unchecked">#757575</color>
+    <color name="tab_checked">#757575</color>
+    <color name="tab_unchecked">#56B6EA</color>
 
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>

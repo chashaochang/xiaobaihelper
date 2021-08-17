@@ -1,5 +1,6 @@
 package cn.xiaobaihome.xiaobaihelper.mvvm.view.home
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.SparseArray
 import android.view.KeyEvent
@@ -13,7 +14,6 @@ import cn.xiaobaihome.xiaobaihelper.helper.extens.dpToPx
 import cn.xiaobaihome.xiaobaihelper.mvvm.base.BaseActivity
 import cn.xiaobaihome.xiaobaihelper.mvvm.view.fragment.todo.TodoFragment
 import cn.xiaobaihome.xiaobaihelper.mvvm.view.fragment.video.VideoFragment
-import es.dmoral.toasty.Toasty
 import kotlin.system.exitProcess
 
 class HomeActivity : BaseActivity() {
@@ -128,7 +128,7 @@ class HomeActivity : BaseActivity() {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             //与上次点击返回键时刻作差
             if (System.currentTimeMillis() - exitTime > 2000) {
-                Toasty.normal(this, "再按一次退出程序").show()
+                toast("再按一次退出程序")
                 exitTime = System.currentTimeMillis()
             } else {
                 //小于2000ms则认为是用户确实希望退出程序-调用System.exit()方法进行退出

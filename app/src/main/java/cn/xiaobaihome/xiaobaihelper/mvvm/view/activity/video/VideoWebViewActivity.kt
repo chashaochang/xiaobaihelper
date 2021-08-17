@@ -26,8 +26,8 @@ class VideoWebViewActivity : BaseActivity() {
     private var coverImg: String? = null
     private lateinit var binding : ActivityVideoWebviewBinding
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         binding = ActivityVideoWebviewBinding.inflate(layoutInflater)
         setContentView(binding.root)
         url = intent.getStringExtra("url")

@@ -13,7 +13,6 @@ import cn.xiaobaihome.xiaobaihelper.R
 import cn.xiaobaihome.xiaobaihelper.databinding.ActivityPlayBinding
 import cn.xiaobaihome.xiaobaihelper.helper.Constant
 import cn.xiaobaihome.xiaobaihelper.mvvm.base.BaseActivity
-import com.baoyz.actionsheet.ActionSheet
 import com.tencent.smtt.export.external.interfaces.IX5WebChromeClient
 import com.tencent.smtt.sdk.WebChromeClient
 import com.tencent.smtt.sdk.WebSettings
@@ -46,50 +45,50 @@ class PlayActivity : BaseActivity() {
         binding.playActivityTitle.text = title
         initWebView()
         binding.playActivityChangeLineBtn.setOnClickListener {
-            ActionSheet.createBuilder(this, supportFragmentManager)
-                    .setCancelButtonTitle("取消")
-                    .setOtherButtonTitles("线路一", "线路二", "线路三", "线路四", "线路五")
-                    .setCancelableOnTouchOutside(true)
-                    .setListener(actionSheetListener)
-                    .show()
+//            ActionSheet.createBuilder(this, supportFragmentManager)
+//                    .setCancelButtonTitle("取消")
+//                    .setOtherButtonTitles("线路一", "线路二", "线路三", "线路四", "线路五")
+//                    .setCancelableOnTouchOutside(true)
+//                    .setListener(actionSheetListener)
+//                    .show()
         }
         binding.playActivityBack.setOnClickListener {
             finish()
         }
     }
 
-    private val actionSheetListener = object : ActionSheet.ActionSheetListener {
-        override fun onDismiss(actionSheet: ActionSheet, isCancel: Boolean) {
-
-        }
-
-        override fun onOtherButtonClick(actionSheet: ActionSheet, index: Int) {
-            when (index) {
-                0 -> {
-                    jxUrl = Constant.JXURL1
-                    loadUrl()
-                }
-                1 -> {
-                    jxUrl = Constant.JXURL2
-                    loadUrl()
-                }
-                2 -> {
-                    jxUrl = Constant.JXURL3
-                    loadUrl()
-                }
-                3 -> {
-                    jxUrl = Constant.JXURL4
-                    loadUrl()
-                }
-                4 -> {
-                    jxUrl = Constant.JXURL5
-                    loadUrl()
-                }
-                else -> {
-                }
-            }
-        }
-    }
+//    private val actionSheetListener = object : ActionSheet.ActionSheetListener {
+//        override fun onDismiss(actionSheet: ActionSheet, isCancel: Boolean) {
+//
+//        }
+//
+//        override fun onOtherButtonClick(actionSheet: ActionSheet, index: Int) {
+//            when (index) {
+//                0 -> {
+//                    jxUrl = Constant.JXURL1
+//                    loadUrl()
+//                }
+//                1 -> {
+//                    jxUrl = Constant.JXURL2
+//                    loadUrl()
+//                }
+//                2 -> {
+//                    jxUrl = Constant.JXURL3
+//                    loadUrl()
+//                }
+//                3 -> {
+//                    jxUrl = Constant.JXURL4
+//                    loadUrl()
+//                }
+//                4 -> {
+//                    jxUrl = Constant.JXURL5
+//                    loadUrl()
+//                }
+//                else -> {
+//                }
+//            }
+//        }
+//    }
 
     /**
      * 展示网页界面

@@ -8,8 +8,8 @@ import cn.xiaobaihome.xiaobaihelper.mvvm.model.repository.ApiRepository
 import cn.xiaobaihome.xiaobaihelper.mvvm.model.repository.JuHeRepository
 import cn.xiaobaihome.xiaobaihelper.mvvm.view.activity.login.viewmodel.LoginViewModel
 import cn.xiaobaihome.xiaobaihelper.mvvm.view.fragment.home.viewmodel.HomeViewModel
-import org.koin.androidx.viewmodel.ext.koin.viewModel
-import org.koin.dsl.module.module
+import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.dsl.module
 import retrofit2.Retrofit
 
 val viewModelModule = module {

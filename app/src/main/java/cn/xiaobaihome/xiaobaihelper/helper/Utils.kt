@@ -5,8 +5,11 @@ import android.content.Context.MODE_PRIVATE
 import cn.xiaobaihome.xiaobaihelper.entity.VideoHistoryItem
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import java.io.BufferedReader
+import java.io.IOException
+import java.io.InputStreamReader
 import java.util.*
-import kotlin.collections.ArrayList
+
 
 //存储key对应的数据
 fun saveData(context: Context, key: String, info: String) {
@@ -51,4 +54,26 @@ fun addVideoHistory(context: Context, videoHistoryItem: VideoHistoryItem) {
     }
     historyList.add(videoHistoryItem)
     saveData(context, "video_history", Gson().toJson(historyList))
+}
+
+fun getJson(fileName: String, context: Context): String {
+    //将json数据变成字符串
+    val stringBuilder = StringBuilder()
+    try {
+        //获取assets资源管理器
+        val assetManager = context.assets
+        //通过管理器打开文件并读取
+        val bf = BufferedReader(
+            InputStreamReader(
+                assetManager.open(fileName)
+            )
+        )
+        var line: String?
+        while (bf.readLine().also { line = it } != null) {
+            stringBuilder.append(line)
+        }
+    } catch (e: IOException) {
+        e.printStackTrace()
+    }
+    return stringBuilder.toString()
 }

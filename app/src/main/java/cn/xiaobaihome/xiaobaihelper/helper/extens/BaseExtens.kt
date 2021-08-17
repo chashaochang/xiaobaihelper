@@ -1,34 +1,26 @@
 package cn.xiaobaihome.xiaobaihelper.helper.extens
 
+import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
-import android.net.Uri
 import android.os.Bundle
-import android.text.TextUtils
 import android.util.Log
-import android.webkit.URLUtil
+import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import androidx.annotation.ColorRes
-import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
 import cn.xiaobaihome.xiaobaihelper.BuildConfig
 import cn.xiaobaihome.xiaobaihelper.R
 import cn.xiaobaihome.xiaobaihelper.helper.Constant
-import cn.xiaobaihome.xiaobaihelper.helper.annotation.ToastType
-import cn.xiaobaihome.xiaobaihelper.mvvm.model.remote.exception.EmptyException
-import es.dmoral.toasty.Toasty
 import java.io.Serializable
-import java.net.ConnectException
-import java.net.SocketTimeoutException
-import java.net.UnknownHostException
-import java.util.concurrent.TimeUnit
 
 
 /**
@@ -39,49 +31,34 @@ import java.util.concurrent.TimeUnit
 
 fun Activity.getCompactColor(@ColorRes colorRes: Int): Int = ContextCompat.getColor(this, colorRes)
 
-fun Activity.toast(msg: CharSequence, duration: Int = Toast.LENGTH_SHORT, @ToastType type: Int = ToastType.NORMAL) {
-    when (type) {
-        ToastType.WARNING -> Toasty.warning(this, msg, duration, true).show()
-        ToastType.ERROR -> Toasty.error(this, msg, duration, true).show()
-        ToastType.NORMAL -> Toasty.info(this, msg, duration, false).show()
-        ToastType.SUCCESS -> Toasty.success(this, msg, duration, true).show()
+private var toast: Toast? = null
+
+@SuppressLint("InflateParams")
+fun toast(context: Context, msg: String?) {
+    try {
+        if (toast != null) {
+            toast!!.cancel()
+        }
+        toast = Toast.makeText(context, msg, Toast.LENGTH_SHORT)
+        val toastLayout =
+            (context.getSystemService(AppCompatActivity.LAYOUT_INFLATER_SERVICE) as LayoutInflater)
+                .inflate(R.layout.layout_toast, null)
+        val textView = toastLayout.findViewById<TextView>(R.id.toast_text)
+        textView.text = msg
+        toast?.view = toastLayout
+        toast?.setGravity(Gravity.CENTER, 0, 0)
+        toast?.show()
+    } catch (e: Exception) {
+        Log.i("Extends", "alert: $e")
     }
 }
 
-fun Activity.dispatchFailure(error: Throwable?) {
-    error?.let {
-        if (BuildConfig.DEBUG) {
-            it.printStackTrace()
-        }
-        if (it is EmptyException) {
-
-        } else if (error is SocketTimeoutException) {
-            it.message?.let { toast("网络连接超时", ToastType.ERROR) }
-
-        } else if (it is UnknownHostException || it is ConnectException) {
-            //网络未连接
-            it.message?.let { toast("网络未连接", ToastType.ERROR) }
-
-        } else {
-            it.message?.let { toast(it, ToastType.ERROR) }
-        }
-    }
+fun View.show() {
+    this.visibility = View.VISIBLE
 }
 
-fun <T : Any> FragmentActivity.argument(key: String) =
-        lazy {
-            @Suppress("RECEIVER_NULLABILITY_MISMATCH_BASED_ON_JAVA_ANNOTATIONS", "UNCHECKED_CAST")
-            intent.extras?.get(key) as? T ?: error("Intent Argument $key is missing")
-        }
-
-fun AppCompatActivity.switchFragment(current: Fragment?, targetFg: Fragment, tag: String? = null) {
-    val ft = supportFragmentManager.beginTransaction()
-    current?.run { ft.hide(this) }
-    if (!targetFg.isAdded) {
-        ft.add(R.id.container, targetFg, tag)
-    }
-    ft.show(targetFg)
-    ft.commitAllowingStateLoss();
+fun View.hide() {
+    this.visibility = View.GONE
 }
 
 fun dpToPx(dpValue: Int): Int {
@@ -107,32 +84,12 @@ fun Any.logD(msg: String?) {
     }
 }
 
-fun Activity.navigateToWebPage(@NonNull url: String) {
-    if (TextUtils.isEmpty(url) || !URLUtil.isNetworkUrl(url)) {
-        return
-    }
-
-    val intent = CustomTabsIntent.Builder()
-            .setShowTitle(true)
-            .setToolbarColor(ContextCompat.getColor(this, R.color.colorPrimary))
-            .build()
-
-    intent.launchUrl(this, Uri.parse(url))
+fun getStatusBarHeight(context: Context): Int {
+    val resources = context.resources
+    val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
+    return resources.getDimensionPixelSize(resourceId)
 }
 
-fun Fragment.navigateToWebPage(@NonNull url: String?) {
-    if (TextUtils.isEmpty(url) || !URLUtil.isNetworkUrl(url)) {
-        return
-    }
-    context?.let {
-        val intent = CustomTabsIntent.Builder()
-                .setShowTitle(true)
-                .setToolbarColor(ContextCompat.getColor(it, R.color.colorPrimary))
-                .build()
-
-        activity?.let { it1 -> intent.launchUrl(it1, Uri.parse(url)) }
-    }
-}
 
 //////////////////////////LiveData///////////////////////////////////
 

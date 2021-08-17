@@ -1,6 +1,7 @@
 package cn.xiaobaihome.xiaobaihelper.mvvm.base
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.Configuration
 import android.graphics.Color
 import android.graphics.Rect
@@ -10,6 +11,7 @@ import android.os.PersistableBundle
 import android.view.View
 import android.view.WindowInsetsController
 import androidx.appcompat.app.AppCompatActivity
+import cn.xiaobaihome.xiaobaihelper.R
 
 open class BaseActivity : AppCompatActivity() {
 
@@ -21,8 +23,10 @@ open class BaseActivity : AppCompatActivity() {
         initStatusBar()
     }
 
-    private fun initStatusBar(){
-        //window.insetsController?.setSystemBarsAppearance(WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS, WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
+    private fun initStatusBar() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.insetsController?.setSystemBarsAppearance(WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS, WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS)
+        }
     }
 
     fun getStatusBarHeight(): Int {
@@ -32,16 +36,14 @@ open class BaseActivity : AppCompatActivity() {
         return rectangle.top
     }
 
-    fun setActionBarDark(color: Int) {
-        val decorView = window.decorView
-        val option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-        decorView.systemUiVisibility = option
-        window.statusBarColor = color
-    }
-
     //检查当前系统是否已开启暗黑模式
     private fun getDarkModeStatus(context: Context): Boolean {
         val mode = context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK
         return mode == Configuration.UI_MODE_NIGHT_YES
     }
+
+    fun toast(msg: String?) {
+        cn.xiaobaihome.xiaobaihelper.helper.extens.toast(this, msg)
+    }
+
 }

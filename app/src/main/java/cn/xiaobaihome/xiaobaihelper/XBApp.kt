@@ -9,14 +9,19 @@ import com.baidu.mapapi.CoordType
 import com.baidu.mapapi.SDKInitializer
 import com.tencent.smtt.sdk.QbSdk
 import com.tencent.smtt.sdk.TbsListener
-import org.koin.android.ext.android.startKoin
+import org.koin.core.context.startKoin
 
 class XBApp : Application() {
 
     override fun onCreate() {
         super.onCreate()
         NetMgr.registerProvider(BaseNetProvider(this))
-        startKoin(this, appModule)
+        startKoin{
+            // use Koin logger
+            printLogger()
+            // declare modules
+            modules(appModule)
+        }
         //x5内核初始化接口
         QbSdk.initX5Environment(this, object : QbSdk.PreInitCallback {
             override fun onCoreInitFinished() {
