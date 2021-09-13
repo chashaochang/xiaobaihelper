@@ -4,15 +4,15 @@ import android.annotation.SuppressLint
 import android.app.ActivityManager
 import android.app.Application
 import android.content.Intent
+import android.content.res.ColorStateList
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
-import android.webkit.WebChromeClient
-import android.webkit.WebResourceRequest
-import android.webkit.WebView
-import android.webkit.WebViewClient
+import android.webkit.*
 import cn.xiaobaihome.xiaobaihelper.R
 import cn.xiaobaihome.xiaobaihelper.databinding.ActivityWebviewBinding
 import cn.xiaobaihome.xiaobaihelper.helper.extens.hide
+import cn.xiaobaihome.xiaobaihelper.helper.extens.show
 import cn.xiaobaihome.xiaobaihelper.helper.getJson
 import cn.xiaobaihome.xiaobaihelper.miniprogram.AppConfig
 import cn.xiaobaihome.xiaobaihelper.miniprogram.MiniProgramManager
@@ -87,9 +87,12 @@ open class WebViewActivity : BaseActivity() {
         settings.builtInZoomControls = true
         settings.displayZoomControls = true
         settings.supportZoom()
-        //settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
+        settings.mixedContentMode = WebSettings.MIXED_CONTENT_ALWAYS_ALLOW
         settings.domStorageEnabled = true//开启DOM
         settings.defaultTextEncodingName = "utf-8"
+        settings.allowFileAccess = true
+        settings.allowContentAccess = true
+        settings.allowUniversalAccessFromFileURLs = true
         //开启调试模式
         WebView.setWebContentsDebuggingEnabled(true)
         binding.webViewActivityWebView.webViewClient = object : WebViewClient() {
@@ -99,7 +102,7 @@ open class WebViewActivity : BaseActivity() {
                 request: WebResourceRequest
             ): Boolean {
                 Log.i("openUrl", "shouldOverrideUrlLoading: " + request.url)
-                return true
+                return super.shouldOverrideUrlLoading(view, request)
             }
 
         }
@@ -119,13 +122,29 @@ open class WebViewActivity : BaseActivity() {
                 try {
                     val config: AppConfig = Gson().fromJson(configJson, AppConfig::class.java)
                     if (config.pages.isNotEmpty()) {
-                        binding.webViewActivityWebView.loadUrl(basePath + miniProgramId + "/" + config.pages[0] + ".html")
+                        val homePage = basePath + miniProgramId + "/" + config.pages[0] + ".html"
+                        binding.webViewActivityWebView.loadUrl(homePage)
+                        if (config.tabBar.list.isNotEmpty()) {
+                            binding.tabBar.show()
+                            binding.tabBar.setBackgroundColor(if (config.tabBar.backgroundColor > 0) config.tabBar.backgroundColor else Color.WHITE)
+                            binding.tabBar.itemTextColor =
+                                ColorStateList.valueOf(if (config.tabBar.color > 0) config.tabBar.color else Color.BLACK)
+                            val menu = binding.tabBar.menu
+                            for ((index, item) in config.tabBar.list.withIndex()) {
+                                menu.add(0, index, index, item.text)
+                            }
+                        } else {
+                            binding.tabBar.hide()
+                        }
                     } else {
                         toast("pages没有页面")
                     }
                 } catch (e: Exception) {
                     toast("配置文件app.json异常")
                 }
+            } else {
+                val homePage = "$basePath$miniProgramId/index.html"
+                binding.webViewActivityWebView.loadUrl(homePage)
             }
         }
     }

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>标题</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1">
+        <script src="../../index.js"></script>
+    </head>
+    <body>
+        <button id="back" style="margin-top: 200px;">返回上页</button>
+        <script>
+            window.onload = function(){
+                document.getElementById("back").onclick = function(){
+                    xb.navigateBack();
+                }
+            }
+        </script>
+    </body>
+</html>

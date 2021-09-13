@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>标题</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width,user-scalable=no,initial-scale=1">
+        <script src="../../index.js"></script>
+    </head>
+    <body>
+        <button id="open" style="margin-top: 200px;">打开新页</button>
+        <script>
+            window.onload = function(){
+                document.getElementById("open").onclick = function(){
+                    xb.navigateTo("pages/log/index.html");
+                }
+            }
+        </script>
+    </body>
+</html>

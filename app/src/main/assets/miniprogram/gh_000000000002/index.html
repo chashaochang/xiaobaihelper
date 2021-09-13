@@ -1,13 +1,30 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
-    <title>页面2</title>
-</head>
-<body>
-<p>测试2<br/>
+<!DOCTYPE html>
+<html lang="zh-cn" class="no-js">
 
+<head>
+    <meta charset="utf-8">
+    <title>标题</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link href="index.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="component.css" />
+    <link rel="stylesheet" type="text/css" href="animations.css" />
+    <script src="modernizr.custom.js"></script>
+    <script src="jquery-3.6.0.min.js"></script>
+
+
+    <!-- <script src="index.js"></script> -->
+</head>
+
+<body>
+    <div id="pt-main" class="pt-perspective">
+        <div class="pt-page pt-page-1">
+            <iframe src="pages/index/index.html"></iframe>
+        </div>
+        <div class="pt-page pt-page-2">
+            <iframe src="pages/log/index.html"></iframe>
+        </div>
+    </div>
+    <script src="pagetransitions.js"></script>
 </body>
+
 </html>
