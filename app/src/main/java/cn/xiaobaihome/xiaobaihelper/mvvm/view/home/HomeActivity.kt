@@ -1,25 +1,31 @@
 package cn.xiaobaihome.xiaobaihelper.mvvm.view.home
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.SparseArray
 import android.view.KeyEvent
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.activity.viewModels
 import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.Fragment
 import cn.xiaobaihome.xiaobaihelper.R
 import cn.xiaobaihome.xiaobaihelper.databinding.ActivityHomeBinding
 import cn.xiaobaihome.xiaobaihelper.helper.extens.dpToPx
 import cn.xiaobaihome.xiaobaihelper.mvvm.base.BaseActivity
+import cn.xiaobaihome.xiaobaihelper.mvvm.model.ApkInfo
+import cn.xiaobaihome.xiaobaihelper.mvvm.model.RespResult
+import cn.xiaobaihome.xiaobaihelper.api.Utils
 import cn.xiaobaihome.xiaobaihelper.mvvm.view.fragment.todo.TodoFragment
 import cn.xiaobaihome.xiaobaihelper.mvvm.view.fragment.video.VideoFragment
+import dagger.hilt.android.AndroidEntryPoint
 import kotlin.system.exitProcess
 
+@AndroidEntryPoint
 class HomeActivity : BaseActivity() {
 
     private var exitTime: Long = 0
     private lateinit var binding: ActivityHomeBinding
+    private val homeViewModel: HomeViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,6 +33,34 @@ class HomeActivity : BaseActivity() {
         setContentView(binding.root)
         initFragments()
         initBottomNavigationView()
+
+        launch {
+            homeViewModel.getVersion(object :
+                RespResult<ApkInfo> {
+                override fun onSuccess(t: ApkInfo) {
+
+                    if (t.versionCode > getVersion()) {
+                        alert(t.updateInfo.toString(), "更新") { _, _ ->
+                            Utils.downLoadNew(this@HomeActivity, t.downloadUrl)
+                        }
+                    }
+                }
+
+                override fun onError(msg: String) {
+                    //alert(msg)
+                }
+
+            })
+        }
+
+    }
+
+    fun getVersion(): Int {
+        val info = packageManager?.getPackageInfo(packageName.toString(), 0)
+        if (info?.longVersionCode == null) {
+            return 0
+        }
+        return info.longVersionCode.toInt()
     }
 
     private var homeFragment: HomeFragment? = null
@@ -36,17 +70,19 @@ class HomeActivity : BaseActivity() {
     private var currentFragment: Fragment? = null
     private val fragments = SparseArray<Fragment>()
     private val navTexts = listOf("首页", "日程", "影视")
-    private val navIconsChecked = listOf(R.mipmap.home_checked, R.mipmap.todo_checked, R.mipmap.movie_checked)
-    private val navIconsUnChecked = listOf(R.mipmap.home_unchecked, R.mipmap.todo_unchecked, R.mipmap.movie_unchecked)
+    private val navIconsChecked =
+        listOf(R.mipmap.home_checked, R.mipmap.todo_checked, R.mipmap.movie_checked)
+    private val navIconsUnChecked =
+        listOf(R.mipmap.home_unchecked, R.mipmap.todo_unchecked, R.mipmap.movie_unchecked)
 
     private fun initFragments() {
         if (homeFragment == null) {
             homeFragment = HomeFragment()
             currentFragment = homeFragment
             supportFragmentManager
-                    .beginTransaction()
-                    .replace(R.id.guidance_activity_FrameLayout, homeFragment!!)
-                    .commitAllowingStateLoss()
+                .beginTransaction()
+                .replace(R.id.guidance_activity_FrameLayout, homeFragment!!)
+                .commitAllowingStateLoss()
         }
         if (todoFragment == null) {
             todoFragment = TodoFragment()
@@ -109,16 +145,16 @@ class HomeActivity : BaseActivity() {
         if (fragment.isAdded) {
             currentFragment?.let {
                 supportFragmentManager.beginTransaction()
-                        .hide(it)
-                        .show(fragment)
-                        .commitNowAllowingStateLoss()
+                    .hide(it)
+                    .show(fragment)
+                    .commitNowAllowingStateLoss()
             }
         } else {
             currentFragment?.let {
                 supportFragmentManager.beginTransaction()
-                        .add(R.id.guidance_activity_FrameLayout, fragment)
-                        .hide(it)
-                        .commitNowAllowingStateLoss()
+                    .add(R.id.guidance_activity_FrameLayout, fragment)
+                    .hide(it)
+                    .commitNowAllowingStateLoss()
             }
         }
         currentFragment = fragment

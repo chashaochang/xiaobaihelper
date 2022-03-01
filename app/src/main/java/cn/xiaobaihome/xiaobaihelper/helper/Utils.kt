@@ -36,8 +36,7 @@ fun clearData(context: Context, key: String) {
 
 fun addVideoHistory(context: Context, videoHistoryItem: VideoHistoryItem) {
     val historyListStr = getData(context, "video_history")
-    val historyList: MutableList<VideoHistoryItem>
-    historyList = if (historyListStr.isEmpty()) {
+    val historyList: MutableList<VideoHistoryItem> = if (historyListStr.isEmpty()) {
         ArrayList()
     } else {
         Gson().fromJson(historyListStr, object : TypeToken<MutableList<VideoHistoryItem>>() {}.type)

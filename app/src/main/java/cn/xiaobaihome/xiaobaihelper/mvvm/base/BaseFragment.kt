@@ -4,6 +4,9 @@ import android.content.DialogInterface
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 
 abstract class BaseFragment : Fragment() {
 
@@ -26,12 +29,8 @@ abstract class BaseFragment : Fragment() {
         }!!
     }
 
-    fun getVersion(): Int {
-        val info = activity?.packageManager?.getPackageInfo(activity?.packageName.toString(), 0)
-        if (info?.longVersionCode == null) {
-            return 0
-        }
-        return info.longVersionCode.toInt()
+    fun launch(block: suspend CoroutineScope.() -> Unit) {
+        lifecycleScope.launch { block() }
     }
 
 }

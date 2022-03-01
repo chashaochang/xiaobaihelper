@@ -15,7 +15,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
-        android:name=".XBApp"
+        android:name=".MainApplication"
         android:allowBackup="true"
         android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
@@ -51,62 +51,62 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".mvvm.view.activity.video.VideoWebViewActivity"
+            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.video.VideoWebViewActivity"
             android:exported="true" />
         <activity
-            android:name=".mvvm.view.activity.play.PlayActivity"
+            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.play.PlayActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="true"
             android:hardwareAccelerated="true" />
         <activity
-            android:name=".mvvm.view.activity.webview.WebViewActivity"
+            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.WebViewActivity"
             android:exported="true" />
         <activity
-            android:name=".mvvm.view.activity.webview.WebViewActivity$AppBrandUI0"
+            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.WebViewActivity$AppBrandUI0"
             android:label="AppBrandUI0"
             android:launchMode="singleTask"
             android:process=":AppBrandUI0"
             android:taskAffinity=".AppBrandUI0" />
 
         <activity
-            android:name=".mvvm.view.activity.webview.WebViewActivity$AppBrandUI1"
+            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.WebViewActivity$AppBrandUI1"
             android:label="AppBrandUI1"
             android:launchMode="singleTask"
             android:process=":AppBrandUI1"
             android:taskAffinity=".AppBrandUI1" />
 
         <activity
-            android:name=".mvvm.view.activity.webview.WebViewActivity$AppBrandUI2"
+            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.WebViewActivity$AppBrandUI2"
             android:label="AppBrandUI2"
             android:launchMode="singleTask"
             android:process=":AppBrandUI2"
             android:taskAffinity=".AppBrandUI2" />
 
         <activity
-            android:name=".mvvm.view.activity.webview.WebViewActivity$AppBrandUI3"
+            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.WebViewActivity$AppBrandUI3"
             android:label="AppBrandUI3"
             android:launchMode="singleTask"
             android:process=":AppBrandUI3"
             android:taskAffinity=".AppBrandUI3" />
 
         <activity
-            android:name=".mvvm.view.activity.webview.WebViewActivity$AppBrandUI4"
+            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.WebViewActivity$AppBrandUI4"
             android:label="AppBrandUI4"
             android:launchMode="singleTask"
             android:process=":AppBrandUI4"
             android:taskAffinity=".AppBrandUI4" />
 
         <activity
-            android:name=".mvvm.view.activity.login.LoginActivity"
+            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.login.LoginActivity"
             android:exported="true" />
         <activity
-            android:name=".mvvm.view.activity.food.FoodActivity"
+            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.food.FoodActivity"
             android:exported="true" />
         <activity
-            android:name=".mvvm.view.activity.random.RandomActivity"
+            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.random.RandomActivity"
             android:exported="true" />
         <activity
-            android:name=".mvvm.view.activity.schedule.ScheduleActivity"
+            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.schedule.ScheduleActivity"
             android:exported="true" />
 
         <meta-data android:name="android.webkit.WebView.EnableSafeBrowsing"

@@ -2,8 +2,7 @@ package cn.xiaobaihome.xiaobaihelper.helper
 
 object Constant {
 
-    val HOST_API  = "https://xiaobaihome.cn/"
-    val HOST_API_JUHE  = "https://v.juhe.cn/"
+    val HOST_API  = "https://api.xiaobaihome.cn/"
     val KEY_SERIALIZABLE = "serializable"
 
     val JXURL1 = "https://www.administratorw.com/video.php?url="

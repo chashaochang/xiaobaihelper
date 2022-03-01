@@ -6,13 +6,12 @@ import android.content.Intent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import cn.xiaobaihome.xiaobaihelper.R
 import cn.xiaobaihome.xiaobaihelper.databinding.ItemNewsBinding
-import cn.xiaobaihome.xiaobaihelper.mvvm.view.activity.webview.WebViewActivity
-import cn.xiaobaihome.xiaobaihelper.mvvm.view.fragment.home.viewmodel.NewItemViewModel
+import cn.xiaobaihome.xiaobaihelper.mvvm.model.NewItemParse
+import cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.WebViewActivity
 import com.bumptech.glide.Glide
 
-class NewsAdapter constructor(private var context: Context, var data: List<NewItemViewModel>) : BaseAdapter() {
+class NewsAdapter constructor(private var context: Context, var data: List<NewItemParse>) : BaseAdapter() {
 
     override fun getItem(position: Int): Any {
         return data[position]
@@ -36,12 +35,12 @@ class NewsAdapter constructor(private var context: Context, var data: List<NewIt
         }
         val item = data[position]
         Glide.with(context)
-                .load(item.thumbnail_pic_s)
+                .load(item.thumbnailPicS)
                 .centerCrop()
                 .into(binding.itemNewsPic)
         binding.itemNewsTitle.text = item.title
         binding.itemNewsCategory.text = item.category
-        binding.itemNewsAuthorName.text = if (item.author_name?.length!! > 9) item.author_name!!.substring(0, 8).plus("...") else item.author_name
+        binding.itemNewsAuthorName.text = if (item.authorName?.length!! > 9) item.authorName!!.substring(0, 8).plus("...") else item.authorName
         binding.itemNewsDate.text = item.date
         binding.root.setOnClickListener {
             val intent = Intent(context, WebViewActivity::class.java)

@@ -1,7 +1,6 @@
 package cn.xiaobaihome.xiaobaihelper.mvvm.view.home
 
 import android.Manifest
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -9,32 +8,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import cn.xiaobaihome.xiaobaihelper.R
 import cn.xiaobaihome.xiaobaihelper.databinding.FragmentHomeBinding
 import cn.xiaobaihome.xiaobaihelper.entity.Shortcut
 import cn.xiaobaihome.xiaobaihelper.helper.extens.getStatusBarHeight
 import cn.xiaobaihome.xiaobaihelper.mvvm.base.BaseFragment
-import cn.xiaobaihome.xiaobaihelper.mvvm.model.data.JuHeResp
-import cn.xiaobaihome.xiaobaihelper.mvvm.model.data.RespResult
-import cn.xiaobaihome.xiaobaihelper.mvvm.model.data.VersionInfo
-import cn.xiaobaihome.xiaobaihelper.mvvm.model.remote.Utils
-import cn.xiaobaihome.xiaobaihelper.mvvm.view.activity.schedule.ScheduleActivity
-import cn.xiaobaihome.xiaobaihelper.mvvm.view.activity.webview.WebViewActivity
-import cn.xiaobaihome.xiaobaihelper.mvvm.view.fragment.home.viewmodel.HomeViewModel
-import cn.xiaobaihome.xiaobaihelper.mvvm.view.fragment.home.viewmodel.NewItemViewModel
+import cn.xiaobaihome.xiaobaihelper.mvvm.view.schedule.ScheduleActivity
+import cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.WebViewActivity
 import com.google.zxing.client.android.CaptureActivity
-import org.koin.androidx.viewmodel.ext.android.viewModel
-import java.util.*
+import dagger.hilt.android.AndroidEntryPoint
 import kotlin.collections.ArrayList
 
+@AndroidEntryPoint
 class HomeFragment : BaseFragment() {
 
     lateinit var binding: FragmentHomeBinding
 
-    private val homeViewModel: HomeViewModel by viewModel()
+    private val homeViewModel: HomeViewModel by viewModels()
 
     private var adapter: NewsAdapter? = null
 
@@ -58,7 +51,7 @@ class HomeFragment : BaseFragment() {
                     context?.let { ContextCompat.getDrawable(it, R.drawable.cell_border_bottom_ed) }
             }
         }
-        adapter = NewsAdapter(requireContext(), ArrayList())
+        adapter = NewsAdapter(requireActivity(), ArrayList())
         binding.lvNews.adapter = adapter
 
         val list = ArrayList<Shortcut>()
@@ -75,7 +68,7 @@ class HomeFragment : BaseFragment() {
         list.add(shortcutSchedule1)
         list.add(shortcutSchedule2)
         list.add(shortcutSchedule3)
-        binding.homeFragmentGridView.adapter = HomeGridViewAdapter(requireContext(), list)
+        binding.homeFragmentGridView.adapter = HomeGridViewAdapter(requireActivity(), list)
         binding.homeFragmentGridView.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, p2, _ ->
                 when (p2) {
@@ -92,45 +85,16 @@ class HomeFragment : BaseFragment() {
                 }
             }
 
-        homeViewModel.getVersion(object : RespResult<VersionInfo> {
-
-            override fun onSuccess(t: VersionInfo) {
-                if (t.versionCode > getVersion()) {
-                    alert(t.memo.toString(), "更新") { _, _ ->
-                        context?.let { it1 ->
-                            t.address?.let { it2 ->
-                                Utils.downLoadNew(
-                                    it1,
-                                    it2
-                                )
-                            }
-                        }
-                    }
-                }
-            }
-
-            override fun onError(msg: String) {
-                //alert(msg)
-            }
-
-        })
-
         binding.homeFragmentToolbarScan.setOnClickListener {
             requestCameraPermission()
         }
-        homeViewModel.loadData(object : RespResult<JuHeResp> {
-            override fun onSuccess(t: JuHeResp) {
-                t.result?.data1?.map(::NewItemViewModel)?.let {
-                    adapter?.data = it
-                    adapter?.notifyDataSetChanged()
-                }
-            }
-
-            override fun onError(msg: String) {
-                alert(msg)
-            }
-
-        })
+        homeViewModel.news.observe(viewLifecycleOwner){
+            adapter?.data = it
+            adapter?.notifyDataSetChanged()
+        }
+        launch {
+            homeViewModel.loadData()
+        }
         return binding.root
     }
 

@@ -1,7 +1,5 @@
 package cn.xiaobaihome.xiaobaihelper.miniprogram
 
-import androidx.ui.graphics.Color
-
 data class AppConfig(
     val pages: List<String>,
     val window: Window,

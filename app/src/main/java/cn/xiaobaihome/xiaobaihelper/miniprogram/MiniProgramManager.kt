@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import cn.xiaobaihome.xiaobaihelper.R
-import cn.xiaobaihome.xiaobaihelper.mvvm.view.activity.webview.WebViewActivity
+import cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.WebViewActivity
 
 /*
      * pool中有5个webView进程0-4
@@ -19,11 +19,11 @@ object MiniProgramManager {
     var activities: MutableList<WebViewActivity> = ArrayList()
 
     init {
-        webViewPool.add("cn.xiaobaihome.xiaobaihelper.mvvm.view.activity.webview.WebViewActivity\$AppBrandUI0")
-        webViewPool.add("cn.xiaobaihome.xiaobaihelper.mvvm.view.activity.webview.WebViewActivity\$AppBrandUI1")
-        webViewPool.add("cn.xiaobaihome.xiaobaihelper.mvvm.view.activity.webview.WebViewActivity\$AppBrandUI2")
-        webViewPool.add("cn.xiaobaihome.xiaobaihelper.mvvm.view.activity.webview.WebViewActivity\$AppBrandUI3")
-        webViewPool.add("cn.xiaobaihome.xiaobaihelper.mvvm.view.activity.webview.WebViewActivity\$AppBrandUI4")
+        webViewPool.add("cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.WebViewActivity\$AppBrandUI0")
+        webViewPool.add("cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.WebViewActivity\$AppBrandUI1")
+        webViewPool.add("cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.WebViewActivity\$AppBrandUI2")
+        webViewPool.add("cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.WebViewActivity\$AppBrandUI3")
+        webViewPool.add("cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.WebViewActivity\$AppBrandUI4")
     }
 
     fun openMiniProgram(context: Context, miniProgramId: String, name: String, iconRes: Int) {
