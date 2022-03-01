@@ -1,6 +1,9 @@
 # xiaobaihelper
 想写啥就写点啥
+使用Jetpack，参考谷歌的sunflower项目
 
+## 架构
+使用mvvm思想，ViewModel，LiveData，FLow
 
 ## 首页
 资讯，使用聚合API，免费接口
