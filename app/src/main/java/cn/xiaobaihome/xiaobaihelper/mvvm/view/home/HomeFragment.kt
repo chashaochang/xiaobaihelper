@@ -12,6 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.viewModels
 import cn.xiaobaihome.xiaobaihelper.R
+import cn.xiaobaihome.xiaobaihelper.api.ApiException
 import cn.xiaobaihome.xiaobaihelper.databinding.FragmentHomeBinding
 import cn.xiaobaihome.xiaobaihelper.entity.Shortcut
 import cn.xiaobaihome.xiaobaihelper.helper.extens.getStatusBarHeight
@@ -37,7 +38,7 @@ class HomeFragment : BaseFragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater)
-        binding.homeFragmentToolbar.setPadding(0, getStatusBarHeight(requireContext()),0,0)
+        binding.homeFragmentToolbar.setPadding(0, getStatusBarHeight(requireContext()), 0, 0)
         binding.homeFragmentScrollView.setOnScrollChangeListener { _, _, _, _, p4 ->
             if (p4 <= 100) {
                 binding.homeFragmentToolbarTitle.text = ""
@@ -88,12 +89,16 @@ class HomeFragment : BaseFragment() {
         binding.homeFragmentToolbarScan.setOnClickListener {
             requestCameraPermission()
         }
-        homeViewModel.news.observe(viewLifecycleOwner){
+        homeViewModel.news.observe(viewLifecycleOwner) {
             adapter?.data = it
             adapter?.notifyDataSetChanged()
         }
         launch {
-            homeViewModel.loadData()
+            try {
+                homeViewModel.loadData()
+            } catch (e: ApiException) {
+                alert(e.message)
+            }
         }
         return binding.root
     }
@@ -135,7 +140,7 @@ class HomeFragment : BaseFragment() {
                 val intent = Intent(context, CaptureActivity::class.java)
                 scanLauncher.launch(intent)
             }
-            shouldShowRequestPermissionRationale(Manifest.permission.CAMERA)-> {
+            shouldShowRequestPermissionRationale(Manifest.permission.CAMERA) -> {
                 // In an educational UI, explain to the user why your app requires this
                 // permission for a specific feature to behave as expected. In this UI,
                 // include a "cancel" or "no thanks" button that allows the user to
