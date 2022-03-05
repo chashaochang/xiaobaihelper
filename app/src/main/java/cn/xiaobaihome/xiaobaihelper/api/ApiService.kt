@@ -12,6 +12,6 @@ interface ApiService {
     @GET("/version/getVersion")
     suspend fun getVersion(): DefaultResult<ApkInfo?>?
 
-    @GET("/news/getNewsList1")
+    @GET("/news/getNewsList")
     suspend fun getNews(@Query("type") type: String, @Query("page") page: Int, @Query("size") size: Int): DefaultResult<List<NewItem>?>?
 }
