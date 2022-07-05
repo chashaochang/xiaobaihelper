@@ -29,18 +29,11 @@
         <activity
             android:name=".MainActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-            </intent-filter>
         </activity>
         <activity
             android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.home.HomeActivity"
             android:exported="true"
             android:launchMode="singleTask">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -59,38 +52,38 @@
             android:exported="true"
             android:hardwareAccelerated="true" />
         <activity
-            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.WebViewActivity"
+            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.MiniProgramWebViewActivity"
             android:exported="true" />
         <activity
-            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.WebViewActivity$AppBrandUI0"
+            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.MiniProgramWebViewActivity$AppBrandUI0"
             android:label="AppBrandUI0"
             android:launchMode="singleTask"
             android:process=":AppBrandUI0"
             android:taskAffinity=".AppBrandUI0" />
 
         <activity
-            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.WebViewActivity$AppBrandUI1"
+            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.MiniProgramWebViewActivity$AppBrandUI1"
             android:label="AppBrandUI1"
             android:launchMode="singleTask"
             android:process=":AppBrandUI1"
             android:taskAffinity=".AppBrandUI1" />
 
         <activity
-            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.WebViewActivity$AppBrandUI2"
+            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.MiniProgramWebViewActivity$AppBrandUI2"
             android:label="AppBrandUI2"
             android:launchMode="singleTask"
             android:process=":AppBrandUI2"
             android:taskAffinity=".AppBrandUI2" />
 
         <activity
-            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.WebViewActivity$AppBrandUI3"
+            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.MiniProgramWebViewActivity$AppBrandUI3"
             android:label="AppBrandUI3"
             android:launchMode="singleTask"
             android:process=":AppBrandUI3"
             android:taskAffinity=".AppBrandUI3" />
 
         <activity
-            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.WebViewActivity$AppBrandUI4"
+            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.MiniProgramWebViewActivity$AppBrandUI4"
             android:label="AppBrandUI4"
             android:launchMode="singleTask"
             android:process=":AppBrandUI4"
@@ -108,6 +101,17 @@
         <activity
             android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.schedule.ScheduleActivity"
             android:exported="true" />
+        <activity android:name=".mvvm.view.webview.WebViewActivity" />
+        <activity android:name=".mvvm.view.openwrt.OpMainActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
 
         <meta-data android:name="android.webkit.WebView.EnableSafeBrowsing"
             android:value="true"/>

@@ -2,8 +2,11 @@ package cn.xiaobaihome.xiaobaihelper
 
 import android.app.Application
 import android.util.Log
-import cn.xiaobaihome.xiaobaihelper.api.NetMgr
 import cn.xiaobaihome.xiaobaihelper.api.BaseNetProvider
+import cn.xiaobaihome.xiaobaihelper.api.NetMgr
+import cn.xiaobaihome.xiaobaihelper.helper.CacheConfig
+import cn.xiaobaihome.xiaobaihelper.helper.CacheHelper
+import cn.xiaobaihome.xiaobaihelper.helper.getAppVersionName
 import com.baidu.mapapi.CoordType
 import com.baidu.mapapi.SDKInitializer
 import com.tencent.smtt.sdk.QbSdk
@@ -46,6 +49,9 @@ class MainApplication : Application() {
         //自4.3.0起，百度地图SDK所有接口均支持百度坐标和国测局坐标，用此方法设置您使用的坐标类型.
         //包括BD09LL和GCJ02两种坐标，默认是BD09LL坐标。
         SDKInitializer.setCoordType(CoordType.BD09LL)
+        CacheHelper.init(this)
+        //存储当前版本号
+        CacheHelper.putString(CacheConfig.CACHE_APP_VERSION, getAppVersionName(this))
     }
 
 }

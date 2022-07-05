@@ -44,12 +44,8 @@ class NewsAdapter constructor(private var context: Context, var data: List<NewIt
         binding.itemNewsDate.text = item.date
         binding.root.setOnClickListener {
             val intent = Intent(context, WebViewActivity::class.java)
-            //intent.flags = Intent.FLAG_ACTIVITY_NEW_DOCUMENT
-//        intent.flags = Intent.FLAG_ACTIVITY_MULTIPLE_TASK
             intent.putExtra("url", item.url)
             context.startActivity(intent)
-            //val activity = context as Activity
-            //activity.overridePendingTransition(R.anim.slide_bottom_in, R.anim.slide_bottom_out)
         }
         return binding.root
     }

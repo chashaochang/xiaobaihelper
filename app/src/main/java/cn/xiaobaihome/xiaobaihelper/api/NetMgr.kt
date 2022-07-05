@@ -2,13 +2,12 @@ package cn.xiaobaihome.xiaobaihelper.api
 
 
 import com.google.gson.GsonBuilder
-import okhttp3.Interceptor
-import okhttp3.OkHttpClient
+import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.*
 import java.util.concurrent.TimeUnit
+
 
 /**
  * 页面描述：网络管理类
@@ -38,13 +37,13 @@ object NetMgr {
         checkProvider(provider)
 
         val gson = GsonBuilder()
-                .setDateFormat("yyyy-MM-dd HH:mm:ss")
-                .create()
+            .disableHtmlEscaping()
+            .create()
 
         val builder = Retrofit.Builder()
-                .baseUrl(baseUrl)
-                .client(getClient(baseUrl, provider!!))
-                .addConverterFactory(GsonConverterFactory.create(gson))
+            .baseUrl(baseUrl)
+            .client(getClient(baseUrl, provider!!))
+            .addConverterFactory(LenientGsonConverterFactory.create(gson))
 
         val retrofit = builder.build()
         retrofitMap[baseUrl] = retrofit
@@ -66,22 +65,40 @@ object NetMgr {
         }
 
         checkProvider(provider)
-
+        val cookieStore: HashMap<String, List<Cookie>> = HashMap()
         val builder = OkHttpClient.Builder()
+        //自动携带，保存和更新Cookie
+        builder.cookieJar(object : CookieJar {
+            override fun loadForRequest(url: HttpUrl): List<Cookie> {
+                val cookies = cookieStore[url.host]
+                return cookies ?: emptyList()
+            }
 
-        builder.connectTimeout(if (provider.configConnectTimeoutSecs() != 0L)
-            provider.configConnectTimeoutSecs()
-        else
-            connectTimeoutMills, TimeUnit.SECONDS)
-        builder.readTimeout(if (provider.configReadTimeoutSecs() != 0L)
-            provider.configReadTimeoutSecs()
-        else
-            readTimeoutMills, TimeUnit.SECONDS)
+            override fun saveFromResponse(url: HttpUrl, cookies: List<Cookie>) {
+                cookieStore[url.host] = cookies
+            }
 
-        builder.writeTimeout(if (provider.configWriteTimeoutSecs() != 0L)
-            provider.configReadTimeoutSecs()
-        else
-            readTimeoutMills, TimeUnit.SECONDS)
+        })
+
+        builder.connectTimeout(
+            if (provider.configConnectTimeoutSecs() != 0L)
+                provider.configConnectTimeoutSecs()
+            else
+                connectTimeoutMills, TimeUnit.SECONDS
+        )
+        builder.readTimeout(
+            if (provider.configReadTimeoutSecs() != 0L)
+                provider.configReadTimeoutSecs()
+            else
+                readTimeoutMills, TimeUnit.SECONDS
+        )
+
+        builder.writeTimeout(
+            if (provider.configWriteTimeoutSecs() != 0L)
+                provider.configReadTimeoutSecs()
+            else
+                readTimeoutMills, TimeUnit.SECONDS
+        )
         provider.configHttps(builder)
 
         val handler = provider.configHandler()

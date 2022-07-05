@@ -4,7 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import cn.xiaobaihome.xiaobaihelper.R
-import cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.WebViewActivity
+import cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.MiniProgramWebViewActivity
 
 /*
      * pool中有5个webView进程0-4
@@ -16,7 +16,7 @@ object MiniProgramManager {
     //未使用的webView池
     private var webViewPool: MutableList<String> = ArrayList()
     var activatedWebViews: LinkedHashMap<String, String> = LinkedHashMap()
-    var activities: MutableList<WebViewActivity> = ArrayList()
+    var activityMiniPrograms: MutableList<MiniProgramWebViewActivity> = ArrayList()
 
     init {
         webViewPool.add("cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.WebViewActivity\$AppBrandUI0")
