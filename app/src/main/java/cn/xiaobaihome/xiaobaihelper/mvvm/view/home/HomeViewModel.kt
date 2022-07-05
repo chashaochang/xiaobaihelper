@@ -1,30 +1,27 @@
 package cn.xiaobaihome.xiaobaihelper.mvvm.view.home
 
-import androidx.lifecycle.MutableLiveData
 import cn.xiaobaihome.xiaobaihelper.mvvm.base.BaseViewModel
 import cn.xiaobaihome.xiaobaihelper.api.ApiService
 import cn.xiaobaihome.xiaobaihelper.api.ApiException
 import cn.xiaobaihome.xiaobaihelper.mvvm.model.*
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(private val apiService: ApiService) : BaseViewModel() {
 
-    var news: MutableLiveData<List<NewItemParse>> = MutableLiveData()
-
-    init {
-        news.value = ArrayList()
-    }
+    var news: MutableStateFlow<List<NewItemParse>> = MutableStateFlow(mutableListOf())
 
     suspend fun loadData() {
-        launch(apiService.getNews("top", 1, 30)){
+        launch(apiService.getNews("top", 1, 30)) {
             if (!it.isNullOrEmpty()) {
                 val list = ArrayList<NewItemParse>()
                 for (i in it) {
                     list.add(NewItemParse(i))
                 }
-                news.postValue(list)
+                news.value = list
             }
         }
     }
@@ -38,6 +35,8 @@ class HomeViewModel @Inject constructor(private val apiService: ApiService) : Ba
             }
         } catch (e: ApiException) {
             respResult.onError(e.message)
+        } catch (e: Exception) {
+            respResult.onError(e.message.toString())
         }
 
     }
