@@ -2,7 +2,10 @@ package cn.xiaobaihome.xiaobaihelper.helper
 
 import android.content.Context
 import android.content.Context.MODE_PRIVATE
+import android.content.pm.PackageManager
+import android.os.Build
 import cn.xiaobaihome.xiaobaihelper.entity.VideoHistoryItem
+import cn.xiaobaihome.xiaobaihelper.miniprogram.AppConfig
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.io.BufferedReader
@@ -31,7 +34,9 @@ fun getData(context: Context, key: String): String {
 
 //清空缓存对应key的数据
 fun clearData(context: Context, key: String) {
-    context.getSharedPreferences(key, MODE_PRIVATE).edit().clear().apply()
+    val editor = context.getSharedPreferences(key, MODE_PRIVATE).edit()
+    editor.clear()
+    editor.apply()
 }
 
 fun addVideoHistory(context: Context, videoHistoryItem: VideoHistoryItem) {
@@ -42,7 +47,7 @@ fun addVideoHistory(context: Context, videoHistoryItem: VideoHistoryItem) {
         Gson().fromJson(historyListStr, object : TypeToken<MutableList<VideoHistoryItem>>() {}.type)
     }
     val iterator = historyList.iterator()
-    while (iterator.hasNext()){
+    while (iterator.hasNext()) {
         val historyItem = iterator.next()
         if (historyItem.coverImg == videoHistoryItem.coverImg) {
             iterator.remove()
@@ -75,4 +80,28 @@ fun getJson(fileName: String, context: Context): String {
         e.printStackTrace()
     }
     return stringBuilder.toString()
+}
+
+fun getUA(): String {
+    if ("" == APP_UA) {
+        APP_UA = USER_AGENT + getAppVersionName() + "|" + getPhoneInfo()// + "|" + UserUtils.getUserId()
+    }
+    return APP_UA
+}
+
+fun getPhoneInfo(): String {
+    return Build.BRAND.toString() + " " + Build.MODEL + "|" + Build.VERSION.RELEASE
+}
+
+fun getAppVersionName(context: Context): String {
+    try {
+        return context.packageManager.getPackageInfo(context.packageName, 0).versionName
+    } catch (e: PackageManager.NameNotFoundException) {
+        e.printStackTrace()
+    }
+    return ""
+}
+
+fun getAppVersionName(): String {
+    return CacheHelper.getString(CacheConfig.CACHE_APP_VERSION, "")
 }

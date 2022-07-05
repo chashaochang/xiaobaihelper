@@ -13,4 +13,16 @@
         <attr name="right_bottom_radius" format="dimension" />
         <attr name="left_bottom_radius" format="dimension" />
     </declare-styleable>
+    <declare-styleable name="XBToolBar">
+        <attr name="enableNavigationBack" format="boolean" />
+        <attr name="backIconColor" format="color" />
+        <attr name="enableMenu" format="boolean" />
+        <attr name="title" format="string" />
+        <attr name="titleTextColor" format="color" />
+        <attr name="menuTextColor" format="color" />
+        <attr name="menuText" format="string" />
+        <attr name="menuTextColorTwo" format="color" />
+        <attr name="enableMenuTwo" format="boolean" />
+        <attr name="menuTextTwo" format="string" />
+    </declare-styleable>
 </resources>

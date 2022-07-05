@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_openwrt"
+    app:startDestination="@id/opMainFragment">
+
+    <fragment
+        android:id="@+id/opLoginFragment"
+        android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.openwrt.OpLoginFragment"
+        android:label="op_login_fragment"
+        tools:layout="@layout/op_login_fragment" />
+    <fragment
+        android:id="@+id/opMainFragment"
+        android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.openwrt.OpMainFragment"
+        android:label="op_main_fragment"
+        tools:layout="@layout/op_main_fragment" >
+        <action
+            android:id="@+id/action_opMainFragment_to_opLoginFragment"
+            app:destination="@id/opLoginFragment" />
+    </fragment>
+</navigation>
