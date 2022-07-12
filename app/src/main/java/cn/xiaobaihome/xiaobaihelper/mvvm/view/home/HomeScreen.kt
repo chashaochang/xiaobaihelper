@@ -5,10 +5,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -17,6 +14,8 @@ import cn.xiaobaihome.xiaobaihelper.helper.AppData
 import cn.xiaobaihome.xiaobaihelper.mvvm.view.acount.AddAccountActivity
 import cn.xiaobaihome.xiaobaihelper.mvvm.view.home.widget.MinerCard
 import com.google.zxing.client.android.CaptureActivity
+import kotlinx.coroutines.runBlocking
+import java.util.*
 
 @Composable
 fun HomeScreen(homeViewModel: HomeViewModel) {
@@ -25,7 +24,7 @@ fun HomeScreen(homeViewModel: HomeViewModel) {
     }
     val context = LocalContext.current
     LaunchedEffect(Unit) {
-        homeViewModel.loadData()
+//        homeViewModel.loadData()
     }
     Column(
         modifier = Modifier.statusBarsPadding()
@@ -59,14 +58,21 @@ fun HomeScreen(homeViewModel: HomeViewModel) {
                 .padding(16.dp, 10.dp)
                 .fillMaxWidth()
         ) {
-            val isMinerLogin = AppData.isMinerLogin.value
+            val isMinerLogin = AppData.isMinerLogin.collectAsState().value
             if (isMinerLogin) {
-                LaunchedEffect(Unit) {
-                    homeViewModel.getMinerStatus()
+                val timer = remember {
+                    Timer().apply {
+                        val task = object : TimerTask() {
+                            override fun run() {
+                                runBlocking {
+                                    homeViewModel.getMinerStatus()
+                                }
+                            }
+                        }
+                        scheduleAtFixedRate(task, 3000L, 3000L)
+                    }
                 }
-                val minerStatus = remember {
-                    homeViewModel.minerStatus.value
-                }
+                val minerStatus = homeViewModel.minerStatus.collectAsState().value
                 if (minerStatus.version.isNotBlank()) {
                     MinerCard(minerStatus)
                 } else {

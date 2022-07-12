@@ -16,6 +16,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -89,7 +90,7 @@ fun AddAccountContent() {
             title = "NBMiner",
             subTitle = "miner",
             3,
-            enable = !AppData.isMinerLogin.value
+            enable = !AppData.isMinerLogin.collectAsState().value
         ),
         AccountItem(
             icon = R.mipmap.icon_ask,

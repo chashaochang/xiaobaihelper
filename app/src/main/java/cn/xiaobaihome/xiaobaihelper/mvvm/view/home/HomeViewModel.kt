@@ -66,7 +66,6 @@ class HomeViewModel @Inject constructor(private val apiService: ApiService) : Ba
         try {
             launch2(minerService.getMinerStatus()) {
                 if (it != null) {
-                    Log.i("TAG", "getMinerStatus: "+it.version)
                     minerStatus.value = it
                 }
             }
