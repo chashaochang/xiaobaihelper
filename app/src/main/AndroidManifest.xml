@@ -27,10 +27,6 @@
         android:usesCleartextTraffic="true"
         tools:ignore="AllowBackup">
         <activity
-            android:name=".MainActivity"
-            android:exported="true">
-        </activity>
-        <activity
             android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.home.HomeActivity"
             android:exported="true"
             android:launchMode="singleTask">
@@ -42,15 +38,11 @@
 
                 <data android:scheme="kh0r1h" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity
-            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.video.VideoWebViewActivity"
-            android:exported="true" />
-        <activity
-            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.play.PlayActivity"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:exported="true"
-            android:hardwareAccelerated="true" />
         <activity
             android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.MiniProgramWebViewActivity"
             android:exported="true" />
@@ -88,30 +80,13 @@
             android:launchMode="singleTask"
             android:process=":AppBrandUI4"
             android:taskAffinity=".AppBrandUI4" />
-
-        <activity
-            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.login.LoginActivity"
-            android:exported="true" />
-        <activity
-            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.food.FoodActivity"
-            android:exported="true" />
-        <activity
-            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.random.RandomActivity"
-            android:exported="true" />
-        <activity
-            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.schedule.ScheduleActivity"
-            android:exported="true" />
         <activity android:name=".mvvm.view.webview.WebViewActivity" />
         <activity android:name=".mvvm.view.openwrt.OpMainActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
+        <activity android:name=".mvvm.view.acount.AddAccountActivity" />
+        <activity android:name=".mvvm.view.acount.LoginAccountActivity" />
 
         <meta-data
             android:name="android.webkit.WebView.EnableSafeBrowsing"
@@ -139,9 +114,6 @@
                 android:value="androidx.startup" />
             <meta-data
                 android:name="cn.xiaobaihome.xiaobaihelper.startup.OkHttpInitializer"
-                android:value="androidx.startup" />
-            <meta-data
-                android:name="cn.xiaobaihome.xiaobaihelper.startup.RetrofitInitializer"
                 android:value="androidx.startup" />
         </provider>
 

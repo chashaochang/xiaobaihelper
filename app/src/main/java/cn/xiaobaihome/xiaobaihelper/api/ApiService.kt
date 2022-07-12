@@ -1,12 +1,8 @@
 package cn.xiaobaihome.xiaobaihelper.api
 
-import cn.xiaobaihome.xiaobaihelper.mvvm.model.ApkInfo
-import cn.xiaobaihome.xiaobaihelper.mvvm.model.DefaultResult
-import cn.xiaobaihome.xiaobaihelper.mvvm.model.NewItem
-import cn.xiaobaihome.xiaobaihelper.mvvm.model.Status
-import com.google.gson.JsonObject
-import com.google.gson.JsonPrimitive
-import retrofit2.Call
+import cn.xiaobaihome.xiaobaihelper.mvvm.model.*
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 
 interface ApiService {
@@ -33,5 +29,21 @@ interface ApiService {
         @Query("status") status: String,
         @Query("_") timestamp: String
     ): Status
+
+    companion object {
+
+        private const val BASE_URL = "https://api.xiaobaihome.cn/"
+
+        fun create(): ApiService {
+            val okHttpClient = OkHttpManager.instance.okHttpClient
+            val gson = GsonManager.instance.gson
+            return Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create(gson))
+                .baseUrl(BASE_URL)
+                .client(okHttpClient)
+                .build()
+                .create(ApiService::class.java)
+        }
+    }
 
 }

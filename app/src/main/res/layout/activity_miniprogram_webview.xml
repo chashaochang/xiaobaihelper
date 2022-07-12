@@ -10,11 +10,11 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <cn.xiaobaihome.xiaobaihelper.ui.widget.MiniProgramActionBar
-        android:id="@+id/action_bar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent" />
+<!--    <cn.xiaobaihome.xiaobaihelper.ui.widget.MiniProgramActionBar-->
+<!--        android:id="@+id/action_bar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/tabBar"

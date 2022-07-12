@@ -1,4 +1,4 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalAnimationApi::class)
 
 package cn.xiaobaihome.xiaobaihelper.mvvm.view.home
 
@@ -8,16 +8,18 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.core.view.WindowCompat
-import androidx.navigation.NavController
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
@@ -25,18 +27,19 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import cn.xiaobaihome.xiaobaihelper.R
+import cn.xiaobaihome.xiaobaihelper.api.MinerApiService
 import cn.xiaobaihome.xiaobaihelper.mvvm.base.BaseActivity
-import cn.xiaobaihome.xiaobaihelper.mvvm.model.ApkInfo
-import cn.xiaobaihome.xiaobaihelper.mvvm.model.RespResult
 import cn.xiaobaihome.xiaobaihelper.api.Utils
+import cn.xiaobaihome.xiaobaihelper.helper.AppData
+import cn.xiaobaihome.xiaobaihelper.helper.CacheUtil
 import cn.xiaobaihome.xiaobaihelper.helper.getVersion
-import cn.xiaobaihome.xiaobaihelper.mvvm.view.RouterConfig
-import cn.xiaobaihome.xiaobaihelper.mvvm.view.registerRouter
-import cn.xiaobaihome.xiaobaihelper.mvvm.view.scan.AddAppScreen
 import cn.xiaobaihome.xiaobaihelper.theme.XBHelperTheme
+import cn.xiaobaihome.xiaobaihelper.widget.alert
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import kotlin.system.exitProcess
 
+@ExperimentalAnimationApi
 @AndroidEntryPoint
 class HomeActivity : BaseActivity() {
 
@@ -45,32 +48,39 @@ class HomeActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
-            val navController = rememberNavController()
-            NavHost(navController = navController, RouterConfig.Home) {
-                registerRouter(navController)
+            HomeContent(homeViewModel)
+            alert(
+                show = homeViewModel.alertState.value.isNotEmpty(),
+                text = homeViewModel.alertState.value
+            )
+
+            LaunchedEffect(Unit) {
+                homeViewModel.loadData()
+                homeViewModel.getVersion()
             }
-        }
-        //检查更新
-        launch {
-            homeViewModel.getVersion(object :
-                RespResult<ApkInfo> {
-                override fun onSuccess(t: ApkInfo) {
 
-                    if (t.versionCode > getVersion()) {
-                        alert(t.updateInfo.toString(), "更新") { _, _ ->
-                            Utils.downLoadNew(this@HomeActivity, t.downloadUrl)
-                        }
+            alert(
+                homeViewModel.apkInfo.value.versionCode > getVersion(),
+                text = homeViewModel.apkInfo.value.updateInfo.toString(),
+                confirmText = "更新",
+                onConfirm = {
+                    homeViewModel.apkInfo.value.downloadUrl?.let {
+                        Utils.downLoadNew(
+                            this@HomeActivity,
+                            it
+                        )
                     }
-                }
-
-                override fun onError(msg: String) {
-                    alert(msg)
-                }
-            })
+                })
         }
-
+        //初始化Miner
+        val minerProtocol = CacheUtil.get(CacheUtil.MINER_PROTOCOL)
+        val minerAddress = CacheUtil.get(CacheUtil.MINER_ADDRESS)
+        val minerPort = CacheUtil.get(CacheUtil.MINER_PORT)
+        if (!minerProtocol.isNullOrBlank() && !minerAddress.isNullOrBlank() && !minerPort.isNullOrBlank()) {
+            AppData.isMinerLogin.value = true
+            MinerApiService.BASE_URL = "${minerProtocol}://${minerAddress}:${minerPort}"
+        }
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
@@ -91,7 +101,7 @@ class HomeActivity : BaseActivity() {
 }
 
 @Composable
-fun HomeContent(navController: NavController) {
+fun HomeContent(homeViewModel: HomeViewModel) {
     val homeNavController = rememberNavController()
     // tab标题
     val items = listOf(
@@ -140,9 +150,9 @@ fun HomeContent(navController: NavController) {
                 startDestination = Screen.Home.route,
                 Modifier.padding(it)
             ) {
-                composable(Screen.Home.route) { HomeScreen(navController) }
-                composable(Screen.Like.route) { LikeScreen(navController) }
-                composable(Screen.Mine.route) { MineScreen(navController) }
+                composable(Screen.Home.route) { HomeScreen(homeViewModel) }
+                composable(Screen.Like.route) { LikeScreen() }
+                composable(Screen.Mine.route) { MineScreen() }
             }
         }
     }

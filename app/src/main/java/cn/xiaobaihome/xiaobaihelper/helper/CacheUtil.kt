@@ -1,0 +1,43 @@
+package cn.xiaobaihome.xiaobaihelper.helper
+
+import android.content.Context
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.core.edit
+import androidx.datastore.preferences.core.stringPreferencesKey
+import androidx.datastore.preferences.preferencesDataStore
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.runBlocking
+
+object CacheUtil {
+
+    val CACHE_APP_VERSION = stringPreferencesKey("CACHE_APP_VERSION")
+    val MINER_PROTOCOL = stringPreferencesKey("MINER_PROTOCOL")
+    val MINER_ADDRESS = stringPreferencesKey("MINER_ADDRESS")
+    val MINER_PORT = stringPreferencesKey("MINER_PORT")
+
+    private const val ACCOUNT_PREFERENCES_NAME = "account_preferences"
+
+    private val Context.dataStore by preferencesDataStore(
+        name = ACCOUNT_PREFERENCES_NAME
+    )
+
+    private lateinit var context: Context
+    fun init(context: Context) {
+        this.context = context
+    }
+
+    fun <T> set(key: Preferences.Key<T>, value: T) {
+        runBlocking {
+            context.dataStore.edit {
+                it[key] = value
+            }
+        }
+    }
+
+    fun <T> get(key: Preferences.Key<T>): T? {
+        return runBlocking {
+            context.dataStore.data.map { it[key] }.first()
+        }
+    }
+}

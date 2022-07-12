@@ -34,12 +34,12 @@ class OpMainActivity :BaseActivity() {
                     }
 
                     override fun onError(msg: String) {
-                        alert(msg)
+                        //alert(msg)
                     }
 
                 })
             } catch (e: Exception) {
-                alert(e.toString())
+                //alert(e.toString())
             }
         }
     }
