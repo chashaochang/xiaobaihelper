@@ -2,36 +2,74 @@
 
 package cn.xiaobaihome.xiaobaihelper.mvvm.view.home.widget
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.Card
-import androidx.compose.material3.Divider
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Text
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import cn.xiaobaihome.xiaobaihelper.R
 import cn.xiaobaihome.xiaobaihelper.mvvm.model.MinerStatus
 
 @Composable
 fun MinerCard(minerStatus: MinerStatus) {
+    Card() {
+        Column(modifier = Modifier.padding(top = 16.dp, end = 16.dp, bottom = 16.dp, start = 0.dp)) {
+            Row() {
+                Icon(
+                    modifier = Modifier.size(80.dp),
+                    painter = painterResource(id = R.mipmap.graphics_card),
+                    contentDescription = ""
+                )
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(minerStatus.miner.devices[0].info, fontSize = 14.sp)
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Row {
+                        Text(text = "算力:", fontSize = 12.sp)
+                        Text(minerStatus.miner.devices[0].hashrate, fontSize = 12.sp)
+                    }
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Row() {
+                        Text(
+                            modifier = Modifier.weight(1f),
+                            text = "核心温度:${minerStatus.miner.devices[0].temperature}℃",
+                            fontSize = 12.sp
+                        )
+                        Text(
+                            modifier = Modifier.weight(1f),
+                            text = "显存温度:${minerStatus.miner.devices[0].memTemperature}℃",
+                            fontSize = 12.sp
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(4.dp))
+                    Row() {
+                        Text(
+                            modifier = Modifier.weight(1f),
+                            text = "功耗:${minerStatus.miner.devices[0].power}W",
+                            fontSize = 12.sp
+                        )
+                        Text(
+                            modifier = Modifier.weight(1f),
+                            text = "风扇:${minerStatus.miner.devices[0].fan}%",
+                            fontSize = 12.sp
+                        )
+                    }
+                }
+            }
 
-    Card {
-        Column {
-            Text(text = "显卡信息")
-            Text("显卡:${minerStatus.miner.devices[0].info}")
-            Text("算力:${minerStatus.miner.devices[0].hashrate}")
-            Text("接受份额:${minerStatus.miner.devices[0].accepted_shares}")
-            Text("拒绝份额:${minerStatus.miner.devices[0].rejected_shares}")
-            Text("无效份额:${minerStatus.miner.devices[0].invalid_shares}")
-            Text("核心温度:${minerStatus.miner.devices[0].temperature}")
-            Text("显存温度:${minerStatus.miner.devices[0].memTemperature}")
-            Text("功耗:${minerStatus.miner.devices[0].power}")
-            Text("风扇:${minerStatus.miner.devices[0].fan}")
-            Divider()
-            Text(text = "矿池信息")
-            Text("当前难度:${minerStatus.stratum.difficulty}")
-            Text("矿池延迟:${minerStatus.stratum.latency}")
-            Text("10分钟算力:${minerStatus.stratum.pool_hashrate_10m}")
-            Text("4小时算力:${minerStatus.stratum.pool_hashrate_4h}")
-            Text("24小时算力:${minerStatus.stratum.pool_hashrate_24h}")
+//            Text("接受份额:${minerStatus.miner.devices[0].accepted_shares}")
+//            Text("拒绝份额:${minerStatus.miner.devices[0].rejected_shares}")
+//            Text("无效份额:${minerStatus.miner.devices[0].invalid_shares}")
+//
+//            Divider()
+//            Text(text = "矿池信息")
+//            Text("当前难度:${minerStatus.stratum.difficulty}")
+//            Text("矿池延迟:${minerStatus.stratum.latency}")
+//            Text("10分钟算力:${minerStatus.stratum.pool_hashrate_10m}")
+//            Text("4小时算力:${minerStatus.stratum.pool_hashrate_4h}")
+//            Text("24小时算力:${minerStatus.stratum.pool_hashrate_24h}")
         }
     }
 }

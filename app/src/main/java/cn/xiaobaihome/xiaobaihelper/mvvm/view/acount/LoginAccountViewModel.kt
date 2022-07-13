@@ -18,12 +18,14 @@ class LoginAccountViewModel @Inject constructor(val apiService: ApiService) : Ba
         protocol: String,
         address: String,
         port: String,
+        username: String,
+        pwd: String,
         result: (Boolean) -> Unit
     ) {
         when (type.value) {
             0 -> {
                 //ikuai
-
+                ikuaiLogin(protocol, address, port, username, pwd, result)
             }
             1 -> {
                 //openwrt
@@ -35,6 +37,33 @@ class LoginAccountViewModel @Inject constructor(val apiService: ApiService) : Ba
                 //nbminer
                 minerLogin(protocol, address, port, result)
             }
+        }
+    }
+
+    private suspend fun ikuaiLogin(
+        protocol: String,
+        address: String,
+        port: String,
+        username: String,
+        pwd: String,
+        result: (Boolean) -> Unit
+    ) {
+        MinerApiService.BASE_URL = "${protocol}://${address}:${port}"
+        val minerApiService = MinerApiService.create()
+        try {
+            launch2(minerApiService.getMinerStatus()) {
+                if (it != null && it.version.isNotBlank()) {
+                    result(true)
+                    CacheUtil.set(CacheUtil.MINER_PROTOCOL, protocol)
+                    CacheUtil.set(CacheUtil.MINER_ADDRESS, address)
+                    CacheUtil.set(CacheUtil.MINER_PORT, port)
+                    AppData.isMinerLogin.value = true
+                } else {
+                    result(false)
+                }
+            }
+        } catch (e: Exception) {
+            result(false)
         }
     }
 

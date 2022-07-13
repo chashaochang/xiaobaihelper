@@ -16,6 +16,12 @@ object CacheUtil {
     val MINER_ADDRESS = stringPreferencesKey("MINER_ADDRESS")
     val MINER_PORT = stringPreferencesKey("MINER_PORT")
 
+    val IKUAI_PROTOCOL = stringPreferencesKey("IKUAI_PROTOCOL")
+    val IKUAI_ADDRESS = stringPreferencesKey("IKUAI_ADDRESS")
+    val IKUAI_PORT = stringPreferencesKey("IKUAI_PORT")
+    val IKUAI_USERNAME = stringPreferencesKey("IKUAI_USERNAME")
+    val IKUAI_PWD = stringPreferencesKey("IKUAI_PWD")
+
     private const val ACCOUNT_PREFERENCES_NAME = "account_preferences"
 
     private val Context.dataStore by preferencesDataStore(

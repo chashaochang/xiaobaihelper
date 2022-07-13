@@ -48,12 +48,14 @@ class LoginAccountActivity : BaseActivity() {
                                 Text("账户登录")
                             },
                         )
-                        LoginContent(viewModel) { protocol, address, port ->
+                        LoginContent(viewModel) { protocol, address, port ,username,pwd->
                             launch {
                                 viewModel.testLogin(
                                     protocol,
                                     address,
                                     port,
+                                    username,
+                                    pwd
                                 ) {
                                     if (it) {
                                         toast("登录成功")
@@ -79,12 +81,16 @@ fun LoginContent(
     viewModel: LoginAccountViewModel, onLoginClick: (
         protocol: String,
         address: String,
-        port: String
+        port: String,
+        username: String,
+        pwd: String
     ) -> Unit
 ) {
     var protocol by remember { mutableStateOf("http") }
     var address by remember { mutableStateOf("192.168.1.1") }
     var port by remember { mutableStateOf("80") }
+    var username by remember { mutableStateOf("") }
+    var pwd by remember { mutableStateOf("") }
     Column(
         Modifier.padding(pagePadding, 10.dp),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -131,7 +137,7 @@ fun LoginContent(
                     }
                 )
                 OutlinedTextField(
-                    modifier = Modifier.width(66.dp),
+                    modifier = Modifier.width(90.dp),
                     value = port,
                     label = { Text(text = "端口") },
                     colors = TextFieldDefaults.outlinedTextFieldColors(
@@ -152,28 +158,30 @@ fun LoginContent(
                 Card(modifier = Modifier.weight(1f)) {
                     OutlinedTextField(
                         modifier = Modifier.padding(top = 14.dp),
-                        value = "",
+                        value = username,
                         label = { Text(text = "账号") },
                         colors = TextFieldDefaults.outlinedTextFieldColors(
                             focusedBorderColor = Color.Transparent,
                             unfocusedBorderColor = Color.Transparent
                         ),
-                        onValueChange = {}
+                        onValueChange = {
+                            username = it
+                        }
                     )
                 }
-                Spacer(modifier = Modifier.width(10.dp))
-                Card(modifier = Modifier.weight(1f)) {
-                    OutlinedTextField(
-                        modifier = Modifier.padding(top = 14.dp),
-                        value = "",
-                        label = { Text(text = "备注") },
-                        colors = TextFieldDefaults.outlinedTextFieldColors(
-                            focusedBorderColor = Color.Transparent,
-                            unfocusedBorderColor = Color.Transparent
-                        ),
-                        onValueChange = {}
-                    )
-                }
+//                Spacer(modifier = Modifier.width(10.dp))
+//                Card(modifier = Modifier.weight(1f)) {
+//                    OutlinedTextField(
+//                        modifier = Modifier.padding(top = 14.dp),
+//                        value = "",
+//                        label = { Text(text = "备注") },
+//                        colors = TextFieldDefaults.outlinedTextFieldColors(
+//                            focusedBorderColor = Color.Transparent,
+//                            unfocusedBorderColor = Color.Transparent
+//                        ),
+//                        onValueChange = {}
+//                    )
+//                }
             }
 
             Spacer(modifier = Modifier.height(10.dp))
@@ -182,13 +190,15 @@ fun LoginContent(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 14.dp),
-                    value = "",
+                    value = pwd,
                     label = { Text(text = "密码") },
                     colors = TextFieldDefaults.outlinedTextFieldColors(
                         focusedBorderColor = Color.Transparent,
                         unfocusedBorderColor = Color.Transparent
                     ),
-                    onValueChange = {}
+                    onValueChange = {
+                        pwd = it
+                    }
                 )
             }
         }
@@ -197,7 +207,9 @@ fun LoginContent(
             onLoginClick(
                 protocol,
                 address,
-                port
+                port,
+                username,
+                pwd
             )
         }) {
             Text(text = "登录并存储")

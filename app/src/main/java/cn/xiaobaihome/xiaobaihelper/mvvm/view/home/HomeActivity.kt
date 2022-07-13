@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -51,13 +52,16 @@ class HomeActivity : BaseActivity() {
         setContent {
             HomeContent(homeViewModel)
             alert(
-                show = homeViewModel.alertState.value.isNotEmpty(),
-                text = homeViewModel.alertState.value
+                show = homeViewModel.alertState.collectAsState().value.isNotEmpty(),
+                text = homeViewModel.alertState.collectAsState().value,
+                onConfirm = {
+                    homeViewModel.alertState.value = ""
+                }
             )
 
             LaunchedEffect(Unit) {
-                homeViewModel.loadData()
-                homeViewModel.getVersion()
+//                homeViewModel.loadData()
+//                homeViewModel.getVersion()
             }
 
             alert(
