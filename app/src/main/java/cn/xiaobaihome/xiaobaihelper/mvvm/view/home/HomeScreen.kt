@@ -12,6 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cn.xiaobaihome.xiaobaihelper.helper.AppData
 import cn.xiaobaihome.xiaobaihelper.mvvm.view.acount.AddAccountActivity
+import cn.xiaobaihome.xiaobaihelper.mvvm.view.home.widget.IKuaiCard
 import cn.xiaobaihome.xiaobaihelper.mvvm.view.home.widget.MinerCard
 import com.google.zxing.client.android.CaptureActivity
 import kotlinx.coroutines.runBlocking
@@ -59,24 +60,40 @@ fun HomeScreen(homeViewModel: HomeViewModel) {
                 .fillMaxWidth()
         ) {
             val isMinerLogin = AppData.isMinerLogin.collectAsState().value
-            if (isMinerLogin) {
-                val timer = remember {
-                    Timer().apply {
-                        val task = object : TimerTask() {
-                            override fun run() {
-                                runBlocking {
-                                    homeViewModel.getMinerStatus()
-                                }
+            val isIKuaiLogin = AppData.isIKuaiLogin.collectAsState().value
+            if (isIKuaiLogin) {
+                Timer().apply {
+                    val task = object : TimerTask() {
+                        override fun run() {
+                            runBlocking {
+                                homeViewModel.getIKuaiStatus()
                             }
                         }
-                        scheduleAtFixedRate(task, 3000L, 3000L)
                     }
+                    scheduleAtFixedRate(task, 0L, 10000L)
+                }
+                val ikuaiStatus = homeViewModel.ikuaiStatus.collectAsState().value
+                if (ikuaiStatus.sysstat.hostname.isNotBlank()) {
+                    IKuaiCard(ikuaiStatus)
+                } else {
+                    Text("暂无ikuai数据")
+                }
+            } else if (isMinerLogin) {
+                Timer().apply {
+                    val task = object : TimerTask() {
+                        override fun run() {
+                            runBlocking {
+                                homeViewModel.getMinerStatus()
+                            }
+                        }
+                    }
+                    scheduleAtFixedRate(task, 0L, 3000L)
                 }
                 val minerStatus = homeViewModel.minerStatus.collectAsState().value
                 if (minerStatus.version.isNotBlank()) {
                     MinerCard(minerStatus)
                 } else {
-                    Text("暂无数据")
+                    Text("暂无miner数据")
                 }
             } else {
                 Text(text = "什么也没有，快去添加设备吧")

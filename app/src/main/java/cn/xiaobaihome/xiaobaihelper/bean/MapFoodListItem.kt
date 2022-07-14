@@ -1,4 +1,4 @@
-package cn.xiaobaihome.xiaobaihelper.entity
+package cn.xiaobaihome.xiaobaihelper.bean
 
 import com.baidu.mapapi.search.core.PoiInfo
 

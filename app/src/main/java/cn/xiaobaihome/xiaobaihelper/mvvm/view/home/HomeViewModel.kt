@@ -4,7 +4,9 @@ import android.util.Log
 import cn.xiaobaihome.xiaobaihelper.mvvm.base.BaseViewModel
 import cn.xiaobaihome.xiaobaihelper.api.ApiService
 import cn.xiaobaihome.xiaobaihelper.api.ApiException
+import cn.xiaobaihome.xiaobaihelper.api.IKuaiApiService
 import cn.xiaobaihome.xiaobaihelper.api.MinerApiService
+import cn.xiaobaihome.xiaobaihelper.bean.IkuaiBaseReq
 import cn.xiaobaihome.xiaobaihelper.mvvm.base.PageState
 import cn.xiaobaihome.xiaobaihelper.mvvm.model.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,6 +23,7 @@ class HomeViewModel @Inject constructor(private val apiService: ApiService) : Ba
     var news: MutableStateFlow<List<NewItemParse>> = MutableStateFlow(mutableListOf())
     var apkInfo: MutableStateFlow<ApkInfo> = MutableStateFlow(ApkInfo())
     var minerStatus: MutableStateFlow<MinerStatus> = MutableStateFlow(MinerStatus())
+    var ikuaiStatus: MutableStateFlow<IKuaiStatus> = MutableStateFlow(IKuaiStatus())
 
     suspend fun loadData() {
 //        launch(apiService.getNews("top", 1, 30)) {
@@ -49,6 +52,34 @@ class HomeViewModel @Inject constructor(private val apiService: ApiService) : Ba
             launch(apiService.getVersion(), autoShowLoading = false) {
                 if (it != null) {
                     apkInfo.value = it
+                }
+            }
+        } catch (e: Exception) {
+            if (e is ApiException) {
+                if (e.code != 4004)
+                    alertState.value = e.message
+            } else {
+                alertState.value = e.message.toString()
+            }
+        }
+    }
+
+    suspend fun getIKuaiStatus(){
+        val ikuaiService = IKuaiApiService.create()
+        try {
+            launch2(ikuaiService.getStatus(IkuaiBaseReq(
+                func_name = "homepage",
+                action = "show",
+                param = IkuaiBaseReq.Param(
+                    TYPE = "sysstat,ac_status"
+                )
+            ))) {
+                if(it!=null){
+                    if (it.data!=null) {
+                        ikuaiStatus.value = it.data
+                    }else{
+                        alertState.value = it.errMsg
+                    }
                 }
             }
         } catch (e: Exception) {

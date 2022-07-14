@@ -28,6 +28,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import cn.xiaobaihome.xiaobaihelper.R
+import cn.xiaobaihome.xiaobaihelper.api.IKuaiApiService
 import cn.xiaobaihome.xiaobaihelper.api.MinerApiService
 import cn.xiaobaihome.xiaobaihelper.mvvm.base.BaseActivity
 import cn.xiaobaihome.xiaobaihelper.api.Utils
@@ -76,6 +77,16 @@ class HomeActivity : BaseActivity() {
                         )
                     }
                 })
+        }
+        //初始化ikuai
+        val ikuaiProtocol = CacheUtil.get(CacheUtil.IKUAI_PROTOCOL)
+        val ikuaiAddress = CacheUtil.get(CacheUtil.IKUAI_ADDRESS)
+        val ikuaiPort = CacheUtil.get(CacheUtil.IKUAI_PORT)
+        val ikuaiUserName = CacheUtil.get(CacheUtil.IKUAI_USERNAME)
+        val ikuaiPwd = CacheUtil.get(CacheUtil.IKUAI_PWD)
+        if (!ikuaiProtocol.isNullOrBlank() && !ikuaiAddress.isNullOrBlank() && !ikuaiPort.isNullOrBlank() && !ikuaiUserName.isNullOrBlank() && !ikuaiPwd.isNullOrBlank()) {
+            AppData.isIKuaiLogin.value = true
+            IKuaiApiService.BASE_URL = "${ikuaiProtocol}://${ikuaiAddress}:${ikuaiPort}"
         }
         //初始化Miner
         val minerProtocol = CacheUtil.get(CacheUtil.MINER_PROTOCOL)

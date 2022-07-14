@@ -21,6 +21,7 @@ object CacheUtil {
     val IKUAI_PORT = stringPreferencesKey("IKUAI_PORT")
     val IKUAI_USERNAME = stringPreferencesKey("IKUAI_USERNAME")
     val IKUAI_PWD = stringPreferencesKey("IKUAI_PWD")
+    val IKUAI_COOKIE = stringPreferencesKey("IKUAI_COOKIE")
 
     private const val ACCOUNT_PREFERENCES_NAME = "account_preferences"
 

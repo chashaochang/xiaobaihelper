@@ -48,7 +48,7 @@ class LoginAccountActivity : BaseActivity() {
                                 Text("账户登录")
                             },
                         )
-                        LoginContent(viewModel) { protocol, address, port ,username,pwd->
+                        LoginContent(viewModel) { protocol, address, port, username, pwd ->
                             launch {
                                 viewModel.testLogin(
                                     protocol,
@@ -56,12 +56,12 @@ class LoginAccountActivity : BaseActivity() {
                                     port,
                                     username,
                                     pwd
-                                ) {
-                                    if (it) {
+                                ) { success, msg ->
+                                    if (success) {
                                         toast("登录成功")
                                         finish()
                                     } else {
-                                        toast("登录失败")
+                                        toast(msg?:"登录失败")
                                     }
                                 }
                             }

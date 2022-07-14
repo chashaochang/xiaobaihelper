@@ -1,16 +1,13 @@
 package cn.xiaobaihome.xiaobaihelper.helper
 
 import android.content.Context
-import android.content.Context.MODE_PRIVATE
 import android.content.pm.PackageManager
 import android.os.Build
-import cn.xiaobaihome.xiaobaihelper.entity.VideoHistoryItem
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import cn.xiaobaihome.xiaobaihelper.bean.VideoHistoryItem
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
-import java.util.*
+import java.security.MessageDigest
 
 fun addVideoHistory(context: Context, videoHistoryItem: VideoHistoryItem) {
 //    val historyListStr = getData(context, "video_history")
@@ -78,4 +75,18 @@ fun getAppVersionName(context: Context): String {
 
 fun getAppVersionName(): String {
     return CacheUtil.get(CacheUtil.CACHE_APP_VERSION) ?: ""
+}
+
+/** md5加密 */
+fun md5(content: String): String {
+    val hash = MessageDigest.getInstance("MD5").digest(content.toByteArray())
+    val hex = StringBuilder(hash.size * 2)
+    for (b in hash) {
+        var str = Integer.toHexString(b.toInt())
+        if (b < 0x10) {
+            str = "0$str"
+        }
+        hex.append(str.substring(str.length -2))
+    }
+    return hex.toString()
 }

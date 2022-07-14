@@ -72,6 +72,7 @@ fun AddAccountContent() {
             title = "iKuai",
             subTitle = "软路由",
             0,
+            !AppData.isIKuaiLogin.collectAsState().value
         ),
         AccountItem(
             icon = R.mipmap.icon_wifi_router,

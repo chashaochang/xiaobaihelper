@@ -7,22 +7,21 @@ import java.security.NoSuchAlgorithmException
 import java.security.SecureRandom
 import java.security.cert.X509Certificate
 import java.util.concurrent.TimeUnit
-import javax.net.ssl.HostnameVerifier
 import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
 
-class OkHttpManager private constructor(){
+class OkHttpManager private constructor() {
 
-    companion object{
-        val instance : OkHttpManager by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
+    companion object {
+        val instance: OkHttpManager by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
             OkHttpManager().apply {
                 init()
             }
         }
     }
 
-    lateinit var okHttpClient:OkHttpClient
+    lateinit var okHttpClient: OkHttpClient
 
     private fun init() {
         val xtm = @SuppressLint("CustomX509TrustManager")
@@ -52,12 +51,13 @@ class OkHttpManager private constructor(){
         builder.hostnameVerifier { _, _ ->
             true
         }
-        builder.sslSocketFactory(sslContext.socketFactory,xtm)
+        //builder.cookieJar(CookieJar())
+        builder.sslSocketFactory(sslContext.socketFactory, xtm)
         //builder.addInterceptor()
         builder.addNetworkInterceptor(ResponseJsonInterceptor())
-        builder.callTimeout(20,TimeUnit.SECONDS)
-        builder.connectTimeout(20,TimeUnit.SECONDS)
-        builder.readTimeout(20,TimeUnit.SECONDS)
+        builder.callTimeout(20, TimeUnit.SECONDS)
+        builder.connectTimeout(20, TimeUnit.SECONDS)
+        builder.readTimeout(20, TimeUnit.SECONDS)
         okHttpClient = builder.build()
     }
 }
