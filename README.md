@@ -1,15 +1,12 @@
 # xiaobaihelper
-想写啥就写点啥
-使用Jetpack，参考谷歌的sunflower项目
+方便自己日常使用的一个App
+会慢慢开发可能有用的一些功能
 
-## 架构
-使用mvvm思想，ViewModel，LiveData，FLow
+## 技术栈
+使用mvvm思想，各种Jetpack组件，界面使用Compose绘制。支持Android12+动态取色
 
-## 首页
-资讯，使用聚合API，免费接口
-
-## 仿微信小程序（开发中）
-
-多任务模式
-根据assets里以小程序id命名的文件夹，寻找app.json配置文件
-根据配置文件的路径确定页面等，具体见微信小程序开发文档
+## 软路由nas等设备管理功能
+- 爱快
+- OpenWrt
+- UnRaid
+- NBMiner
