@@ -1,6 +1,6 @@
 package cn.xiaobaihome.xiaobaihelper.bean
 
-data class LoginBean(
+data class IkuaiLoginBean(
     val username: String = "",
     val pass: String = "",
     val passwd: String = "",

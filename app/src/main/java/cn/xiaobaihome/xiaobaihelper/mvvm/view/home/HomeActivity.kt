@@ -30,6 +30,7 @@ import androidx.navigation.compose.rememberNavController
 import cn.xiaobaihome.xiaobaihelper.R
 import cn.xiaobaihome.xiaobaihelper.api.IKuaiApiService
 import cn.xiaobaihome.xiaobaihelper.api.MinerApiService
+import cn.xiaobaihome.xiaobaihelper.api.OpenWrtApiService
 import cn.xiaobaihome.xiaobaihelper.mvvm.base.BaseActivity
 import cn.xiaobaihome.xiaobaihelper.api.Utils
 import cn.xiaobaihome.xiaobaihelper.helper.AppData
@@ -87,6 +88,16 @@ class HomeActivity : BaseActivity() {
         if (!ikuaiProtocol.isNullOrBlank() && !ikuaiAddress.isNullOrBlank() && !ikuaiPort.isNullOrBlank() && !ikuaiUserName.isNullOrBlank() && !ikuaiPwd.isNullOrBlank()) {
             AppData.isIKuaiLogin.value = true
             IKuaiApiService.BASE_URL = "${ikuaiProtocol}://${ikuaiAddress}:${ikuaiPort}"
+        }
+        //初始化openwrt
+        val openwrtProtocol = CacheUtil.get(CacheUtil.OPENWRT_PROTOCOL)
+        val openwrtAddress = CacheUtil.get(CacheUtil.OPENWRT_ADDRESS)
+        val openwrtPort = CacheUtil.get(CacheUtil.OPENWRT_PORT)
+        val openwrtUserName = CacheUtil.get(CacheUtil.OPENWRT_USERNAME)
+        val openwrtPwd = CacheUtil.get(CacheUtil.OPENWRT_PWD)
+        if (!openwrtProtocol.isNullOrBlank() && !openwrtAddress.isNullOrBlank() && !openwrtPort.isNullOrBlank() && !openwrtUserName.isNullOrBlank() && !openwrtPwd.isNullOrBlank()) {
+            AppData.isOpenWrtLogin.value = true
+            OpenWrtApiService.BASE_URL = "${openwrtProtocol}://${openwrtAddress}:${openwrtPort}"
         }
         //初始化Miner
         val minerProtocol = CacheUtil.get(CacheUtil.MINER_PROTOCOL)

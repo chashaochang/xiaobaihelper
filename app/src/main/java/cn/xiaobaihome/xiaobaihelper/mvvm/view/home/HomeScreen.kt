@@ -14,6 +14,7 @@ import cn.xiaobaihome.xiaobaihelper.helper.AppData
 import cn.xiaobaihome.xiaobaihelper.mvvm.view.acount.AddAccountActivity
 import cn.xiaobaihome.xiaobaihelper.mvvm.view.home.widget.IKuaiCard
 import cn.xiaobaihome.xiaobaihelper.mvvm.view.home.widget.MinerCard
+import cn.xiaobaihome.xiaobaihelper.mvvm.view.home.widget.OpenWrtCard
 import com.google.zxing.client.android.CaptureActivity
 import kotlinx.coroutines.runBlocking
 import java.util.*
@@ -24,8 +25,58 @@ fun HomeScreen(homeViewModel: HomeViewModel) {
         mutableStateOf(false)
     }
     val context = LocalContext.current
-    LaunchedEffect(Unit) {
-//        homeViewModel.loadData()
+    val isIKuaiLogin = AppData.isIKuaiLogin.collectAsState().value
+    if (isIKuaiLogin) {
+        remember {
+            Timer().apply {
+                val task = object : TimerTask() {
+                    override fun run() {
+                        runBlocking {
+                            homeViewModel.getIKuaiStatus()
+                        }
+                    }
+                }
+                scheduleAtFixedRate(task, 10L, 5000L)
+            }
+        }
+    }
+    val ikuaiStatus = homeViewModel.ikuaiStatus.collectAsState().value
+
+    val isOpenWrtLogin = AppData.isOpenWrtLogin.collectAsState().value
+    if (isOpenWrtLogin) {
+        LaunchedEffect(Unit){
+            homeViewModel.getOpenWrtInfoHtml()
+        }
+        remember {
+            Timer().apply {
+                val task = object : TimerTask() {
+                    override fun run() {
+                        runBlocking {
+                            homeViewModel.getOpenWrtStatus()
+                        }
+                    }
+                }
+                scheduleAtFixedRate(task, 10L, 5000L)
+            }
+        }
+    }
+    val openWrtStatus = homeViewModel.openWrtStatus.collectAsState().value
+    val openWrtInfo = homeViewModel.openWrtInfo.collectAsState().value
+
+    val isMinerLogin = AppData.isMinerLogin.collectAsState().value
+    if (isMinerLogin) {
+        remember {
+            Timer().apply {
+                val task = object : TimerTask() {
+                    override fun run() {
+                        runBlocking {
+                            homeViewModel.getMinerStatus()
+                        }
+                    }
+                }
+                scheduleAtFixedRate(task, 0L, 3000L)
+            }
+        }
     }
     Column(
         modifier = Modifier.statusBarsPadding()
@@ -53,44 +104,27 @@ fun HomeScreen(homeViewModel: HomeViewModel) {
                 }
             }
         )
-        Box(
+        Column(
             modifier = Modifier
                 .weight(1f)
                 .padding(16.dp, 10.dp)
                 .fillMaxWidth()
         ) {
-            val isMinerLogin = AppData.isMinerLogin.collectAsState().value
-            val isIKuaiLogin = AppData.isIKuaiLogin.collectAsState().value
-            if (isIKuaiLogin) {
-                Timer().apply {
-                    val task = object : TimerTask() {
-                        override fun run() {
-                            runBlocking {
-                                homeViewModel.getIKuaiStatus()
-                            }
-                        }
-                    }
-                    scheduleAtFixedRate(task, 0L, 10000L)
-                }
-                val ikuaiStatus = homeViewModel.ikuaiStatus.collectAsState().value
-                if (ikuaiStatus.sysstat.hostname.isNotBlank()) {
-                    IKuaiCard(ikuaiStatus)
-                } else {
-                    Text("暂无ikuai数据")
-                }
-            } else if (isMinerLogin) {
-                Timer().apply {
-                    val task = object : TimerTask() {
-                        override fun run() {
-                            runBlocking {
-                                homeViewModel.getMinerStatus()
-                            }
-                        }
-                    }
-                    scheduleAtFixedRate(task, 0L, 3000L)
-                }
+            if (isIKuaiLogin && ikuaiStatus.sysstat.hostname.isNotEmpty()) {
+                IKuaiCard(ikuaiStatus)
+            } else {
+                Text("暂无ikuai数据")
+            }
+            if (isOpenWrtLogin && openWrtInfo.name.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(10.dp))
+                OpenWrtCard(openWrtInfo,openWrtStatus)
+            } else {
+                Text("暂无openwrt数据")
+            }
+            if (isMinerLogin) {
                 val minerStatus = homeViewModel.minerStatus.collectAsState().value
                 if (minerStatus.version.isNotBlank()) {
+                    Spacer(modifier = Modifier.height(10.dp))
                     MinerCard(minerStatus)
                 } else {
                     Text("暂无miner数据")

@@ -2,6 +2,7 @@ package cn.xiaobaihome.xiaobaihelper.api
 
 import android.annotation.SuppressLint
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import java.security.KeyManagementException
 import java.security.NoSuchAlgorithmException
 import java.security.SecureRandom
@@ -54,10 +55,14 @@ class OkHttpManager private constructor() {
         //builder.cookieJar(CookieJar())
         builder.sslSocketFactory(sslContext.socketFactory, xtm)
         //builder.addInterceptor()
-        builder.addNetworkInterceptor(ResponseJsonInterceptor())
+        val httpLoggingInterceptor = HttpLoggingInterceptor(HttpLogger())
+        httpLoggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
+        builder.addNetworkInterceptor(httpLoggingInterceptor)
+        builder.addNetworkInterceptor(NetInterceptor())
         builder.callTimeout(20, TimeUnit.SECONDS)
         builder.connectTimeout(20, TimeUnit.SECONDS)
         builder.readTimeout(20, TimeUnit.SECONDS)
+        builder.followRedirects(false)//禁止重定向，防止openwrt登录后重定向
         okHttpClient = builder.build()
     }
 }

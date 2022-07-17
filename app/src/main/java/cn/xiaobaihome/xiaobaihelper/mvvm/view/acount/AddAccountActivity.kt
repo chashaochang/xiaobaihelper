@@ -79,6 +79,7 @@ fun AddAccountContent() {
             title = "openWrt",
             subTitle = "软路由",
             1,
+            !AppData.isOpenWrtLogin.collectAsState().value
         ),
         AccountItem(
             icon = R.mipmap.icon_nas,

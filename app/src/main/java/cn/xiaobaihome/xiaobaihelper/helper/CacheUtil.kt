@@ -23,6 +23,13 @@ object CacheUtil {
     val IKUAI_PWD = stringPreferencesKey("IKUAI_PWD")
     val IKUAI_COOKIE = stringPreferencesKey("IKUAI_COOKIE")
 
+    val OPENWRT_PROTOCOL = stringPreferencesKey("OPENWRT_PROTOCOL")
+    val OPENWRT_ADDRESS = stringPreferencesKey("OPENWRT_ADDRESS")
+    val OPENWRT_PORT = stringPreferencesKey("OPENWRT_PORT")
+    val OPENWRT_USERNAME = stringPreferencesKey("OPENWRT_USERNAME")
+    val OPENWRT_PWD = stringPreferencesKey("OPENWRT_PWD")
+    val OPENWRT_COOKIE = stringPreferencesKey("OPENWRT_COOKIE")
+
     private const val ACCOUNT_PREFERENCES_NAME = "account_preferences"
 
     private val Context.dataStore by preferencesDataStore(

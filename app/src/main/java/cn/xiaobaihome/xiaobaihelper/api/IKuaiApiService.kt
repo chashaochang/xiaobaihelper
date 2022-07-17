@@ -1,7 +1,7 @@
 package cn.xiaobaihome.xiaobaihelper.api
 
 import cn.xiaobaihome.xiaobaihelper.bean.IkuaiBaseReq
-import cn.xiaobaihome.xiaobaihelper.bean.LoginBean
+import cn.xiaobaihome.xiaobaihelper.bean.IkuaiLoginBean
 import cn.xiaobaihome.xiaobaihelper.mvvm.model.IKuaiDefaultResult
 import cn.xiaobaihome.xiaobaihelper.mvvm.model.IKuaiStatus
 import retrofit2.Retrofit
@@ -14,7 +14,7 @@ interface IKuaiApiService {
 
     @Headers("type:ikuai")
     @POST("/Action/login")
-    suspend fun login(@Body loginBean:LoginBean): IKuaiDefaultResult<Any>
+    suspend fun login(@Body ikuaiLoginBean:IkuaiLoginBean): IKuaiDefaultResult<Any>
 
     @Headers("type:ikuai")
     @POST("/Action/call")

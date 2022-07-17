@@ -2,12 +2,12 @@
 
 package cn.xiaobaihome.xiaobaihelper.mvvm.view.home.widget
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import cn.xiaobaihome.xiaobaihelper.R
@@ -16,7 +16,21 @@ import cn.xiaobaihome.xiaobaihelper.mvvm.model.MinerStatus
 @Composable
 fun MinerCard(minerStatus: MinerStatus) {
     Card() {
-        Column(modifier = Modifier.padding(top = 16.dp, end = 16.dp, bottom = 16.dp, start = 0.dp)) {
+        Column(
+            modifier = Modifier.padding(
+                top = 12.dp,
+                end = 16.dp,
+                bottom = 16.dp,
+                start = 0.dp
+            ).fillMaxWidth()
+        ) {
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = "NBMiner",
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.titleMedium
+            )
+            Spacer(modifier = Modifier.height(4.dp))
             Row() {
                 Icon(
                     modifier = Modifier.size(80.dp),
@@ -27,20 +41,20 @@ fun MinerCard(minerStatus: MinerStatus) {
                     Text(minerStatus.miner.devices[0].info, fontSize = 14.sp)
                     Spacer(modifier = Modifier.height(4.dp))
                     Row {
-                        Text(text = "算力:", fontSize = 12.sp)
-                        Text(minerStatus.miner.devices[0].hashrate, fontSize = 12.sp)
+                        Text(text = "算力:", fontSize = 14.sp)
+                        Text(minerStatus.miner.devices[0].hashrate, fontSize = 14.sp)
                     }
                     Spacer(modifier = Modifier.height(4.dp))
                     Row() {
                         Text(
                             modifier = Modifier.weight(1f),
-                            text = "核心温度:${minerStatus.miner.devices[0].temperature}℃",
-                            fontSize = 12.sp
+                            text = "风扇:${minerStatus.miner.devices[0].fan}%",
+                            fontSize = 14.sp
                         )
                         Text(
                             modifier = Modifier.weight(1f),
-                            text = "显存温度:${minerStatus.miner.devices[0].memTemperature}℃",
-                            fontSize = 12.sp
+                            text = "显存:${minerStatus.miner.devices[0].memTemperature}℃",
+                            fontSize = 14.sp
                         )
                     }
                     Spacer(modifier = Modifier.height(4.dp))
@@ -48,17 +62,17 @@ fun MinerCard(minerStatus: MinerStatus) {
                         Text(
                             modifier = Modifier.weight(1f),
                             text = "功耗:${minerStatus.miner.devices[0].power}W",
-                            fontSize = 12.sp
+                            fontSize = 14.sp
                         )
                         Text(
                             modifier = Modifier.weight(1f),
-                            text = "风扇:${minerStatus.miner.devices[0].fan}%",
-                            fontSize = 12.sp
+                            text = "核心:${minerStatus.miner.devices[0].temperature}℃",
+                            fontSize = 14.sp
                         )
+
                     }
                 }
             }
-
 //            Text("接受份额:${minerStatus.miner.devices[0].accepted_shares}")
 //            Text("拒绝份额:${minerStatus.miner.devices[0].rejected_shares}")
 //            Text("无效份额:${minerStatus.miner.devices[0].invalid_shares}")
