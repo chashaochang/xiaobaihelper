@@ -15,6 +15,7 @@ import cn.xiaobaihome.xiaobaihelper.mvvm.view.acount.AddAccountActivity
 import cn.xiaobaihome.xiaobaihelper.mvvm.view.home.widget.IKuaiCard
 import cn.xiaobaihome.xiaobaihelper.mvvm.view.home.widget.MinerCard
 import cn.xiaobaihome.xiaobaihelper.mvvm.view.home.widget.OpenWrtCard
+import cn.xiaobaihome.xiaobaihelper.mvvm.view.home.widget.QuickButtons
 import com.google.zxing.client.android.CaptureActivity
 import kotlinx.coroutines.runBlocking
 import java.util.*
@@ -44,7 +45,7 @@ fun HomeScreen(homeViewModel: HomeViewModel) {
 
     val isOpenWrtLogin = AppData.isOpenWrtLogin.collectAsState().value
     if (isOpenWrtLogin) {
-        LaunchedEffect(Unit){
+        LaunchedEffect(Unit) {
             homeViewModel.getOpenWrtInfoHtml()
         }
         remember {
@@ -62,7 +63,7 @@ fun HomeScreen(homeViewModel: HomeViewModel) {
     }
     val openWrtStatus = homeViewModel.openWrtStatus.collectAsState().value
     val openWrtInfo = homeViewModel.openWrtInfo.collectAsState().value
-
+    val minerStatus = homeViewModel.minerStatus.collectAsState().value
     val isMinerLogin = AppData.isMinerLogin.collectAsState().value
     if (isMinerLogin) {
         remember {
@@ -110,6 +111,7 @@ fun HomeScreen(homeViewModel: HomeViewModel) {
                 .padding(16.dp, 10.dp)
                 .fillMaxWidth()
         ) {
+            QuickButtons()
             if (isIKuaiLogin && ikuaiStatus.sysstat.hostname.isNotEmpty()) {
                 IKuaiCard(ikuaiStatus)
             } else {
@@ -117,20 +119,15 @@ fun HomeScreen(homeViewModel: HomeViewModel) {
             }
             if (isOpenWrtLogin && openWrtInfo.name.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(10.dp))
-                OpenWrtCard(openWrtInfo,openWrtStatus)
+                OpenWrtCard(openWrtInfo, openWrtStatus)
             } else {
                 Text("暂无openwrt数据")
             }
-            if (isMinerLogin) {
-                val minerStatus = homeViewModel.minerStatus.collectAsState().value
-                if (minerStatus.version.isNotBlank()) {
-                    Spacer(modifier = Modifier.height(10.dp))
-                    MinerCard(minerStatus)
-                } else {
-                    Text("暂无miner数据")
-                }
+            if (isMinerLogin && minerStatus.version.isNotBlank()) {
+                Spacer(modifier = Modifier.height(10.dp))
+                MinerCard(minerStatus)
             } else {
-                Text(text = "什么也没有，快去添加设备吧")
+                Text("暂无miner数据")
             }
         }
     }
