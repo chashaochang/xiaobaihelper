@@ -4,6 +4,7 @@ import android.util.Log
 import cn.xiaobaihome.xiaobaihelper.api.*
 import cn.xiaobaihome.xiaobaihelper.mvvm.base.BaseViewModel
 import cn.xiaobaihome.xiaobaihelper.bean.IkuaiBaseReq
+import cn.xiaobaihome.xiaobaihelper.helper.CacheUtil
 import cn.xiaobaihome.xiaobaihelper.mvvm.base.PageState
 import cn.xiaobaihome.xiaobaihelper.mvvm.model.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -82,7 +83,7 @@ class HomeViewModel @Inject constructor(private val apiService: ApiService) : Ba
                     if (it.data != null) {
                         ikuaiStatus.value = it.data
                     } else if (it.result == 10014) {
-
+                        CacheUtil.set(CacheUtil.IKUAI_COOKIE, "")
                     } else {
                         alertState.value = it.errMsg
                     }

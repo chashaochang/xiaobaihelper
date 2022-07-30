@@ -27,6 +27,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import cn.xiaobaihome.xiaobaihelper.R
 import cn.xiaobaihome.xiaobaihelper.api.IKuaiApiService
 import cn.xiaobaihome.xiaobaihelper.api.MinerApiService
@@ -38,8 +40,10 @@ import cn.xiaobaihome.xiaobaihelper.helper.CacheUtil
 import cn.xiaobaihome.xiaobaihelper.helper.getVersion
 import cn.xiaobaihome.xiaobaihelper.theme.XBHelperTheme
 import cn.xiaobaihome.xiaobaihelper.widget.alert
+import cn.xiaobaihome.xiaobaihelper.worker.CheckLoginStatusWorker
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import java.util.concurrent.TimeUnit
 import kotlin.system.exitProcess
 
 @ExperimentalAnimationApi
@@ -107,6 +111,11 @@ class HomeActivity : BaseActivity() {
             AppData.isMinerLogin.value = true
             MinerApiService.BASE_URL = "${minerProtocol}://${minerAddress}:${minerPort}"
         }
+        //每分钟检查一次登录状态
+        val saveRequest =
+            PeriodicWorkRequestBuilder<CheckLoginStatusWorker>(10, TimeUnit.SECONDS)
+                .build()
+        WorkManager.getInstance(this).enqueue(saveRequest)
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {

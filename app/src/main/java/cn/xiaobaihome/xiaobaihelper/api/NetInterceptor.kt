@@ -1,8 +1,11 @@
 package cn.xiaobaihome.xiaobaihelper.api
 
-import android.util.Log
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.OutOfQuotaPolicy
+import androidx.work.WorkManager
 import cn.xiaobaihome.xiaobaihelper.helper.AppData
 import cn.xiaobaihome.xiaobaihelper.helper.CacheUtil
+import cn.xiaobaihome.xiaobaihelper.worker.OpenWrtAutoLoginWorker
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -17,7 +20,6 @@ class NetInterceptor : Interceptor {
                     request = request.newBuilder()
                         .addHeader("Cookie", it)
                         .build()
-
                 }
         } else if (type != null && type == "openwrt") {
             CacheUtil.get(CacheUtil.OPENWRT_COOKIE)
@@ -25,7 +27,6 @@ class NetInterceptor : Interceptor {
                     request = request.newBuilder()
                         .addHeader("Cookie", it)
                         .build()
-
                 }
         }
         val response = chain.proceed(request)
@@ -41,6 +42,10 @@ class NetInterceptor : Interceptor {
                     CacheUtil.set(CacheUtil.OPENWRT_COOKIE, it)
                     AppData.isOpenWrtLogin.value = true
                 }
+            }
+            //登陆过期
+            if(response.code == 403){
+                CacheUtil.set(CacheUtil.OPENWRT_COOKIE, "")
             }
         }
         return response

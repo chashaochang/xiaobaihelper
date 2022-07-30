@@ -84,8 +84,6 @@ dependencies {
     // Jetpack Compose Integration
     implementation "androidx.navigation:navigation-compose:$nav_version"
 
-    api project(':zxing')
-
     //JetPack
     implementation "androidx.fragment:fragment-ktx:$rootProject.fragmentVersion"
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
@@ -93,6 +91,12 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.8.0'
 
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
+
+    def work_version = "2.7.1"
+    // Kotlin + coroutines
+    implementation "androidx.work:work-runtime-ktx:$work_version"
+    // optional - Multiprocess support
+    implementation "androidx.work:work-multiprocess:$work_version"
 
     //网络相关
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.5'

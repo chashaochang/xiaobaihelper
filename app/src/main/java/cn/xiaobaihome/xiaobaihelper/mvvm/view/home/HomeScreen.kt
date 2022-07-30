@@ -2,6 +2,8 @@ package cn.xiaobaihome.xiaobaihelper.mvvm.view.home
 
 import android.content.Intent
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.*
@@ -16,7 +18,6 @@ import cn.xiaobaihome.xiaobaihelper.mvvm.view.home.widget.IKuaiCard
 import cn.xiaobaihome.xiaobaihelper.mvvm.view.home.widget.MinerCard
 import cn.xiaobaihome.xiaobaihelper.mvvm.view.home.widget.OpenWrtCard
 import cn.xiaobaihome.xiaobaihelper.mvvm.view.home.widget.QuickButtons
-import com.google.zxing.client.android.CaptureActivity
 import kotlinx.coroutines.runBlocking
 import java.util.*
 
@@ -100,19 +101,23 @@ fun HomeScreen(homeViewModel: HomeViewModel) {
                     })
                     DropdownMenuItem(text = { Text(text = "扫一扫", fontSize = 16.sp) }, onClick = {
                         expandState.value = false
-                        context.startActivity(Intent(context, CaptureActivity::class.java))
+                        //context.startActivity(Intent(context, CaptureActivity::class.java))
                     })
                 }
             }
         )
+        val scrollState = rememberScrollState()
         Column(
             modifier = Modifier
                 .weight(1f)
                 .padding(16.dp, 10.dp)
                 .fillMaxWidth()
+                .fillMaxHeight()
+                .verticalScroll(scrollState)
         ) {
             QuickButtons()
             if (isIKuaiLogin && ikuaiStatus.sysstat.hostname.isNotEmpty()) {
+                Spacer(modifier = Modifier.height(16.dp))
                 IKuaiCard(ikuaiStatus)
             } else {
                 Text("暂无ikuai数据")
