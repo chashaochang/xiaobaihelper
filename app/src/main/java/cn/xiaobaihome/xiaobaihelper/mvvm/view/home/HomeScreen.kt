@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package cn.xiaobaihome.xiaobaihelper.mvvm.view.home
 
 import android.content.Intent

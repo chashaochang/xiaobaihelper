@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import cn.xiaobaihome.xiaobaihelper.R
-import cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.MiniProgramWebViewActivity
 
 /*
      * pool中有5个webView进程0-4
@@ -54,8 +53,8 @@ object MiniProgramManager {
         intent.putExtra("title", name)
         intent.putExtra("icon", iconRes)
         intent.putExtra("needSuffix", needSuffix)
-        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT);
-        intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_DOCUMENT)
+        intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
         context.startActivity(intent)
         val activity = context as Activity
         activity.overridePendingTransition(R.anim.slide_bottom_in, R.anim.push_none)

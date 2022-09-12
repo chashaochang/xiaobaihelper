@@ -44,38 +44,38 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.MiniProgramWebViewActivity"
+            android:name="cn.xiaobaihome.xiaobaihelper.miniprogram.MiniProgramWebViewActivity"
             android:exported="true" />
         <activity
-            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.MiniProgramWebViewActivity$AppBrandUI0"
+            android:name="cn.xiaobaihome.xiaobaihelper.miniprogram.MiniProgramWebViewActivity$AppBrandUI0"
             android:label="AppBrandUI0"
             android:launchMode="singleTask"
             android:process=":AppBrandUI0"
             android:taskAffinity=".AppBrandUI0" />
 
         <activity
-            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.MiniProgramWebViewActivity$AppBrandUI1"
+            android:name="cn.xiaobaihome.xiaobaihelper.miniprogram.MiniProgramWebViewActivity$AppBrandUI1"
             android:label="AppBrandUI1"
             android:launchMode="singleTask"
             android:process=":AppBrandUI1"
             android:taskAffinity=".AppBrandUI1" />
 
         <activity
-            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.MiniProgramWebViewActivity$AppBrandUI2"
+            android:name="cn.xiaobaihome.xiaobaihelper.miniprogram.MiniProgramWebViewActivity$AppBrandUI2"
             android:label="AppBrandUI2"
             android:launchMode="singleTask"
             android:process=":AppBrandUI2"
             android:taskAffinity=".AppBrandUI2" />
 
         <activity
-            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.MiniProgramWebViewActivity$AppBrandUI3"
+            android:name="cn.xiaobaihome.xiaobaihelper.miniprogram.MiniProgramWebViewActivity$AppBrandUI3"
             android:label="AppBrandUI3"
             android:launchMode="singleTask"
             android:process=":AppBrandUI3"
             android:taskAffinity=".AppBrandUI3" />
 
         <activity
-            android:name="cn.xiaobaihome.xiaobaihelper.mvvm.view.webview.MiniProgramWebViewActivity$AppBrandUI4"
+            android:name="cn.xiaobaihome.xiaobaihelper.miniprogram.MiniProgramWebViewActivity$AppBrandUI4"
             android:label="AppBrandUI4"
             android:launchMode="singleTask"
             android:process=":AppBrandUI4"
